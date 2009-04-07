@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+<head>
+<title>BFG Tutorial Bin</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="${application_url}/static/css/default.css" />
+<!--[if IE 6]>
+<link rel="stylesheet" href="$[application_url}/static/css/fix.css" type="text/css" />
+<![endif]-->
+</head>
+<body>
+<div id="container">
+  <div id="header">
+    <div id="title"><image class="bfglogo" src="${application_url}/static/images/site/raygun.png" height="60" /><span>B F G</span></div>
+    <div id="navcontainer">
+      <ul id="navlist">
+        <li><a href="${application_url}">Home</a></li>
+          <li><a href="${application_url}/documentation">Documentation</a></li>
+        <li id="active"><a href="${application_url}/community" id="current">Community</a></li>
+        <li><a href="${application_url}/software">Software</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="slogan">
+    <p>Gets you and your web applications up to speed. In a blast.</p>
+  </div>
+  <div id="content">
+
+      <div id="subnav" tal:condition="tutorials">
+        <div id="news">
+          <div class="newsheader">Recent tutorials</div>
+          <ul>
+            <li tal:repeat="tutorial tutorials[:20]">
+              <a href="${tutorial.url}">${tutorial.title}, by ${tutorial.author} on ${tutorial.date}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    <div id="one">
+
+      <h1>BFG Tutorial Bin</h1>
+      <div class="message" tal:condition="message|nothing"
+           tal:content="message">Error message</div>
+
+       <a href="${tutorialbin_url}add">Add tutorial</a>
+
+      <div class="userinfo" tal:condition="user">
+          You are currently logged in as <b>${user}</b>
+          <a href="${application_url}/logout">Log Out</a>
+      </div>
+
+      <div class="left">
+          <p>If you have a piece of code that you can share to enlighten the community, but don't have the time to write a long document, consider using our <a href="${tutorialbin_url}add">quick and dirty tutorial maker</a>. Just paste some code, add an explanatory text and a title and you're done.</p>
+    
+        <div tal:condition="latest">
+        <style tal:content="style_defs"></style>
+        <h2>${latest['title']}</h2>
+          <span class="entryheader">Author:</span> ${latest['author_name']} <br/>
+          <span class="entryheader">Date:</span> ${latest['date']} <br/>
+          <span class="entryheader" tal:condition="latest['author_url']">External URL: <a href="${latest['author_url']}">${latest['author_url']}</a></span><br tal:condition="latest['author_url']"/>
+          <div><pre>${latest['text']}</pre></div>
+          <div>${latest['formatted_code']}</div>
+       </div>
+
+      </div>
+
+    </div>
+  </div>
+  <div id="footer">
+    <div class="copy">Copyright &copy; 2009 | <a href="http://www.agendaless.com/">Agendaless and contributors</a></div>
+    <div class="credit">Design based on a theme by <a href="http://realalibi.com">Robobuilder</a></div>
+  </div>
+</div>
+</body>
+</html>

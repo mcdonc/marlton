@@ -1,0 +1,8 @@
+Next release
+
+  Searching and community dashboard.
+
+0.1
+
+  Initial release.
+

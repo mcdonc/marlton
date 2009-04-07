@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+<head>
+<title>B F G</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="${application_url}/static/css/default.css" />
+<!--[if IE 6]>
+<link rel="stylesheet" href="${application_url}/static/css/fix.css" type="text/css" />
+<![endif]-->
+</head>
+<body>
+<div id="container">
+  <div id="header">
+    <div id="title"><image class="bfglogo" src="${application_url}/static/images/site/raygun.png" height="60" /><span>B F G</span></div>
+    <div id="navcontainer">
+      <ul id="navlist">
+        <li id="active"><a href="${application_url}" id="current">Home</a></li>
+          <li><a href="${application_url}/documentation">Documentation</a></li>
+        <li><a href="${application_url}/community">Community</a></li>
+        <li><a href="${application_url}/software">Software</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="slogan">
+    <p>Gets you and your web applications up to speed. Fast.</p>
+  </div>
+  <div id="twocolumn">
+    <div id="left">
+      <h1 class="box">Get to know BFG</h1>
+      <p>BFG is a 'pay only for what you eat' web framework inspired by Zope. You can get started easily and learn new concepts as you go, and only if you need them. It's simple, well tested, well documented and fast.</p>
+      <ul>
+          <li>See the <a href="${application_url}/documentation">documentation</a></li>
+        <li>Examine the code of BFG <a href="http://docs.repoze.org/bfg/index.html#sample-applications">sample applications</a></li>
+        <li>Join the community on the <a href="irc://irc.freenode.net/#repoze">#repoze IRC channel</a>.</li>
+      </ul>
+    </div>
+    <div id="right">
+      <h1 class="box">Start developing now</h1>
+      <h6>Current version is 0.6.9</h6>
+      <p>Get started quickly with setuptools. You'll need an environment capable of compiling C code and the Python development libraries, as well as a few other dependencies.</p>
+      <p><a href="${application_url}/install"><img src="${application_url}/static/images/site/getbfg.png" border="0" /></a></p>
+    </div>
+    <div id="clearboth"></div>
+  </div>
+  <div id="content">
+    <div id="subnav">
+      <span class="header">Search</span>
+      <form id="searchbox" action="#" method="post">
+        <p>
+          <input type="text" value="" />
+          <input type="submit" value="go" />
+        </p>
+      </form>
+      <div id="news"> <span class="header">Recent blog posts</span>
+        <ul>
+          <li><a href="">Blog post one</a></li>
+          <li><a href="">Blog post two</a></li>
+          <li><a href="">Blog post three</a></li>
+        </ul>
+        <span class="header">Recent tutorials</span>
+        <ul>
+          <li><a href="">Tutorial one</a></li>
+          <li><a href="">Tutorial two</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="one">
+      <h1>Welcome</h1>
+      <p>BFG is a Python web application framework. It is inspired by Zope, and uses Zope libraries to do much of its work. However, it is simpler than any released version of Zope. BFG uses the WSGI protocol to handle requests and responses.</p>
+      <h2>What makes BFG special</h2> 
+      <p><b>Familiarity:</b> As web developers, we've become accustomed to working in very particular ways (primarily using Zope 2) over the years. This framework is a canonization of practices that "fit our brains".</p>
+
+<p><b>Simplicity:</b> BFG attempts to be a "pay only for what you eat" framework in which you can be productive quickly with partial knowledge, in contrast to "pay up front for what anyone might eventually want to eat" frameworks, which tend to expect you to understand a great many concepts and technologies fully before you can be truly productive. BFG doesn't force you to use any particular technology to get your application written, and we try to keep the core set of concepts you need to understand to a minimum. We've thrown out all the cruft.</p>
+
+<p><b>Minimalism:</b> BFG provides only the very basics: URL to code mapping, templating, and security. There is not much more to the framework than these pieces: you are expected to provide the rest.</p>
+
+<p><b>Documentation:</b> Because BFG is so minimal, it's relatively easy to keep its documentation up-to-date, which is helpful to bring new developers up to speed. It's our goal that nothing remain undocumented about BFG.</p>
+
+<p><b>Speed:</b> BFG is meant to be fast, capable of serving on the order of 100-1000 requests per second on today's commodity hardware for views that do "real work" given proper application implementation. The hardware is cheap mantra has its limits when you're responsible for managing a great many machines: the fewer you need, the less pain you'll have.</p>
+    </div>
+  </div>
+  <div id="footer">
+    <div class="copy">Copyright &copy; 2009 | <a href="http://www.agendaless.com/">Agendaless and contributors</a></div>
+    <div class="credit">Design based on a theme by <a href="http://realalibi.com">Robobuilder</a></div>
+  </div>
+</div>
+</body>
+</html>

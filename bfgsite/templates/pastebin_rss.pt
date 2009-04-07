@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>BFG Cluegun Recent Pastes</title>
+        <link>${pastebin_url}</link>
+        <description>Recent activity in the BFG Cluegun paste bin.</description>
+        <language>en</language>
+        <lastBuildDate>${last_date}</lastBuildDate>
+        <item tal:repeat="item pastes">
+            <title>${item['author']} on ${item['date']} (${item['language']})</title>
+            <link>${item['url']}</link>
+            <description></description>
+            <guid>${item['url']}</guid>
+        </item>
+    </channel>
+</rss>

@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+<head>
+<title>B F G</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="${application_url}/static/css/default.css" />
+<!--[if IE 6]>
+<link rel="stylesheet" href="${application_url}/static/css/fix.css" type="text/css" />
+<![endif]-->
+</head>
+<body>
+<div id="container">
+  <div id="header">
+      <div id="title"><image class="bfglogo" src="${application_url}/static/images/site/raygun.png" height="60" /><span>B F G</span></div>
+    <div id="navcontainer">
+      <ul id="navlist">
+          <li><a href="${application_url}">Home</a></li>
+          <li><a href="${application_url}/documentation">Documentation</a></li>
+        <li><a href="${application_url}/community">Community</a></li>
+        <li><a href="${application_url}/software">Software</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="slogan">
+    <p>Gets you and your web applications up to speed. Fast.</p>
+  </div>
+  <div id="content">
+    <div id="one">
+  <div class="section" id="installingBFG">
+<span id="installing-chapter"></span><h1>Installing <tt class="xref docutils literal"><span class="pre">BFG</span></tt></h1>
+<div class="section" id="before-you-install">
+<h2>Before You Install</h2>
+
+<p>You will need <a class="reference external" href="http://python.org">Python</a> version 2.4 or better to
+run <tt class="xref docutils literal"><span class="pre">BFG</span></tt>.  It has been tested under Python 2.4.5, Python
+2.5.2 and Python 2.6.  Development of <tt class="xref docutils literal"><span class="pre">BFG</span></tt> is currently
+done primarily under Python 2.4.  <tt class="xref docutils literal"><span class="pre">BFG</span></tt> does <em>not</em> run
+under any version of Python before 2.4, and does <em>not</em> run under
+Python 3.X.</p>
+
+<div class="indent">
+<h5>Warning</h5>
+<p class="last">To succesfully install <tt class="xref docutils literal"><span class="pre">BFG</span></tt>, you will need
+an environment capable of compiling C code (e.g. <tt class="docutils literal"><span class="pre">XCode</span> <span class="pre">Tools</span></tt>
+will need to be installed if you&#8217;re using MacOS X, and <tt class="docutils literal"><span class="pre">gcc</span></tt> and
+other build tools will need to be installed if you&#8217;re using other
+UNIXlike systems).  See the system&#8217;s documentation about installing
+this software.  Additionally, the Python development libraries for
+your Python version will need to be installed and the <tt class="docutils literal"><span class="pre">lixbml2</span></tt>
+
+and <tt class="docutils literal"><span class="pre">libxslt</span></tt> development libraries will need to be installed.
+These requirements are often satisfied by installing the
+<tt class="docutils literal"><span class="pre">python-devel</span></tt>, <tt class="docutils literal"><span class="pre">libxml2-devel</span></tt> and <tt class="docutils literal"><span class="pre">libxslt-devel</span></tt> packages
+into your system.  You will also need <a class="reference external" href="../glossary.html#term-setuptools"><em class="xref">setuptools</em></a> installed
+on within your Python system in order to run the <tt class="docutils literal"><span class="pre">easy_install</span></tt>
+
+command.</p>
+</div>
+<p>At the time of this writing, <tt class="docutils literal"><span class="pre">BFG</span></tt> will not install on
+Windows systems unless you have development tools (e.g. <em>Visual C++</em>)
+installed.</p>
+<div class="indent">
+<h4>Note</h4>
+<p class="last">If you&#8217;d like to help produce and maintain a version of
+<tt class="xref docutils literal"><span class="pre">BFG</span></tt> that works on Windows, we&#8217;d love to hear from
+you.  There&#8217;s nothing intrinsic about <tt class="xref docutils literal"><span class="pre">BFG</span></tt> that would
+prevent it from running on Windows, but none of the current
+developers use the platform.  Please contact us via the <a class="reference external" href="http://lists.repoze.org/listinfo/repoze-dev">repoze.dev
+maillist</a> if you&#8217;d
+like to try to tackle the job of compilation and maintenance.</p>
+
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Installing <tt class="xref docutils literal"><span class="pre">BFG</span></tt></h2>
+<p>It is advisable to install <tt class="xref docutils literal"><span class="pre">BFG</span></tt> into a <a class="reference external" href="../glossary.html#term-virtualenv"><em class="xref">virtualenv</em></a>
+in order to obtain isolation from any &#8220;system&#8221; packages you&#8217;ve got
+installed in your Python version (and likewise, to prevent
+
+<tt class="xref docutils literal"><span class="pre">BFG</span></tt> from globally installing versions of packages that
+are not compatible with your system Python).</p>
+<p>To set up a virtualenv to install <tt class="xref docutils literal"><span class="pre">BFG</span></tt> within, first
+ensure that setuptools is installed.  Invoke <tt class="docutils literal"><span class="pre">import</span> <span class="pre">setuptools</span></tt>
+within the Python interpreter you&#8217;d like to run <tt class="xref docutils literal"><span class="pre">BFG</span></tt>
+under.</p>
+
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>chrism@vitaminf bfg<span class="o">]</span><span class="nv">$ </span>python
+Python 2.4.5 <span class="o">(</span><span class="c">#1, Aug 29 2008, 12:27:37)</span>
+<span class="o">[</span>GCC 4.0.1 <span class="o">(</span>Apple Inc. build 5465<span class="o">)]</span> on darwin
+Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&quot;</span>, <span class="s2">&quot;credits&quot;</span> or <span class="s2">&quot;license&quot;</span> <span class="k">for </span>more information.
+
+&gt;&gt;&gt; import setuptools
+</pre></div>
+</div>
+<p>If <tt class="docutils literal"><span class="pre">import</span> <span class="pre">setuptools</span></tt> does not raise an <tt class="docutils literal"><span class="pre">ImportError</span></tt>, it means
+that setuptools is already installed into your Python interpreter.  If
+<tt class="docutils literal"><span class="pre">import</span> <span class="pre">setuptools</span></tt> fails, you will need to install setuptools
+manually.  If you are using a &#8220;system&#8221; Python (one installed by your
+OS distributor or a 3rd-party packager such as Fink or MacPorts), you
+can usually install a setuptools package using your system&#8217;s package
+manager.  If you cannot do this, or if you&#8217;re using a self-installed
+version of Python, you will need to install setuptools &#8220;by hand&#8221;.
+Installing setuptools &#8220;by hand&#8221; is always a reasonable thing to do,
+even if your package manager already has a prechewed version of
+setuptools for installation.</p>
+
+<p>To install setuptools by hand, first download <a class="reference external" href="http://peak.telecommunity.com/dist/ez_setup.py">ez_setup.py</a> then invoke it
+using the Python interpreter you want to install setuptools into.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>python ez_setup.py
+</pre></div>
+</div>
+<p>Once this command is invoked, setuptools should be installed on your
+system.  If the command fails due to permission errors, you may need
+to be the administrative user on your system to successfully invoke
+the script.</p>
+<div class="section" id="installing-the-virtualenv-package">
+<h3>Installing the <tt class="docutils literal"><span class="pre">virtualenv</span></tt> Package</h3>
+
+<p>Once you&#8217;ve got setuptools installed, you should install the
+<a class="reference external" href="../glossary.html#term-virtualenv"><em class="xref">virtualenv</em></a> package.  To install the <a class="reference external" href="../glossary.html#term-virtualenv"><em class="xref">virtualenv</em></a> package
+into your setuptools-enabled Python interpreter, use the
+<tt class="docutils literal"><span class="pre">easy_install</span></tt> command.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>easy_install virtualenv
+</pre></div>
+</div>
+<p>This command should succeed, and tell you that the virtualenv package
+is now installed.  If it fails due to permission errors, you may need
+to install it as your system&#8217;s administrative user.</p>
+
+</div>
+<div class="section" id="creating-the-virtual-python-environment">
+<h3>Creating the Virtual Python Environment</h3>
+<p>Once the <a class="reference external" href="../glossary.html#term-virtualenv"><em class="xref">virtualenv</em></a> package is installed in your Python, you
+can actually create a virtual environment.  To do so, invoke the
+following:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><pre>1
+2
+3</pre></td><td class="code"><div class="highlight"><pre><span class="nv">$ </span>virtualenv --no-site-packages bfgenv
+New python executable in bfgenv/bin/python
+Installing setuptools.............done.
+</pre></div>
+</td></tr></table></div>
+<div class="indent">
+<h5>Warning</h5>
+
+<p class="last">Using <tt class="docutils literal"><span class="pre">--no-site-packages</span></tt> when generating your
+virtualenv is <em>very important</em>. This flag provides the necessary
+isolation for running the set of packages required by
+<tt class="xref docutils literal"><span class="pre">BFG</span></tt>.  If you do not specify <tt class="docutils literal"><span class="pre">--no-site-packages</span></tt>,
+it&#8217;s possible that <tt class="xref docutils literal"><span class="pre">BFG</span></tt> will not install properly into
+the virtualenv, or, even if it does, may not run properly,
+depending on the packages you&#8217;ve already got installed into your
+Python&#8217;s &#8220;main&#8221; site-packages dir.</p>
+
+</div>
+<p>You should perform any following commands that mention a &#8220;bin&#8221;
+directory from within the <tt class="docutils literal"><span class="pre">bfgenv</span></tt> virtualenv dir.</p>
+</div>
+<div class="section" id="installingBFG-into-the-virtual-python-environment">
+<h3>Installing <tt class="xref docutils literal"><span class="pre">BFG</span></tt> Into the Virtual Python Environment</h3>
+
+<p>After you&#8217;ve got your <tt class="docutils literal"><span class="pre">bfgenv</span></tt> virtualenv installed, you may install
+<tt class="xref docutils literal"><span class="pre">BFG</span></tt> itself using the following commands from within the
+virtualenv (<tt class="docutils literal"><span class="pre">bfgenv</span></tt>) directory:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><pre>1</pre></td><td class="code"><div class="highlight"><pre><span class="nv">$ </span>bin/easy_install -i http://dist.repoze.org/lemonade/dev/simple repoze.bfg
+</pre></div>
+</td></tr></table></div>
+<div class="indent">
+
+<h5>Warning</h5>
+<p class="last">Note carefully the <tt class="docutils literal"><span class="pre">-i</span>
+<span class="pre">http://dist.repoze.org/lemonade/dev/simple</span></tt> above.  It is
+required.  <tt class="xref docutils literal"><span class="pre">BFG</span></tt> software is maintained in its own
+index; <tt class="xref docutils literal"><span class="pre">BFG</span></tt> cannot be installed from PyPI.</p>
+</div>
+<p>This command will take longer than the previous ones to complete, as it
+compiles a number of dependencies.</p>
+
+</div>
+<div class="section" id="what-gets-installed">
+<h3>What Gets Installed</h3>
+<p>When you <tt class="docutils literal"><span class="pre">easy_install</span></tt> <tt class="xref docutils literal"><span class="pre">BFG</span></tt>, various Zope libraries,
+WebOb, Paste, PasteScript, and PasteDeploy libraries are installed.</p>
+<p>Additionally, as shown in the next section, PasteScript (aka <em>paster</em>)
+templates will be registered that make it easy to start a new
+<tt class="xref docutils literal"><span class="pre">BFG</span></tt> project.</p>
+
+</div>
+</div>
+<div class="section" id="troubleshooting">
+<h2>Troubleshooting</h2>
+<div class="section" id="if-lxml-fails-to-compile-during-easy-install">
+<h3>If <tt class="docutils literal"><span class="pre">lxml</span></tt> Fails to Compile During <tt class="docutils literal"><span class="pre">easy_install</span></tt></h3>
+<p>If the installation of <tt class="xref docutils literal"><span class="pre">BFG</span></tt> fails due to problems
+compiling <tt class="docutils literal"><span class="pre">lxml</span></tt>, you should try installing <tt class="docutils literal"><span class="pre">lxml</span></tt> before
+installing <tt class="xref docutils literal"><span class="pre">BFG</span></tt>.  To do so, invoke <tt class="docutils literal"><span class="pre">easy_install</span></tt>,
+instructing <tt class="docutils literal"><span class="pre">lxml</span></tt> to download its own copy of <tt class="docutils literal"><span class="pre">libxml2</span></tt>:</p>
+
+<div class="highlight-python"><pre>$ STATIC_DEPS=true bin/easy_install lxml</pre>
+</div>
+<p>Once that completes, you can start a subsequent <tt class="docutils literal"><span class="pre">easy_install</span></tt> of
+<tt class="xref docutils literal"><span class="pre">BFG</span></tt> as per the instructions above; it should then work.</p>
+</div>
+<div class="section" id="if-you-can-t-install-via-easy-install-alternate-installation">
+<h3>If You Can&#8217;t Install Via <tt class="docutils literal"><span class="pre">easy_install</span></tt> (Alternate Installation)</h3>
+
+<p>If you can&#8217;t get <tt class="xref docutils literal"><span class="pre">BFG</span></tt> installed using <tt class="docutils literal"><span class="pre">easy_install</span></tt>
+because <tt class="docutils literal"><span class="pre">lxml</span></tt> fails to compile on your system, you can try the
+<a class="reference external" href="http://svn.repoze.org/buildouts/repoze.bfg/trunk/README.txt">BFG buildout</a>.  This
+installation mechanism builds known-compatible <tt class="docutils literal"><span class="pre">libxml2</span></tt> and
+<tt class="docutils literal"><span class="pre">libxslt</span></tt> from source and causes <tt class="docutils literal"><span class="pre">lxml</span></tt> to link against these
+instead of your system packages, as version incompatibilities between
+system packages and <tt class="docutils literal"><span class="pre">lxml</span></tt> versions are typically to blame for
+compilation problems.</p>
+
+</div>
+</div>
+</div>
+
+
+
+    </div>
+  </div>
+  <div id="footer">
+    <div class="copy">Copyright &copy; 2009 | <a href="http://www.agendaless.com/">Agendaless and contributors</a></div>
+    <div class="credit">Design based on a theme by <a href="http://realalibi.com">Robobuilder</a></div>
+  </div>
+</div>
+</body>
+</html>
