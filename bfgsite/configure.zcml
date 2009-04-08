@@ -1,119 +1,117 @@
-<configure xmlns="http://namespaces.zope.org/zope"
-	   xmlns:bfg="http://namespaces.repoze.org/bfg"
+<configure xmlns="http://namespaces.repoze.org/bfg"
 	   i18n_domain="repoze.bfg">
 
-  <include package="zope.component" file="meta.zcml"/>
   <include package="repoze.bfg.includes" />
 
-  <bfg:view
+  <view
      for=".models.IWebSite"
      view=".website.index_view"
      permission="view"
      />
 
-  <bfg:view
+  <view
      for=".models.IWebSite"
      view=".website.manage_view"
      name="manage"
      permission="manage"
      />
 
-  <bfg:view
+  <view
      for=".models.IWebSite"
      view=".website.static_view"
      name="static"
      permission="view"
      />
 
-  <bfg:view
+  <view
      for=".models.IWebSite"
      view=".website.docs_view"
      name="documentation"
      permission="view"
      />
 
-  <bfg:view
+  <view
      for=".models.IWebSite"
      view=".website.install_view"
      name="install"
      permission="view"
      />
 
-  <bfg:view
+  <view
      for=".models.IWebSite"
      view=".website.software_view"
      name="software"
      permission="view"
      />
 
-  <bfg:view
+  <view
      for=".models.IWebSite"
      view=".website.community_view"
      name="community"
      permission="view"
      />
 
-  <bfg:view
+  <view
      for=".models.IWebSite"
      view=".website.logout_view"
      name="logout"
      permission="view"
      />
 
-  <bfg:view
+  <view
      for=".models.IPasteBin"
      view=".pastebin.pastebin_view"
      permission="view"
      />
 
-  <bfg:view
+  <view
      for=".models.IPasteBin"
      view=".pastebin.pastebin_rss_view"
      name="rss"
      permission="view"
      />
 
-  <bfg:view
+  <view
      for=".models.IPasteBin"
      view=".pastebin.pastebin_manage_view"
      name="manage"
      permission="view"
      />
 
-  <bfg:view
+  <view
      for=".models.ITutorialBin"
      view=".tutorialbin.tutorialbin_view"
      permission="view"
      />
 
-  <bfg:view
+  <view
      for=".models.ITutorialBin"
      view=".tutorialbin.tutorialbin_add_view"
      name="add"
      permission="view"
      />
 
-  <bfg:view
+  <view
      for=".models.ITutorialBin"
      view=".tutorialbin.tutorialbin_rss_view"
      name="rss"
      permission="view"
      />
 
-  <bfg:view
+  <view
      for=".models.ITutorialBin"
      view=".tutorialbin.tutorialbin_manage_view"
      name="manage"
      permission="view"
      />
 
-  <bfg:view
+  <view
      for=".models.IPasteEntry"
      view=".pastebin.entry_view"
      permission="view"
      />
 
-  <bfg:view
+  <view
      for=".models.ITutorial"
      view=".tutorialbin.tutorial_view"
      permission="view"

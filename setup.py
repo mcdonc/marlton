@@ -31,27 +31,17 @@ requires = [
     'ZODB3',
     'Pygments',
     'FormEncode',
-    'zope.security',
     'nose',
     'repoze.zodbconn',
+    'repoze.folder',
     ]
 
-def get_version():
-    try:
-        here = os.path.abspath(os.path.dirname(__file__))
-    except NameError:
-        here = os.path.abspath(os.getcwd())
-    f = os.path.join(here, 'bfgsite', 'VERSION.txt')
-    version = open(f).readline().strip()
-    return version
-
 setup(name='bfgsite',
-      version=get_version(),
-      description='A web site for repoze.bfg with a paste bin and a tutorial bin',
+      version='0.3',
+      description=('A web site for repoze.bfg with a paste bin and a tutorial '
+                   'bin'),
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[
-        "Development Status :: 3 - Alpha",
-        "Intended Audience :: Developers",
         "Programming Language :: Python",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
@@ -65,7 +55,6 @@ setup(name='bfgsite',
       license="BSD-derived (http://www.repoze.org/LICENSE.txt)",
       packages=find_packages(),
       include_package_data=True,
-      namespace_packages=[],
       zip_safe=False,
       tests_require = requires,
       install_requires= requires,

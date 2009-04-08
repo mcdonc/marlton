@@ -1,5 +1,4 @@
 from datetime import datetime
-from persistent.mapping import PersistentMapping
 from persistent import Persistent
 
 from zope.interface import Interface
@@ -10,24 +9,25 @@ from repoze.bfg.security import Allow
 from repoze.bfg.security import Everyone
 from repoze.bfg.security import Authenticated
 
+from repoze.folder import Folder
+
 class IWebSite(Interface):
     pass
 
-class WebSite(PersistentMapping):
+class WebSite(Folder):
     implements(IWebSite, ILocation)
+    __name__ = __parent__ = None
     __acl__ = [ (Allow, Everyone, 'view') ]
 
     def __init__(self):
-        super(WebSite, self).__init__(self)
-        self.__name__ = None
-        self.__parent__ = None
-        self['pastebin']=PasteBin()
-        self['tutorialbin']=TutorialBin()
+        super(WebSite, self).__init__()
+        self['pastebin'] = PasteBin()
+        self['tutorialbin'] = TutorialBin()
 
 class IBin(Interface):
     pass
 
-class Bin(PersistentMapping):
+class Bin(Folder):
     implements(IBin)
     __acl__ = [ (Allow, Everyone, 'view'), (Allow, Authenticated, 'manage') ]
 
@@ -70,7 +70,8 @@ class ITutorial(Interface):
 class Tutorial(Persistent):
     implements(ITutorial)
 
-    def __init__(self, title, author_name, text, author_url=None, code=None, language=None):
+    def __init__(self, title, author_name, text, author_url=None, code=None,
+                 language=None):
         self.title = title
         self.author_name = author_name
         self.author_url = author_url

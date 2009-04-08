@@ -18,6 +18,8 @@
           <li><a href="${application_url}/documentation">Documentation</a></li>
         <li><a href="${application_url}/community">Community</a></li>
         <li><a href="${application_url}/software">Software</a></li>
+        <li><a href="${application_url}/pastebin">Pastebin</a></li>
+        <li><a href="${application_url}/tutorialbin">Tutorials</a></li>
       </ul>
     </div>
   </div>

@@ -1,8 +1,4 @@
 import os
-import sys
-import urlparse
-
-import formencode
 import webob
 
 from paste import urlparser
@@ -10,8 +6,6 @@ from paste import urlparser
 from repoze.bfg.wsgi import wsgiapp
 from repoze.bfg.chameleon_zpt import render_template
 from repoze.bfg.url import model_url
-
-from bfgsite.utils import sort_byint
 
 COOKIE_LANGUAGE = 'website.last_lang'
 COOKIE_AUTHOR = 'website.last_author'
@@ -101,3 +95,4 @@ def software_view(context, request):
         )
     response.unicode_body = unicode(body)
     return response    
+

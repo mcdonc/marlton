@@ -1,18 +1,14 @@
-import os
 import sys
 import urlparse
 
 import formencode
 import webob
 
-from paste import urlparser
-
 import pygments
 from pygments import lexers
 from pygments import formatters
 from pygments import util
 
-from repoze.bfg.wsgi import wsgiapp
 from repoze.bfg.chameleon_zpt import render_template_to_response
 from repoze.bfg.chameleon_zpt import render_template
 from repoze.bfg.traversal import find_interface
