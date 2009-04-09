@@ -11,13 +11,6 @@
 
   <view
      for=".models.IWebSite"
-     view=".website.manage_view"
-     name="manage"
-     permission="manage"
-     />
-
-  <view
-     for=".models.IWebSite"
      view=".website.static_view"
      name="static"
      permission="view"
@@ -27,13 +20,6 @@
      for=".models.IWebSite"
      view=".website.docs_view"
      name="documentation"
-     permission="view"
-     />
-
-  <view
-     for=".models.IWebSite"
-     view=".website.install_view"
-     name="install"
      permission="view"
      />
 

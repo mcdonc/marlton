@@ -1,65 +1,42 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
-<head>
-<title>B F G</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link rel="stylesheet" type="text/css" href="${application_url}/static/css/default.css" />
-<!--[if IE 6]>
-<link rel="stylesheet" href="${application_url}/static/css/fix.css" type="text/css" />
-<![endif]-->
-</head>
-<body>
-<div id="container">
-  <div id="header">
-      <div id="title"><image class="bfglogo" src="${application_url}/static/images/site/raygun.png" height="60" /><span>B F G</span></div>
-    <div id="navcontainer">
-      <ul id="navlist">
-          <li><a href="${application_url}">Home</a></li>
-          <li><a href="${application_url}/documentation">Documentation</a></li>
-        <li><a href="${application_url}/community">Community</a></li>
-        <li id="active"><a href="${application_url}/software" id="current">Software</a></li>
-      </ul>
+<div 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    metal:use-macro="main_template.macros['master']">
+
+  <div metal:fill-slot="content">
+    <div id="content">
+      <div id="one">
+        <h1>Software</h1> 
+        <p>Browse and check out tagged and trunk versions of BFG
+        via the <a class="reference external" href="http://svn.repoze.org/repoze.bfg/">Repoze Subversion repository</a>.  To check out the trunk
+        via Subversion, use this command:</p>
+        <div class="highlight"><pre>svn co http://svn.repoze.org/repoze.bfg/trunk repoze.bfg</pre></div>
+        <p>If you want to collaborate on BFG development, you could become a contributor. To find out how to become a contributor to BFG, please
+        see the <a href="http://repoze.org/contributing.html">contributor&#8217;s page</a>.</p>
+        <p>Although BFG itself is a minimal framework, we have developed several pieces of code which can be useful to you when developing with BFG. Note that they are not BFG specific. Most of them can be used as middleware on a WSGI stack, so they could be used on any Python web application.</p>
+        <ul>
+          
+          <li><a href="http://docs.repoze.org/bfg">repoze.bfg</a></li>
+          <li><a href="http://docs.repoze.org/catalog">repoze.catalog</a></li>
+          <li><a href="http://docs.repoze.org/evolution">repoze.evolution</a></li>
+          <li><a href="http://docs.repoze.org/folder">repoze.folder</a></li>
+          <li><a href="http://docs.repoze.org/urispace">repoze.urispace</a></li>
+          <li><a href="http://docs.repoze.org/who">repoze.who</a></li>
+          
+          <li><a href="http://docs.repoze.org/workflow">repoze.workflow</a></li>
+          <li><a href="http://docs.repoze.org/zodbconn">repoze.zodbconn</a></li>
+          <li><a href="http://docs.repoze.org/lemonade">repoze.lemonade</a></li>
+          <li><a href="http://docs.repoze.org/session">repoze.session</a></li>
+          <li><a href="http://docs.repoze.org/tm2">repoze.tm2</a></li>
+          <li><a href="http://docs.repoze.org/what">repoze.what</a></li>
+          
+          <li><a href="http://docs.repoze.org/zcml">repoze.zcml</a></li>
+          <li><a href="http://docs.repoze.org/xmlrpc">repoze.bfg.xmlrpc</a></li>
+        </ul>
+        
+      </div>
     </div>
-  </div>
-  <div id="slogan">
-    <p>Gets you and your web applications up to speed. Fast.</p>
-  </div>
-  <div id="content">
-    <div id="one">
-           <h1>Software</h1> 
-<p>Browse and check out tagged and trunk versions of BFG
-via the <a class="reference external" href="http://svn.repoze.org/repoze.bfg/">Repoze Subversion repository</a>.  To check out the trunk
-via Subversion, use this command:</p>
-<div class="highlight"><pre>svn co http://svn.repoze.org/repoze.bfg/trunk repoze.bfg</pre></div>
-<p>If you want to collaborate on BFG development, you could become a contributor. To find out how to become a contributor to BFG, please
-see the <a href="http://repoze.org/contributing.html">contributor&#8217;s page</a>.</p>
-           <p>Although BFG itself is a minimal framework, we have developed several pieces of code which can be useful to you when developing with BFG. Note that they are not BFG specific. Most of them can be used as middleware on a WSGI stack, so they could be used on any Python web application.</p>
-            <ul>
-
-             <li><a href="http://docs.repoze.org/bfg">repoze.bfg</a></li>
-             <li><a href="http://docs.repoze.org/catalog">repoze.catalog</a></li>
-             <li><a href="http://docs.repoze.org/evolution">repoze.evolution</a></li>
-             <li><a href="http://docs.repoze.org/folder">repoze.folder</a></li>
-             <li><a href="http://docs.repoze.org/urispace">repoze.urispace</a></li>
-             <li><a href="http://docs.repoze.org/who">repoze.who</a></li>
-
-             <li><a href="http://docs.repoze.org/workflow">repoze.workflow</a></li>
-             <li><a href="http://docs.repoze.org/zodbconn">repoze.zodbconn</a></li>
-	     <li><a href="http://docs.repoze.org/lemonade">repoze.lemonade</a></li>
-	     <li><a href="http://docs.repoze.org/session">repoze.session</a></li>
-	     <li><a href="http://docs.repoze.org/tm2">repoze.tm2</a></li>
-             <li><a href="http://docs.repoze.org/what">repoze.what</a></li>
-
-	     <li><a href="http://docs.repoze.org/zcml">repoze.zcml</a></li>
-             <li><a href="http://docs.repoze.org/xmlrpc">repoze.bfg.xmlrpc</a></li>
-	     </ul>
-
-    </div>
-  </div>
-  <div id="footer">
-    <div class="copy">Copyright &copy; 2009 | <a href="http://www.agendaless.com/">Agendaless and contributors</a></div>
-    <div class="credit">Design based on a theme by <a href="http://realalibi.com">Robobuilder</a></div>
   </div>
 </div>
-</body>
-</html>
+

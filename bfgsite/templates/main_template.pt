@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" 
+      xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:define-macro="master">
+
+  <head>
+    <title>B F G</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" type="text/css" href="${application_url}/static/css/default.css" />
+    <!--[if IE 6]>
+        <link rel="stylesheet" href="${application_url}/static/css/fix.css" type="text/css" />
+        <![endif]-->
+
+   <metal:block define-slot="headinclude"/>
+  </head>
+
+  <body>
+    <div id="container">
+      <div id="header">
+          <div id="title">
+            <a href="${application_url}">
+            <image class="bfglogo" src="${application_url}/static/images/site/raygun.png" height="60" /><span>B F G</span>
+            </a>
+          </div>
+        <div id="navcontainer">
+          <ul id="navlist">
+            <li id="active"><a href="${application_url}" id="current">Home</a></li>
+            <li><a href="${application_url}/documentation">Documentation</a></li>
+            <li><a href="${application_url}/community">Community</a></li>
+            <li><a href="${application_url}/software">Software</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div metal:define-slot="content"/>
+
+      <div id="footer">
+        <div class="copy">Copyright &copy; 2009 | <a href="http://www.agendaless.com/">Agendaless and contributors</a></div>
+        <div class="credit">Design based on a theme by <a href="http://realalibi.com">Robobuilder</a></div>
+      </div>
+      
+    </div>
+
+</body>
+</html>

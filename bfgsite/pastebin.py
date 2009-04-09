@@ -19,10 +19,11 @@ from repoze.monty import marshal
 
 from bfgsite.models import PasteEntry
 from bfgsite.models import IPasteBin
-from bfgsite.website import preferred_author
-from bfgsite.website import COOKIE_AUTHOR
-from bfgsite.website import COOKIE_LANGUAGE
+
 from bfgsite.utils import sort_byint
+from bfgsite.utils import preferred_author
+from bfgsite.utils import COOKIE_AUTHOR
+from bfgsite.utils import COOKIE_LANGUAGE
 
 def get_pastes(context, request, max):
     pastebin = find_interface(context, IPasteBin)

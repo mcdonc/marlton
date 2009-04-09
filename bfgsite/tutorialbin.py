@@ -19,9 +19,10 @@ from repoze.monty import marshal
 
 from bfgsite.models import Tutorial
 from bfgsite.models import ITutorialBin
-from bfgsite.website import preferred_author
-from bfgsite.website import COOKIE_AUTHOR
-from bfgsite.website import COOKIE_LANGUAGE
+
+from bfgsite.utils import preferred_author
+from bfgsite.utils import COOKIE_AUTHOR
+from bfgsite.utils import COOKIE_LANGUAGE
 from bfgsite.utils import sort_byint
 
 def get_tutorials(context, request, max):
