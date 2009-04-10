@@ -28,11 +28,11 @@ from repoze.monty import marshal
 from bfgsite.models import Tutorial
 from bfgsite.models import PasteEntry
 
-from bfgsite.models import ITutorialBin
-from bfgsite.models import IPasteBin
-from bfgsite.models import IPasteEntry
-from bfgsite.models import IWebSite
-from bfgsite.models import ITutorial
+from bfgsite.interfaces import ITutorialBin
+from bfgsite.interfaces import IPasteBin
+from bfgsite.interfaces import IPasteEntry
+from bfgsite.interfaces import IWebSite
+from bfgsite.interfaces import ITutorial
 
 from bfgsite.utils import preferred_author
 from bfgsite.utils import COOKIE_AUTHOR

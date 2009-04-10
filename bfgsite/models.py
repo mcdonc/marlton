@@ -1,7 +1,6 @@
 from datetime import datetime
 from persistent import Persistent
 
-from zope.interface import Interface
 from zope.interface import implements
 from repoze.bfg.interfaces import ILocation
 
@@ -11,8 +10,12 @@ from repoze.bfg.security import Authenticated
 
 from repoze.folder import Folder
 
-class IWebSite(Interface):
-    pass
+from bfgsite.interfaces import IWebSite
+from bfgsite.interfaces import IBin
+from bfgsite.interfaces import IPasteBin
+from bfgsite.interfaces import ITutorialBin
+from bfgsite.interfaces import IPasteEntry
+from bfgsite.interfaces import ITutorial
 
 class WebSite(Folder):
     implements(IWebSite, ILocation)
@@ -23,9 +26,6 @@ class WebSite(Folder):
         super(WebSite, self).__init__()
         self['pastebin'] = PasteBin()
         self['tutorialbin'] = TutorialBin()
-
-class IBin(Interface):
-    pass
 
 class Bin(Folder):
     implements(IBin)
@@ -40,20 +40,11 @@ class Bin(Folder):
         self[itemid] = item
         return itemid
 
-class IPasteBin(Interface):
-    pass
-
 class PasteBin(Bin):
     implements(IPasteBin)
 
-class ITutorialBin(Interface):
-    pass
-
 class TutorialBin(Bin):
     implements(ITutorialBin)
-
-class IPasteEntry(Interface):
-    pass
 
 class PasteEntry(Persistent):
     implements(IPasteEntry)
@@ -64,9 +55,6 @@ class PasteEntry(Persistent):
         self.language = language
         self.date = datetime.now()
         
-class ITutorial(Interface):
-    pass
-
 class Tutorial(Persistent):
     implements(ITutorial)
 
