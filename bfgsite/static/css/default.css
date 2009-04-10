@@ -20,21 +20,23 @@ body{
 	background:#353535;
 	text-align:center;
 	font:13.3px Verdana,Arial,Helvetica,sans-serif;
-	word-spacing:1px;
-	line-height:200%;
+//	word-spacing:1px;
+//	line-height:200%;
 }
 /*Header*/
 .bfglogo{
 	float:left;
         margin-top: 10px;
         margin-right: 20px;
+        border: none;
 }
 #navcontainer{
 	float:right;
+        clear:right;
 }
 #navlist {
 	margin: 0;
-	padding: 81px 0 20px 10px;
+	padding: 30px 5px 30px 10px;
 	float:right;
 	font:12px Verdana,Arial,Helvetica,sans-serif;
 }
@@ -57,7 +59,28 @@ body{
 	background: transparent;
 	color: #fff;
 }
+
 #navlist a:hover { color: #fff; }
+
+#searchbox{
+        float:right;
+        margin-top: 10px;
+        margin-right: 20px;
+}
+
+
+
+#searchbox input{
+	background-color:#eee;
+	border:1px solid #ddd;
+	font:11px Verdana,sans-serif;
+	color:#4c5153;
+	padding:2px 3px;
+}
+#searchbox input:hover,
+#searchbox input:focus{
+	background-color:#fff;
+}
 
 #header{
 	width:798px;
@@ -70,18 +93,22 @@ body{
 	border-bottom:#999 1px solid;
 	border-right:#999 1px solid;
 }
+
 #title{
 	width:450px;
 	margin-top:5px;
 	margin-left:25px;
 	position:absolute;
 	color:#fff;
-        font:28px Georgia,Verdana,Arial,Helvetica,sans-serif bold;
+        font:28px Arial,Helvetica,sans-serif bold;
 	cursor:default;
 	float:left;
-        font-size: 600%;
+        font-size: 72px;
         font-weight: bold;
 }
+
+#title a:hover { text-decoration: none; }
+
 /*Construction Styles*/
 #container{
 	width:800px;
@@ -277,21 +304,7 @@ code{
 	color:#3C8C06;
 	font-weight:bold;
 }
-/*Searchbox - News*/
-#searchbox p{
-	margin:7px 0 7px 2px;
-}
-#searchbox p input{
-	background-color:#eee;
-	border:1px solid #ddd;
-	font:11px Verdana,sans-serif;
-	color:#4c5153;
-	padding:2px 3px;
-}
-#searchbox p input:hover,
-#searchbox p input:focus{
-	background-color:#fff;
-}
+
 .header{
 	color:#3C8C06;
 	font-size:14px;

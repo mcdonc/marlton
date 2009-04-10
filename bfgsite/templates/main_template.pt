@@ -16,27 +16,39 @@
   </head>
 
   <body>
+
     <div id="container">
+
       <div id="header">
+
           <div id="title">
             <a href="${application_url}">
-            <image class="bfglogo" src="${application_url}/static/images/site/raygun.png" height="60" /><span>B F G</span>
+            <img class="bfglogo" src="${application_url}/static/images/site/raygun.png" height="60" /><span>B F G</span>
             </a>
           </div>
-        <div id="navcontainer">
-          <ul id="navlist">
-            <li id="active"><a href="${application_url}" id="current">Home</a></li>
-            <li><a href="${application_url}/documentation">Documentation</a></li>
-            <li><a href="${application_url}/community">Community</a></li>
-            <li><a href="${application_url}/software">Software</a></li>
-          </ul>
-        </div>
+
+          <div id="searchbox">
+            <form action="#" method="post">
+                <input type="text" value="" />
+                <input type="submit" value="search" />
+            </form>
+          </div>
+
+          <div id="navcontainer">
+            <ul id="navlist">
+              <li id="active"><a href="${application_url}" id="current">Home</a></li>
+              <li><a href="${application_url}/documentation">Documentation</a></li>
+              <li><a href="${application_url}/community">Community</a></li>
+              <li><a href="${application_url}/software">Software</a></li>
+            </ul>
+          </div>
+
       </div>
       
       <div metal:define-slot="content"/>
 
       <div id="footer">
-        <div class="copy">Copyright &copy; 2009 | <a href="http://www.agendaless.com/">Agendaless and contributors</a></div>
+        <div class="copy">Copyright &copy; 2008-2009 | <a href="http://www.agendaless.com/"><a href="http://agendaless.com">Agendaless Consulting</a> and contributors</a></div>
         <div class="credit">Design based on a theme by <a href="http://realalibi.com">Robobuilder</a></div>
       </div>
       
