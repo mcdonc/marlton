@@ -8,6 +8,8 @@ from paste import urlparser
 
 import formencode
 
+from zope.component import getMultiAdapter
+
 from pygments import lexers
 from pygments import formatters
 from pygments import highlight
@@ -33,6 +35,7 @@ from bfgsite.interfaces import IPasteBin
 from bfgsite.interfaces import IPasteEntry
 from bfgsite.interfaces import IWebSite
 from bfgsite.interfaces import ITutorial
+from bfgsite.interfaces import INavigation
 
 from bfgsite.utils import preferred_author
 from bfgsite.utils import COOKIE_AUTHOR
@@ -59,7 +62,7 @@ def index_view(context, request):
     app_url = request.application_url
     body = render_template(
         'templates/index.pt',
-        main_template = get_template('templates/main_template.pt'),
+        api = API(context, request),
         application_url = app_url,
         )
     response.unicode_body = unicode(body)
@@ -71,7 +74,7 @@ def docs_view(context, request):
     app_url = request.application_url
     body = render_template(
         'templates/documentation.pt',
-        main_template = get_template('templates/main_template.pt'),
+        api = API(context, request),
         application_url = app_url,
         )
     response.unicode_body = unicode(body)
@@ -83,7 +86,7 @@ def community_view(context, request):
     app_url = request.application_url
     body = render_template(
         'templates/community.pt',
-        main_template = get_template('templates/main_template.pt'),
+        api = API(context, request),
         application_url = app_url,
         )
     response.unicode_body = unicode(body)
@@ -95,7 +98,7 @@ def software_view(context, request):
     app_url = request.application_url
     body = render_template(
         'templates/software.pt',
-        main_template = get_template('templates/main_template.pt'),
+        api = API(context, request),
         application_url = app_url,
         )
     response.unicode_body = unicode(body)
@@ -499,4 +502,15 @@ def pastebin_rss_view(context, request):
         )
     response.unicode_body = unicode(body)
     return response    
+
+def breadcrumbs(context, request):
+    pass
+
+class API:
+    def __init__(self, context, request):
+        self.context = context
+        self.site = find_interface(context, IWebSite)
+        self.request = request
+        self.main_template = get_template('templates/main_template.pt')
+        self.navitems = getMultiAdapter((context, request), INavigation).items()
 

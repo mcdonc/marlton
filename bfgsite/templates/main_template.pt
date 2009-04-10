@@ -36,10 +36,11 @@
 
           <div id="navcontainer">
             <ul id="navlist">
-              <li id="active"><a href="${application_url}" id="current">Home</a></li>
-              <li><a href="${application_url}/documentation">Documentation</a></li>
-              <li><a href="${application_url}/community">Community</a></li>
-              <li><a href="${application_url}/software">Software</a></li>
+              <tal:block tal:repeat="navitem api.navitems">
+                <li>
+                  <a href="${navitem['href']}" id="${navitem['state']}">${navitem['title']}</a>
+                </li>
+              </tal:block>
             </ul>
           </div>
 

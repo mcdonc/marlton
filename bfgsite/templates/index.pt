@@ -2,7 +2,7 @@
     xmlns="http://www.w3.org/1999/xhtml" 
     xmlns:tal="http://xml.zope.org/namespaces/tal"
     xmlns:metal="http://xml.zope.org/namespaces/metal"
-    metal:use-macro="main_template.macros['master']">
+    metal:use-macro="api.main_template.macros['master']">
 
   <div metal:fill-slot="content">
 
@@ -58,7 +58,10 @@
         by Zope, and uses Zope libraries to do much of its
         work. However, it is simpler than any released version of
         Zope. BFG uses the WSGI protocol to handle requests and
-        responses.</p>
+        responses.  BFG shares project management and version control
+        facilities with the <a href="http://repoze.org">Repoze</a>
+        project, and is developed by the same primary developers.  It
+        is otherwise unrelated to Repoze.</p>
 
         <h2>What makes BFG special</h2> 
         <p><b>Familiarity:</b> As web developers, we've become
@@ -90,7 +93,7 @@
         <p><b>Speed:</b> BFG is meant to be fast, capable of serving
         on the order of 100-1000 requests per second on today's
         commodity hardware for views that do "real work" given proper
-        application implementation. The hardware is cheap mantra has
+        application implementation. The "hardware is cheap" mantra has
         its limits when you're responsible for managing a great many
         machines: the fewer you need, the less pain you'll have.</p>
       </div>

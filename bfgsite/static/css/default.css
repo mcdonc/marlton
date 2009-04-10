@@ -13,6 +13,7 @@ colors {
 html{
 	height:100%;
 }
+
 body{
 	margin:0px;
 	padding:0px;
@@ -23,6 +24,7 @@ body{
 //	word-spacing:1px;
 //	line-height:200%;
 }
+
 /*Header*/
 .bfglogo{
 	float:left;
@@ -30,22 +32,26 @@ body{
         margin-right: 20px;
         border: none;
 }
+
 #navcontainer{
 	float:right;
         clear:right;
 }
+
 #navlist {
 	margin: 0;
 	padding: 30px 5px 30px 10px;
 	float:right;
 	font:12px Verdana,Arial,Helvetica,sans-serif;
 }
+
 #navlist ul, #navlist li {
 	margin: 0;
 	padding: 0;
 	display: inline;
 	list-style-type: none;
 }
+
 #navlist a:link, #navlist a:visited {
 	float: left;
 	line-height: 14px;
@@ -53,14 +59,23 @@ body{
 	text-decoration: none;
 	color: #fff;
 }
-#navlist a:link#current, #navlist a:visited#current, #navlist a:hover {
+
+#navlist a:hover {
 	border-bottom: 3px solid #999;
 	padding-bottom: 2px;
 	background: transparent;
 	color: #fff;
 }
 
+#navlist a:link#current, #navlist a:visited#current {
+	border-bottom: 3px solid #3270A9;
+	padding-bottom: 2px;
+	background: transparent;
+	color: #3270A9;
+}
+
 #navlist a:hover { color: #fff; }
+
 
 #searchbox{
         float:right;

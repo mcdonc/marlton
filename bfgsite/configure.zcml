@@ -9,4 +9,10 @@
     factory="repoze.bfg.security.RemoteUserACLSecurityPolicy"
     />
 
+  <adapter
+    factory=".adapters.WebSiteNavigation"
+    for=".interfaces.IWebSite repoze.bfg.interfaces.IRequest"
+    provides=".interfaces.INavigation"
+    />
+
 </configure>

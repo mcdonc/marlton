@@ -18,3 +18,6 @@ class IPasteEntry(Interface):
 class ITutorial(Interface):
     pass
 
+class INavigation(Interface):
+    def items(self):
+        """ Return a navigation items dict """

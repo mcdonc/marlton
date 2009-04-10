@@ -2,18 +2,36 @@
     xmlns="http://www.w3.org/1999/xhtml" 
     xmlns:tal="http://xml.zope.org/namespaces/tal"
     xmlns:metal="http://xml.zope.org/namespaces/metal"
-    metal:use-macro="main_template.macros['master']">
+    metal:use-macro="api.main_template.macros['master']">
 
   <div metal:fill-slot="content">
+
     <div id="content">
+
       <h1>Software</h1> 
-      <p>Browse and check out tagged and trunk versions of BFG
-      via the <a class="reference external" href="http://svn.repoze.org/repoze.bfg/">Repoze Subversion repository</a>.  To check out the trunk
-      via Subversion, use this command:</p>
-      <div class="highlight"><pre>svn co http://svn.repoze.org/repoze.bfg/trunk repoze.bfg</pre></div>
-      <p>If you want to collaborate on BFG development, you could become a contributor. To find out how to become a contributor to BFG, please
-      see the <a href="http://repoze.org/contributing.html">contributor&#8217;s page</a>.</p>
-      <p>Although BFG itself is a minimal framework, we have developed several pieces of code which can be useful to you when developing with BFG. Note that they are not BFG specific. Most of them can be used as middleware on a WSGI stack, so they could be used on any Python web application.</p>
+
+      <p>Browse and check out tagged and trunk versions of BFG via the
+      <a class="reference external"
+      href="http://svn.repoze.org/repoze.bfg/">Repoze Subversion
+      repository</a>.  To check out the trunk via Subversion, use this
+      command:</p>
+
+      <div class="highlight">
+        <pre>svn co http://svn.repoze.org/repoze.bfg/trunk repoze.bfg</pre>
+      </div>
+
+      <p>If you want to collaborate on BFG development, you may
+      become a contributor. To find out how to become a contributor to
+      BFG, please see the <a
+      href="http://repoze.org/contributing.html">contributor&#8217;s
+      page</a>.</p>
+
+      <p>Although BFG itself is a minimal framework, we have developed
+      several pieces of code which can be useful to you when
+      developing with BFG. Note that they are not BFG specific. Most
+      of them can be used as middleware on a WSGI stack, so they could
+      be used on any Python web application.</p>
+
       <ul>
         
         <li><a href="http://docs.repoze.org/bfg">repoze.bfg</a></li>
