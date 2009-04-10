@@ -7,16 +7,14 @@
   <div metal:fill-slot="content">
 
   <div id="content">
-    <div id="one">
-           <h1>Community</h1> 
-           <p>The BFG community makes heavy use of IRC chats for staying in touch and helping out new developers. Please join us at the <a href="irc://irc.freenode.net/#repoze">#repoze channel</a> for support, rants, raves or just plain lurking.</p>
-           <p>We also have some tools available for you:</p>
-           <ul>
-               <li>Need to discuss some piece of code at the IRC channel? Use our <a href="${application_url}/pastebin">Pastebin</a>.</li>
-               <li>Have a piece of code you are proud of or something you think worth learning but don't have time to write a long blog post or tutorial? Why not just paste it and add a brief explanation on our <a href="${application_url}/tutorialbin">quick and dirty tutorial maker</a>.</li>
-               <li>If you prefer to use mailing lists for support and collaboration, you can use the <a href="http://lists.repoze.org/listinfo/repoze-dev">repoze.dev mailing list</a>, but be warned that it is a very low volume list, since we are usually on IRC.</li>
-           </ul>
-    </div>
+    <h1>Community</h1> 
+    <p>The BFG community makes heavy use of IRC chats for staying in touch and helping out new developers. Please join us at the <a href="irc://irc.freenode.net/#repoze">#repoze channel</a> for support, rants, raves or just plain lurking.</p>
+    <p>We also have some tools available for you:</p>
+    <ul>
+      <li>Need to discuss some piece of code at the IRC channel? Use our <a href="${application_url}/pastebin">Pastebin</a>.</li>
+      <li>Have a piece of code you are proud of or something you think worth learning but don't have time to write a long blog post or tutorial? Why not just paste it and add a brief explanation on our <a href="${application_url}/tutorialbin">quick and dirty tutorial maker</a>.</li>
+      <li>If you prefer to use mailing lists for support and collaboration, you can use the <a href="http://lists.repoze.org/listinfo/repoze-dev">repoze.dev mailing list</a>, but be warned that it is a very low volume list, since we are usually on IRC.</li>
+    </ul>
   </div>
   </div>
 </div>
