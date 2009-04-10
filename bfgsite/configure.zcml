@@ -5,101 +5,101 @@
 
   <view
      for=".models.IWebSite"
-     view=".website.index_view"
+     view=".views.index_view"
      permission="view"
      />
 
   <view
      for=".models.IWebSite"
-     view=".website.static_view"
+     view=".views.static_view"
      name="static"
      permission="view"
      />
 
   <view
      for=".models.IWebSite"
-     view=".website.docs_view"
+     view=".views.docs_view"
      name="documentation"
      permission="view"
      />
 
   <view
      for=".models.IWebSite"
-     view=".website.software_view"
+     view=".views.software_view"
      name="software"
      permission="view"
      />
 
   <view
      for=".models.IWebSite"
-     view=".website.community_view"
+     view=".views.community_view"
      name="community"
      permission="view"
      />
 
   <view
      for=".models.IWebSite"
-     view=".website.logout_view"
+     view=".views.logout_view"
      name="logout"
      permission="view"
      />
 
   <view
      for=".models.IPasteBin"
-     view=".pastebin.pastebin_view"
+     view=".views.pastebin_view"
      permission="view"
      />
 
   <view
      for=".models.IPasteBin"
-     view=".pastebin.pastebin_rss_view"
+     view=".views.pastebin_rss_view"
      name="rss"
      permission="view"
      />
 
   <view
      for=".models.IPasteBin"
-     view=".pastebin.pastebin_manage_view"
+     view=".views.pastebin_manage_view"
      name="manage"
      permission="view"
      />
 
   <view
      for=".models.ITutorialBin"
-     view=".tutorialbin.tutorialbin_view"
+     view=".views.tutorialbin_view"
      permission="view"
      />
 
   <view
      for=".models.ITutorialBin"
-     view=".tutorialbin.tutorialbin_add_view"
+     view=".views.tutorialbin_add_view"
      name="add"
      permission="view"
      />
 
   <view
      for=".models.ITutorialBin"
-     view=".tutorialbin.tutorialbin_rss_view"
+     view=".views.tutorialbin_rss_view"
      name="rss"
      permission="view"
      />
 
   <view
      for=".models.ITutorialBin"
-     view=".tutorialbin.tutorialbin_manage_view"
+     view=".views.tutorialbin_manage_view"
      name="manage"
      permission="view"
      />
 
   <view
      for=".models.IPasteEntry"
-     view=".pastebin.entry_view"
+     view=".views.entry_view"
      permission="view"
      />
 
   <view
      for=".models.ITutorial"
-     view=".tutorialbin.tutorial_view"
+     view=".views.tutorial_view"
      permission="view"
      />
 
