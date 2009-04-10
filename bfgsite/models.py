@@ -17,7 +17,7 @@ class IWebSite(Interface):
 class WebSite(Folder):
     implements(IWebSite, ILocation)
     __name__ = __parent__ = None
-    __acl__ = [ (Allow, Everyone, 'view') ]
+    __acl__ = [ (Allow, Everyone, 'view'), (Allow, Authenticated, 'manage') ]
 
     def __init__(self):
         super(WebSite, self).__init__()

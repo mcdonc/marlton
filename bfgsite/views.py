@@ -17,6 +17,7 @@ from repoze.bfg.chameleon_zpt import render_template
 from repoze.bfg.chameleon_zpt import get_template
 from repoze.bfg.chameleon_zpt import render_template_to_response
 from repoze.bfg.traversal import find_interface
+from repoze.bfg.view import bfg_view
 from repoze.bfg.security import authenticated_userid
 from repoze.bfg.security import has_permission
 from repoze.bfg.url import model_url
@@ -25,9 +26,13 @@ from repoze.bfg.wsgi import wsgiapp
 from repoze.monty import marshal
 
 from bfgsite.models import Tutorial
-from bfgsite.models import ITutorialBin
 from bfgsite.models import PasteEntry
+
+from bfgsite.models import ITutorialBin
 from bfgsite.models import IPasteBin
+from bfgsite.models import IPasteEntry
+from bfgsite.models import IWebSite
+from bfgsite.models import ITutorial
 
 from bfgsite.utils import preferred_author
 from bfgsite.utils import COOKIE_AUTHOR
@@ -37,15 +42,18 @@ from bfgsite.utils import sort_byint
 here = os.path.abspath(os.path.dirname(__file__))
 static = urlparser.StaticURLParser(os.path.join(here))
 
+@bfg_view(for_=IWebSite, name='static', permission='view')
 @wsgiapp
 def static_view(environ, start_response):
     return static(environ, start_response)
 
+@bfg_view(for_=IWebSite, name='logout', permission='view')
 def logout_view(context, request):
     response = webob.Response()
     response.status = '401 Unauthorized'
     return response
 
+@bfg_view(for_=IWebSite, permission='view')
 def index_view(context, request):
     response = webob.Response()
     app_url = request.application_url
@@ -57,6 +65,7 @@ def index_view(context, request):
     response.unicode_body = unicode(body)
     return response    
 
+@bfg_view(for_=IWebSite, name='documentation', permission='view')
 def docs_view(context, request):
     response = webob.Response()
     app_url = request.application_url
@@ -68,6 +77,7 @@ def docs_view(context, request):
     response.unicode_body = unicode(body)
     return response    
 
+@bfg_view(for_=IWebSite, name='community', permission='view')
 def community_view(context, request):
     response = webob.Response()
     app_url = request.application_url
@@ -79,6 +89,7 @@ def community_view(context, request):
     response.unicode_body = unicode(body)
     return response    
 
+@bfg_view(for_=IWebSite, name='software', permission='view')
 def software_view(context, request):
     response = webob.Response()
     app_url = request.application_url
@@ -116,6 +127,7 @@ formatter = formatters.HtmlFormatter(linenos=True,
                                      cssclass="source")
 style_defs = formatter.get_style_defs()
 
+@bfg_view(for_=ITutorial, permission='view')
 def tutorial_view(context, request):
     text = context.text or u''
     try:
@@ -153,6 +165,7 @@ lexer_info = []
 for name, aliases, filetypes, mimetypes_ in all_lexers:
     lexer_info.append({'alias':aliases[0], 'name':name})
 
+@bfg_view(for_=ITutorialBin, permission='view')
 def tutorialbin_view(context,request):
     response = webob.Response()
     app_url = request.application_url
@@ -202,6 +215,7 @@ class TutorialAddSchema(formencode.Schema):
     title = formencode.validators.NotEmpty()
     text = formencode.validators.NotEmpty()
 
+@bfg_view(for_=ITutorialBin, name='add', permission='view')
 def tutorialbin_add_view(context, request):
     params = request.params
     author_name = preferred_author(request)
@@ -273,6 +287,7 @@ def tutorialbin_add_view(context, request):
     response.unicode_body = unicode(body)
     return response
 
+@bfg_view(for_=ITutorialBin, name='manage', permission='manage')
 def tutorialbin_manage_view(context, request):
     params = request.params
     message = u''
@@ -300,6 +315,7 @@ def tutorialbin_manage_view(context, request):
     response.unicode_body = unicode(body)
     return response
         
+@bfg_view(for_=ITutorialBin, name='rss', permission='view')
 def tutorialbin_rss_view(context, request):
     response = webob.Response()
     app_url = request.application_url
@@ -341,6 +357,7 @@ formatter = formatters.HtmlFormatter(linenos=True,
                                      cssclass="source")
 style_defs = formatter.get_style_defs()
 
+@bfg_view(for_=IPasteEntry, permission='view')
 def entry_view(context, request):
     paste = context.paste or u''
     try:
@@ -379,6 +396,7 @@ class PasteAddSchema(formencode.Schema):
     allow_extra_fields = True
     paste = formencode.validators.NotEmpty()
 
+@bfg_view(for_=IPasteBin, permission='view')
 def pastebin_view(context, request):
     params = request.params
     author_name = preferred_author(request)
@@ -434,6 +452,7 @@ def pastebin_view(context, request):
     response.unicode_body = unicode(body)
     return response
 
+@bfg_view(for_=IPasteBin, name='manage', permission='manage')
 def pastebin_manage_view(context, request):
     params = request.params
     message = u''
@@ -461,6 +480,7 @@ def pastebin_manage_view(context, request):
     response.unicode_body = unicode(body)
     return response
         
+@bfg_view(for_=IPasteBin, name='rss', permission='view')
 def pastebin_rss_view(context, request):
     response = webob.Response()
     app_url = request.application_url
