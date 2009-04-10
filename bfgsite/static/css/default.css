@@ -61,14 +61,14 @@ body{
 }
 
 #navlist a:hover {
-	border-bottom: 3px solid #999;
+	border-bottom: 1px solid #999;
 	padding-bottom: 2px;
 	background: transparent;
 	color: #fff;
 }
 
 #navlist a:link#current, #navlist a:visited#current {
-	border-bottom: 3px solid #3270A9;
+	border-bottom: 1px solid #3270A9;
 	padding-bottom: 2px;
 	background: transparent;
 	color: #3270A9;
