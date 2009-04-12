@@ -8,6 +8,8 @@ from repoze.bfg.security import Allow
 from repoze.bfg.security import Everyone
 from repoze.bfg.security import Authenticated
 
+from repoze.session.manager import SessionDataManager
+
 from repoze.folder import Folder
 
 from bfgsite.interfaces import IWebSite
@@ -26,6 +28,7 @@ class WebSite(Folder):
         super(WebSite, self).__init__()
         self['pastebin'] = PasteBin()
         self['tutorialbin'] = TutorialBin()
+        self.sessions = SessionDataManager(3600, 5)
 
 class Bin(Folder):
     implements(IBin)

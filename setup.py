@@ -28,12 +28,17 @@ requires = [
     'repoze.tm2',
     'repoze.monty',
     'repoze.who',
+    'repoze.retry',
     'ZODB3',
     'Pygments',
     'FormEncode',
     'nose',
     'repoze.zodbconn',
     'repoze.folder',
+    'PyCAPTCHA',
+    'PIL',
+    'repoze.session',
+    'repoze.browserid',
     ]
 
 setup(name='bfgsite',

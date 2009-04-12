@@ -1,6 +1,7 @@
 import os
 import sys
 import urlparse
+from StringIO import StringIO
 
 import webob
 
@@ -25,6 +26,8 @@ from repoze.bfg.url import model_url
 from repoze.bfg.wsgi import wsgiapp
 
 from repoze.monty import marshal
+
+from Captcha.Visual.Tests import PseudoGimpy
 
 from bfgsite.models import Tutorial
 from bfgsite.models import PasteEntry
@@ -235,28 +238,39 @@ def tutorialbin_add_view(context, request):
     can_manage = has_permission('manage', context, request)
 
     if params.has_key('form.submitted'):
-        title = request.params.get('title', u'')
-        text = request.params.get('text', u'')
-        code = request.params.get('code', u'')
-        author_name = request.params.get('author_name', u'')
-        author_url = request.params.get('author_url', u'')
-        language = request.params.get('language', u'')
-        schema = TutorialAddSchema()
-        message = None
-        try:
-            form = schema.to_python(request.params)
-        except formencode.validators.Invalid, why:
-            message = str(why)
+        site = find_interface(context, IWebSite)
+        session = site.sessions.get(request.environ['repoze.browserid'])
+        solutions = session.get('captcha_solutions', [])
+        captcha_answer = request.params.get('captcha_answer', '')
+        ok = False
+        for solution in solutions:
+            if captcha_answer.lower() == solution.lower():
+                ok = True
+        if not ok:
+            message = 'Bad CAPTCHA answer'
         else:
-            response.set_cookie(COOKIE_AUTHOR, author_name)
-            response.set_cookie(COOKIE_LANGUAGE, language)
+            title = request.params.get('title', u'')
+            text = request.params.get('text', u'')
+            code = request.params.get('code', u'')
+            author_name = request.params.get('author_name', u'')
+            author_url = request.params.get('author_url', u'')
+            language = request.params.get('language', u'')
+            schema = TutorialAddSchema()
+            message = None
+            try:
+                form = schema.to_python(request.params)
+            except formencode.validators.Invalid, why:
+                message = str(why)
+            else:
+                response.set_cookie(COOKIE_AUTHOR, author_name)
+                response.set_cookie(COOKIE_LANGUAGE, language)
 
-            pobj = Tutorial(title, author_name, text, author_url, code,
-                            language)
-            tutorialid = context.add(pobj)
-            response.status = '301 Moved Permanently'
-            response.headers['Location'] = '%s%s' % (tutorialbin_url,
-                                                     tutorialid)
+                pobj = Tutorial(title, author_name, text, author_url, code,
+                                language)
+                tutorialid = context.add(pobj)
+                response.status = '301 Moved Permanently'
+                response.headers['Location'] = '%s%s' % (tutorialbin_url,
+                                                         tutorialid)
     tutorials = get_tutorials(context, request, 10)
 
     return render_template_to_response(
@@ -489,6 +503,21 @@ def pastebin_rss_view(context, request):
     response.content_type = 'application/rss+xml'
     return response
 
+@bfg_view(name='captcha.jpg')
+def captcha_jpeg(context, request):
+    site = find_interface(context, IWebSite)
+    output = StringIO()
+    
+    captcha = PseudoGimpy()
+    image = captcha.render()
+    image.save(output, 'JPEG')
+    data = output.getvalue()
+    session = site.sessions.get(request.environ['repoze.browserid'])
+    session['captcha_solutions'] = captcha.solutions
+    r = webob.Response(data, '200 OK', [ ('Content-Type', 'image/jpeg'),
+                                         ('Content-Length', len(data)) ])
+    return r
+
 class API:
     def __init__(self, context, request):
         self.context = context
@@ -496,4 +525,6 @@ class API:
         self.request = request
         self.main_template = get_template('templates/main_template.pt')
         self.navitems = getMultiAdapter((context, request), INavigation).items()
+
+
 

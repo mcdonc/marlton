@@ -546,3 +546,11 @@ width. Also be sure to account for the border.*/
 	color:#012346;
 	font-size:15px;
 }
+
+.message {
+	margin: 10px 0px 20px 0px;
+	text-align: center;
+	font-weight: bold;
+        color: red;
+	border:1px solid #ddd;
+}
