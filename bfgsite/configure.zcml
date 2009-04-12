@@ -10,8 +10,8 @@
     />
 
   <adapter
-    factory=".adapters.WebSiteNavigation"
-    for=".interfaces.IWebSite repoze.bfg.interfaces.IRequest"
+    factory=".adapters.DefaultNavigation"
+    for="* *"
     provides=".interfaces.INavigation"
     />
 

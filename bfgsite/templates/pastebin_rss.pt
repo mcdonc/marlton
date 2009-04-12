@@ -9,7 +9,7 @@
         <item tal:repeat="item pastes">
             <title>${item['author']} on ${item['date']} (${item['language']})</title>
             <link>${item['url']}</link>
-            <description></description>
+            <description><span tal:replace="item.body"/></description>
             <guid>${item['url']}</guid>
         </item>
     </channel>

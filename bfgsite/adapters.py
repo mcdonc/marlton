@@ -1,8 +1,30 @@
 from zope.interface import implements
 from repoze.bfg.url import model_url
+from repoze.bfg.traversal import find_interface
 from bfgsite.interfaces import INavigation
+from bfgsite.interfaces import IWebSite
 
-class Navigation:
+class DefaultNavigation(object):
+
+    implements(INavigation)
+    links = (
+        {'context_iface':IWebSite,
+         'view_name':'',
+         'title':'Home'},
+        {'context_iface':IWebSite,
+         'view_name':'documentation',
+         'title':'Documentation'},
+        {'context_iface':IWebSite,
+         'view_name':'software',
+         'title':'Software'},
+        {'context_iface':IWebSite,
+         'view_name':'community',
+         'title':'Community'},
+        {'context_iface':IWebSite,
+         'view_name':'pastebin',
+         'title':'Paste Bin'},
+        )
+
     def __init__(self, context, request):
         self.context = context
         self.request = request
@@ -15,26 +37,16 @@ class Navigation:
                 state = 'current'
             else:
                 state = 'notcurrent'
+
+            navcontext = find_interface(self.context, link['context_iface'])
+
             items.append(
                 {'state':state,
-                 'href':model_url(self.context, self.request,
+                 'href':model_url(navcontext, self.request,
                                   link['view_name']),
                  'title':link['title'],
                  })
         
         return items
-
-class WebSiteNavigation(Navigation):
-    implements(INavigation)
-    links = (
-        {'view_name':'',
-         'title':'Home'},
-        {'view_name':'documentation',
-         'title':'Documentation'},
-        {'view_name':'software',
-         'title':'Software'},
-        {'view_name':'community',
-         'title':'Community'},
-        )
 
     

@@ -37,11 +37,11 @@
 
     <div id="content">
       <div id="subnav">
-        <div id="news"> <span class="header">Recent blog posts</span>
+        <div id="news"> <span class="header">Recent pastes</span>
         <ul>
-          <li><a href="">Blog post one</a></li>
-          <li><a href="">Blog post two</a></li>
-          <li><a href="">Blog post three</a></li>
+          <li tal:repeat="paste pastes">
+             <a href="${paste['url']}">${paste['title']}</a>
+          </li>
         </ul>
         <span class="header">Recent tutorials</span>
         <ul>
@@ -60,8 +60,10 @@
         Zope. BFG uses the WSGI protocol to handle requests and
         responses.  BFG shares project management and version control
         facilities with the <a href="http://repoze.org">Repoze</a>
-        project, and is developed by the same primary developers.  It
-        is otherwise unrelated to Repoze.</p>
+        project, and is developed by the same primary developers, but
+        its goals are different than the overall goals of the Repoze
+        project.
+        </p>
 
         <h2>What makes BFG special</h2> 
         <p><b>Familiarity:</b> As web developers, we've become

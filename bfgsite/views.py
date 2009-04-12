@@ -15,7 +15,6 @@ from pygments import formatters
 from pygments import highlight
 from pygments import util
 
-from repoze.bfg.chameleon_zpt import render_template
 from repoze.bfg.chameleon_zpt import get_template
 from repoze.bfg.chameleon_zpt import render_template_to_response
 from repoze.bfg.traversal import find_interface
@@ -60,49 +59,43 @@ def logout_view(context, request):
 def index_view(context, request):
     response = webob.Response()
     app_url = request.application_url
-    body = render_template(
+    pastes = get_pastes(context['pastebin'], request, 5)
+    return render_template_to_response(
         'templates/index.pt',
         api = API(context, request),
         application_url = app_url,
+        pastes = pastes,
         )
-    response.unicode_body = unicode(body)
-    return response    
 
 @bfg_view(for_=IWebSite, name='documentation', permission='view')
 def docs_view(context, request):
     response = webob.Response()
     app_url = request.application_url
-    body = render_template(
+    return render_template_to_response(
         'templates/documentation.pt',
         api = API(context, request),
         application_url = app_url,
         )
-    response.unicode_body = unicode(body)
-    return response    
 
 @bfg_view(for_=IWebSite, name='community', permission='view')
 def community_view(context, request):
     response = webob.Response()
     app_url = request.application_url
-    body = render_template(
+    return render_template_to_response(
         'templates/community.pt',
         api = API(context, request),
         application_url = app_url,
         )
-    response.unicode_body = unicode(body)
-    return response    
 
 @bfg_view(for_=IWebSite, name='software', permission='view')
 def software_view(context, request):
     response = webob.Response()
     app_url = request.application_url
-    body = render_template(
+    return render_template_to_response(
         'templates/software.pt',
         api = API(context, request),
         application_url = app_url,
         )
-    response.unicode_body = unicode(body)
-    return response    
 
 def get_tutorials(context, request, max):
     tutorialbin = find_interface(context, ITutorialBin)
@@ -197,7 +190,7 @@ def tutorialbin_view(context,request):
         latest = None
     user = authenticated_userid(request)
     can_manage = has_permission('manage', context, request)
-    body = render_template(
+    return render_template_to_response(
         'templates/tutorialbin.pt',
         tutorials = tutorials,
         style_defs = style_defs,
@@ -209,8 +202,6 @@ def tutorialbin_view(context,request):
         user = user,
         can_manage = can_manage,
         )
-    response.unicode_body = unicode(body)
-    return response    
 
 class TutorialAddSchema(formencode.Schema):
     allow_extra_fields = True
@@ -235,12 +226,12 @@ def tutorialbin_add_view(context, request):
     can_manage = has_permission('manage', context, request)
 
     if params.has_key('form.submitted'):
-        title = request.params.get('title', '')
-        text = request.params.get('text', '')
-        code = request.params.get('code', '')
-        author_name = request.params.get('author_name', '')
-        author_url = request.params.get('author_url', '')
-        language = request.params.get('language', '')
+        title = request.params.get('title', u'')
+        text = request.params.get('text', u'')
+        code = request.params.get('code', u'')
+        author_name = request.params.get('author_name', u'')
+        author_url = request.params.get('author_url', u'')
+        language = request.params.get('language', u'')
         schema = TutorialAddSchema()
         message = None
         try:
@@ -251,19 +242,6 @@ def tutorialbin_add_view(context, request):
             response.set_cookie(COOKIE_AUTHOR, author_name)
             response.set_cookie(COOKIE_LANGUAGE, language)
 
-            if isinstance(title, str):
-                title = unicode(title, 'utf-8')
-            if isinstance(author_name, str):
-                author_name = unicode(author_name, 'utf-8')
-            if isinstance(author_url, str):
-                author_url = unicode(author_url, 'utf-8')
-            if isinstance(language, str):
-                language = unicode(language, 'utf-8')
-            if isinstance(text, str):
-                text = unicode(text, 'utf-8')
-            if isinstance(code, str):
-                code = unicode(code, 'utf-8')
-
             pobj = Tutorial(title, author_name, text, author_url, code,
                             language)
             tutorialid = context.add(pobj)
@@ -272,7 +250,7 @@ def tutorialbin_add_view(context, request):
                                                      tutorialid)
     tutorials = get_tutorials(context, request, 10)
 
-    body = render_template(
+    return render_template_to_response(
         'templates/tutorialbin_add.pt',
         author_name = author_name,
         author_url = author_url,
@@ -287,8 +265,6 @@ def tutorialbin_add_view(context, request):
         user = user,
         can_manage = can_manage,
         )
-    response.unicode_body = unicode(body)
-    return response
 
 @bfg_view(for_=ITutorialBin, name='manage', permission='manage')
 def tutorialbin_manage_view(context, request):
@@ -309,14 +285,12 @@ def tutorialbin_manage_view(context, request):
 
     tutorials = get_tutorials(context, request, sys.maxint)
 
-    body = render_template(
+    return render_template_to_response(
         'templates/tutorialbin_manage.pt',
         tutorials = tutorials,
         application_url = app_url,
         tutorialbin_url = tutorialbin_url,
         )
-    response.unicode_body = unicode(body)
-    return response
         
 @bfg_view(for_=ITutorialBin, name='rss', permission='view')
 def tutorialbin_rss_view(context, request):
@@ -328,15 +302,13 @@ def tutorialbin_rss_view(context, request):
         last_date=tutorials[0]['date']
     else:
         last_date=None
-    body = render_template(
+    return render_template_to_response(
         'templates/tutorialbin_rss.pt',
         tutorials = tutorials,
         last_date = last_date,
         application_url = app_url,
         tutorialbin_url = tutorialbin_url,
         )
-    response.unicode_body = unicode(body)
-    return response    
 
 def get_pastes(context, request, max):
     pastebin = find_interface(context, IPasteBin)
@@ -351,8 +323,14 @@ def get_pastes(context, request, max):
         else:
             pdate = 'UNKNOWN'
         paste_url = urlparse.urljoin(pastebin_url, name)
-        new = {'author':entry.author_name, 'date':pdate, 'url':paste_url,
-               'language':entry.language,'name':name}
+        author_name = entry.author_name
+        if not author_name:
+            author_name = '{unknown}'
+        paste_title = '#%s by %s on %s (%s...)' % (name, author_name, pdate,
+                                                   entry.paste[:8])
+        new = {'author':author_name, 'date':pdate, 'url':paste_url,
+               'language':entry.language,'name':name, 'body':entry.paste,
+               'title':paste_title}
         pastes.append(new)
     return pastes
 
@@ -378,6 +356,7 @@ def entry_view(context, request):
 
     return render_template_to_response(
         'templates/entry.pt',
+        api = API(context, request),
         author = context.author_name,
         date = context.date.strftime('%x at %X'),
         style_defs = style_defs,
@@ -425,14 +404,6 @@ def pastebin_view(context, request):
         else:
             response.set_cookie(COOKIE_AUTHOR, author_name)
             response.set_cookie(COOKIE_LANGUAGE, language)
-
-            if isinstance(author_name, str):
-                author_name = unicode(author_name, 'utf-8')
-            if isinstance(language, str):
-                language = unicode(language, 'utf-8')
-            if isinstance(paste, str):
-                paste = unicode(paste, 'utf-8')
-
             pobj = PasteEntry(author_name, paste, language)
             pasteid = context.add(pobj)
             response.status = '301 Moved Permanently'
@@ -440,8 +411,9 @@ def pastebin_view(context, request):
 
     pastes = get_pastes(context, request, 10)
 
-    body = render_template(
+    return render_template_to_response(
         'templates/pastebin.pt',
+        api = API(context, request),
         author_name = author_name,
         paste = paste,
         lexers = lexer_info,
@@ -452,9 +424,7 @@ def pastebin_view(context, request):
         user = user,
         can_manage = can_manage,
         )
-    response.unicode_body = unicode(body)
-    return response
-
+    
 @bfg_view(for_=IPasteBin, name='manage', permission='manage')
 def pastebin_manage_view(context, request):
     params = request.params
@@ -474,14 +444,13 @@ def pastebin_manage_view(context, request):
 
     pastes = get_pastes(context, request, sys.maxint)
 
-    body = render_template(
+    return render_template_to_response(
         'templates/pastebin_manage.pt',
+        api = API(context, request),
         pastes = pastes,
         application_url = app_url,
         pastebin_url = pastebin_url,
         )
-    response.unicode_body = unicode(body)
-    return response
         
 @bfg_view(for_=IPasteBin, name='rss', permission='view')
 def pastebin_rss_view(context, request):
@@ -493,18 +462,17 @@ def pastebin_rss_view(context, request):
         last_date=pastes[0]['date']
     else:
         last_date=None
-    body = render_template(
+    for paste in pastes:
+        paste['body'] = nl_to_br(paste['body'])
+    response = render_template_to_response(
         'templates/pastebin_rss.pt',
         pastes = pastes,
         last_date = last_date,
         application_url = app_url,
         pastebin_url = pastebin_url,
         )
-    response.unicode_body = unicode(body)
-    return response    
-
-def breadcrumbs(context, request):
-    pass
+    response.content_type = 'application/rss+xml'
+    return response
 
 class API:
     def __init__(self, context, request):
@@ -513,4 +481,9 @@ class API:
         self.request = request
         self.main_template = get_template('templates/main_template.pt')
         self.navitems = getMultiAdapter((context, request), INavigation).items()
+
+def nl_to_br(s):
+    s = s.replace('\n', '<br>')
+    return s
+
 
