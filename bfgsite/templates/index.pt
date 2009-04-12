@@ -55,15 +55,17 @@
       <div id="one">
         <h1>Welcome</h1>
 
-        <p>BFG is a Python web application framework. It is inspired
-        by Zope, and uses Zope libraries to do much of its
-        work. However, it is simpler than any released version of
-        Zope. BFG uses the WSGI protocol to handle requests and
-        responses.  BFG shares project management and version control
+        <p>BFG is a Python web application framework.  BFG is also
+        referred to as <i>repoze.bfg</i>, as that is the package name
+        of the software which comprises the framework.
+        </p>
+
+        <p>BFG shares project management and version control
         facilities with the <a href="http://repoze.org">Repoze</a>
         project, and is developed by the same primary developers, but
         its goals are different than the overall goals of the Repoze
-        project.
+        project.  BFG is inspired by, and uses technology from, the <a
+        href="http://zope.org">Zope</a> project.
         </p>
 
         <h2>What makes BFG special</h2> 
