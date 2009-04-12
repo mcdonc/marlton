@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0">
     <channel>
-        <title>BFG Cluegun Recent Pastes</title>
+        <title>BFG Recent Tutorials</title>
         <link>${tutorialbin_url}</link>
         <description>Recent activity in the BFG Tutorial bin.</description>
         <language>en</language>
@@ -9,7 +9,7 @@
         <item tal:repeat="item tutorials">
         <title>${item['title']}, by ${item['author']}</title>
             <link>${item['url']}</link>
-            <description></description>
+            <description><span tal:replace="item.text"/></description>
             <guid>${item['url']}</guid>
         </item>
     </channel>

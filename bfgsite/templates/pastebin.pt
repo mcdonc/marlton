@@ -12,7 +12,7 @@
         <div id="news">
           <div class="newsheader">Previous Pastes</div>
           <ul>
-            <li tal:repeat="paste pastes[:20]">
+            <li tal:repeat="paste pastes[:5]">
               <a href="${paste.url}"
                  >${paste.author} on ${paste.date} (${paste.language or 'auto'})</a>
             </li>

@@ -3,26 +3,35 @@ from repoze.bfg.url import model_url
 from repoze.bfg.traversal import find_interface
 from bfgsite.interfaces import INavigation
 from bfgsite.interfaces import IWebSite
+from bfgsite.interfaces import IPasteBin
+from bfgsite.interfaces import IPasteEntry
+from bfgsite.interfaces import ITutorialBin
+from bfgsite.interfaces import ITutorial
 
 class DefaultNavigation(object):
 
     implements(INavigation)
     links = (
-        {'context_iface':IWebSite,
-         'view_name':'',
-         'title':'Home'},
-        {'context_iface':IWebSite,
+        {'view_iface':IWebSite,
+         'nav_ifaces':(IWebSite,),
          'view_name':'documentation',
          'title':'Documentation'},
-        {'context_iface':IWebSite,
+        {'view_iface':IWebSite,
+         'nav_ifaces':(IWebSite,),
          'view_name':'software',
          'title':'Software'},
-        {'context_iface':IWebSite,
+        {'view_iface':IWebSite,
+         'nav_ifaces':(IWebSite,),
          'view_name':'community',
          'title':'Community'},
-        {'context_iface':IWebSite,
+        {'view_iface':IWebSite,
+         'nav_ifaces':(IPasteBin, IPasteEntry),
          'view_name':'pastebin',
-         'title':'Paste Bin'},
+         'title':'Pastes'},
+        {'view_iface':IWebSite,
+         'nav_ifaces':(ITutorialBin, ITutorial),
+         'view_name':'tutorialbin',
+         'title':'Tutorials'},
         )
 
     def __init__(self, context, request):
@@ -33,20 +42,28 @@ class DefaultNavigation(object):
         items = []
 
         for link in self.links:
-            if self.request.view_name == link['view_name']:
-                state = 'current'
-            else:
-                state = 'notcurrent'
+            state = 'notcurrent'
+            view_iface = link['view_iface']
+            nav_ifaces = link['nav_ifaces']
+            view_name = link['view_name']
 
-            navcontext = find_interface(self.context, link['context_iface'])
+            if view_iface.providedBy(self.context):
+                if self.request.view_name == view_name:
+                    state = 'current'
+            else:
+                for nav_iface in nav_ifaces:
+                    if nav_iface.providedBy(self.context):
+                        state = 'current'
+                        break
+
+            viewcontext = find_interface(self.context, view_iface)
 
             items.append(
                 {'state':state,
-                 'href':model_url(navcontext, self.request,
-                                  link['view_name']),
+                 'href':model_url(viewcontext, self.request, view_name),
                  'title':link['title'],
                  })
-        
+
         return items
 
     

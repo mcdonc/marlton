@@ -1,42 +1,37 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-     xmlns:tal="http://xml.zope.org/namespaces/tal">
-  <head>
-    <title>ClueGun pastebin management</title>
-    <link rel="stylesheet" type="text/css"
-          href="${application_url}/static/styles.css" />
-  </head>
-  <body>
-    <div id="main">
+<div 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    metal:use-macro="api.main_template.macros['master']">
 
-      <div class="header">ClueGun by <a
-         href="http://repoze.org" >Agendaless Consulting</a> (based on ClueBin by <a
-         href="http://www.serverzen.com">ServerZen Software</a>).
-      </div>
+  <div metal:fill-slot="content">
 
-        <a href="${pastebin_url}">Main page</a>
+    <div id="content">
+      
+      <a href="${tutorialbin_url}">Main page</a>
+      
+      
+      <div class="left" tal:condition="tutorials">
         
-
-      <div class="left" tal:condition="pastes">
-
         <fieldset>
-          <legend>Delete Pastes</legend>
-          <form action="${pastebin_url}/manage" method="POST">
+          <legend>Delete Tutorials</legend>
+          <form action="${tutorialbin_url}/manage" method="POST">
             <ul>
-              <li tal:repeat="paste pastes">
+              <li tal:repeat="tutorial tutorials">
                 <input type="checkbox" name="delete:list" 
-                   value="${paste.name}"/>
-                <a href="${paste.url}"
-                   >By: ${paste.author} on ${paste.date}</a>
+                       value="${tutorial.name}"/>
+                <a href="${tutorial.url}"
+                   >By: ${tutorial.author} on ${tutorial.date}</a>
               </li>
             </ul>
             <input type="submit" name="form.submitted" value="Delete"/>
           </form>
         </fieldset>
       </div>
-
+      
       <div class="clear">
-
+        
       </div>
     </div>
-  </body>
-</html>
+  </div>
+</div>

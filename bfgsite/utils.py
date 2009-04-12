@@ -21,3 +21,8 @@ def preferred_author(request):
         author_name = unicode(author_name, 'utf-8')
     return author_name
 
+def nl_to_br(s):
+    s = s.replace('\n', '<br>')
+    return s
+
+

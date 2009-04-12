@@ -40,6 +40,7 @@ from bfgsite.utils import preferred_author
 from bfgsite.utils import COOKIE_AUTHOR
 from bfgsite.utils import COOKIE_LANGUAGE
 from bfgsite.utils import sort_byint
+from bfgsite.utils import nl_to_br
 
 here = os.path.abspath(os.path.dirname(__file__))
 static = urlparser.StaticURLParser(os.path.join(here))
@@ -60,11 +61,13 @@ def index_view(context, request):
     response = webob.Response()
     app_url = request.application_url
     pastes = get_pastes(context['pastebin'], request, 5)
+    tutorials = get_tutorials(context['tutorialbin'], request, 5)
     return render_template_to_response(
         'templates/index.pt',
         api = API(context, request),
         application_url = app_url,
         pastes = pastes,
+        tutorials = tutorials,
         )
 
 @bfg_view(for_=IWebSite, name='documentation', permission='view')
@@ -110,12 +113,16 @@ def get_tutorials(context, request, max):
         else:
             pdate = 'UNKNOWN'
         tutorial_url = urlparse.urljoin(tutorialbin_url, name)
-        new = {'author':tutorial.author_name,
-               'title':tutorial.title,
-               'date':pdate,
-               'url':tutorial_url,
-               'author_url':tutorial.author_url,
-               'language':tutorial.language,'name':name}
+        new = {
+            'author':tutorial.author_name,
+            'title':tutorial.title,
+            'date':pdate,
+            'url':tutorial_url,
+            'author_url':tutorial.author_url,
+            'language':tutorial.language,
+            'name':name,
+            'text':tutorial.text
+            }
         tutorials.append(new)
     return tutorials
 
@@ -141,6 +148,7 @@ def tutorial_view(context, request):
 
     return render_template_to_response(
         'templates/tutorial.pt',
+        api = API(context, request),
         author = context.author_name,
         author_url = context.author_url,
         date = context.date.strftime('%x at %X'),
@@ -192,6 +200,7 @@ def tutorialbin_view(context,request):
     can_manage = has_permission('manage', context, request)
     return render_template_to_response(
         'templates/tutorialbin.pt',
+        api = API(context, request),
         tutorials = tutorials,
         style_defs = style_defs,
         last_date = last_date,
@@ -252,6 +261,7 @@ def tutorialbin_add_view(context, request):
 
     return render_template_to_response(
         'templates/tutorialbin_add.pt',
+        api = API(context, request),
         author_name = author_name,
         author_url = author_url,
         title = title,
@@ -287,6 +297,7 @@ def tutorialbin_manage_view(context, request):
 
     return render_template_to_response(
         'templates/tutorialbin_manage.pt',
+        api = API(context, request),
         tutorials = tutorials,
         application_url = app_url,
         tutorialbin_url = tutorialbin_url,
@@ -302,13 +313,17 @@ def tutorialbin_rss_view(context, request):
         last_date=tutorials[0]['date']
     else:
         last_date=None
-    return render_template_to_response(
+    for tutorial in tutorials:
+        tutorial['text'] = nl_to_br(tutorial['text'])
+    response = render_template_to_response(
         'templates/tutorialbin_rss.pt',
         tutorials = tutorials,
         last_date = last_date,
         application_url = app_url,
         tutorialbin_url = tutorialbin_url,
         )
+    response.content_type = 'application/rss+xml'
+    return response
 
 def get_pastes(context, request, max):
     pastebin = find_interface(context, IPasteBin)
@@ -326,8 +341,8 @@ def get_pastes(context, request, max):
         author_name = entry.author_name
         if not author_name:
             author_name = '{unknown}'
-        paste_title = '#%s by %s on %s (%s...)' % (name, author_name, pdate,
-                                                   entry.paste[:8])
+        paste_title = '#%s by %s on %s (%s...)' % (name, author_name[:15],
+                                                   pdate, entry.paste[:8])
         new = {'author':author_name, 'date':pdate, 'url':paste_url,
                'language':entry.language,'name':name, 'body':entry.paste,
                'title':paste_title}
@@ -481,9 +496,4 @@ class API:
         self.request = request
         self.main_template = get_template('templates/main_template.pt')
         self.navitems = getMultiAdapter((context, request), INavigation).items()
-
-def nl_to_br(s):
-    s = s.replace('\n', '<br>')
-    return s
-
 

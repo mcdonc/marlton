@@ -45,8 +45,9 @@
         </ul>
         <span class="header">Recent tutorials</span>
         <ul>
-          <li><a href="">Tutorial one</a></li>
-          <li><a href="">Tutorial two</a></li>
+          <li tal:repeat="tutorial tutorials">
+            <a href="${tutorial.url}">${tutorial.title}, by ${tutorial.author} on ${tutorial.date}</a>
+          </li>
         </ul>
         </div>
       </div>
