@@ -30,7 +30,7 @@
           
           <style tal:content="style_defs"></style>
           
-          <a href="${pastebin_url}">Return to main page</a>
+          <a href="${pastebin_url}">Add a paste</a>
           
           <h2>Paste Entry</h2>
           <span class="entryheader">Author:</span> ${author} <br/>

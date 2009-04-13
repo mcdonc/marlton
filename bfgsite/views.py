@@ -3,7 +3,8 @@ import sys
 import urlparse
 from StringIO import StringIO
 
-import webob
+from webob import Response
+from webob.exc import HTTPUnauthorized
 
 from paste import urlparser
 
@@ -55,27 +56,21 @@ def static_view(environ, start_response):
 
 @bfg_view(for_=IWebSite, name='logout', permission='view')
 def logout_view(context, request):
-    response = webob.Response()
-    response.status = '401 Unauthorized'
-    return response
+    return HTTPUnauthorized()
 
 @bfg_view(for_=IWebSite, permission='view')
 def index_view(context, request):
-    response = webob.Response()
     app_url = request.application_url
-    pastes = get_pastes(context['pastebin'], request, 5)
     tutorials = get_tutorials(context['tutorialbin'], request, 5)
     return render_template_to_response(
         'templates/index.pt',
         api = API(context, request),
         application_url = app_url,
-        pastes = pastes,
         tutorials = tutorials,
         )
 
 @bfg_view(for_=IWebSite, name='documentation', permission='view')
 def docs_view(context, request):
-    response = webob.Response()
     app_url = request.application_url
     return render_template_to_response(
         'templates/documentation.pt',
@@ -85,7 +80,6 @@ def docs_view(context, request):
 
 @bfg_view(for_=IWebSite, name='community', permission='view')
 def community_view(context, request):
-    response = webob.Response()
     app_url = request.application_url
     return render_template_to_response(
         'templates/community.pt',
@@ -95,7 +89,6 @@ def community_view(context, request):
 
 @bfg_view(for_=IWebSite, name='software', permission='view')
 def software_view(context, request):
-    response = webob.Response()
     app_url = request.application_url
     return render_template_to_response(
         'templates/software.pt',
@@ -174,7 +167,6 @@ for name, aliases, filetypes, mimetypes_ in all_lexers:
 
 @bfg_view(for_=ITutorialBin, permission='view')
 def tutorialbin_view(context,request):
-    response = webob.Response()
     app_url = request.application_url
     tutorialbin_url = model_url(context, request)
     tutorials = get_tutorials(context, request, sys.maxint)
@@ -231,7 +223,6 @@ def tutorialbin_add_view(context, request):
     text = u''
     code = u''
     message = u''
-    response = webob.Response()
     app_url = request.application_url
     tutorialbin_url = model_url(context, request)
     user = authenticated_userid(request)
@@ -241,7 +232,7 @@ def tutorialbin_add_view(context, request):
         site = find_interface(context, IWebSite)
         session = site.sessions.get(request.environ['repoze.browserid'])
         solutions = session.get('captcha_solutions', [])
-        captcha_answer = request.params.get('captcha_answer', '')
+        captcha_answer = params.get('captcha_answer', '')
         ok = False
         for solution in solutions:
             if captcha_answer.lower() == solution.lower():
@@ -249,12 +240,12 @@ def tutorialbin_add_view(context, request):
         if not ok:
             message = 'Bad CAPTCHA answer'
         else:
-            title = request.params.get('title', u'')
-            text = request.params.get('text', u'')
-            code = request.params.get('code', u'')
-            author_name = request.params.get('author_name', u'')
-            author_url = request.params.get('author_url', u'')
-            language = request.params.get('language', u'')
+            title = params.get('title', u'')
+            text = params.get('text', u'')
+            code = params.get('code', u'')
+            author_name = params.get('author_name', u'')
+            author_url = params.get('author_url', u'')
+            language = params.get('language', u'')
             schema = TutorialAddSchema()
             message = None
             try:
@@ -262,15 +253,18 @@ def tutorialbin_add_view(context, request):
             except formencode.validators.Invalid, why:
                 message = str(why)
             else:
-                response.set_cookie(COOKIE_AUTHOR, author_name)
+                response = Response()
+                response.set_cookie(COOKIE_AUTHOR, author_name, max_age=864000)
                 response.set_cookie(COOKIE_LANGUAGE, language)
 
                 pobj = Tutorial(title, author_name, text, author_url, code,
                                 language)
                 tutorialid = context.add(pobj)
-                response.status = '301 Moved Permanently'
+                response.status = '302'
                 response.headers['Location'] = '%s%s' % (tutorialbin_url,
                                                          tutorialid)
+                return response
+
     tutorials = get_tutorials(context, request, 10)
 
     return render_template_to_response(
@@ -293,10 +287,8 @@ def tutorialbin_add_view(context, request):
 @bfg_view(for_=ITutorialBin, name='manage', permission='manage')
 def tutorialbin_manage_view(context, request):
     params = request.params
-    message = u''
-    response = webob.Response()
+    message = params.get('message', u'')
     app_url = request.application_url
-    tutorialbin_url = model_url(context, request)
 
     if params.has_key('form.submitted'):
         form = marshal(request.environ, request.body_file)
@@ -304,14 +296,19 @@ def tutorialbin_manage_view(context, request):
         for checkbox in checkboxes:
             del context[checkbox]
         message = '%s tutorials deleted' % len(checkboxes)
-        response.status = '301 Moved Permanently'
-        response.headers['Location'] = tutorialbin_url
+        response = Response()
+        response.status = '302'
+        url = model_url(context, request, 'manage', query={'message':message})
+        response.headers['Location'] = url
+        return response
 
     tutorials = get_tutorials(context, request, sys.maxint)
+    tutorialbin_url = model_url(context, request)
 
     return render_template_to_response(
         'templates/tutorialbin_manage.pt',
         api = API(context, request),
+        message = message,
         tutorials = tutorials,
         application_url = app_url,
         tutorialbin_url = tutorialbin_url,
@@ -319,7 +316,6 @@ def tutorialbin_manage_view(context, request):
         
 @bfg_view(for_=ITutorialBin, name='rss', permission='view')
 def tutorialbin_rss_view(context, request):
-    response = webob.Response()
     app_url = request.application_url
     tutorialbin_url = model_url(context, request)
     tutorials = get_tutorials(context, request, sys.maxint)
@@ -414,16 +410,15 @@ def pastebin_view(context, request):
     language = u''
     paste = u''
     message = u''
-    response = webob.Response()
     app_url = request.application_url
     pastebin_url = model_url(context, request)
     user = authenticated_userid(request)
     can_manage = has_permission('manage', context, request)
 
     if params.has_key('form.submitted'):
-        paste = request.params.get('paste', '')
-        author_name = request.params.get('author_name', '')
-        language = request.params.get('language', '')
+        paste = params.get('paste', '')
+        author_name = params.get('author_name', '')
+        language = params.get('language', '')
         schema = PasteAddSchema()
         message = None
         try:
@@ -431,12 +426,14 @@ def pastebin_view(context, request):
         except formencode.validators.Invalid, why:
             message = str(why)
         else:
-            response.set_cookie(COOKIE_AUTHOR, author_name)
+            response = Response()
+            response.set_cookie(COOKIE_AUTHOR, author_name, max_age=864000)
             response.set_cookie(COOKIE_LANGUAGE, language)
             pobj = PasteEntry(author_name, paste, language)
             pasteid = context.add(pobj)
-            response.status = '301 Moved Permanently'
+            response.status = '302'
             response.headers['Location'] = '%s%s' % (pastebin_url, pasteid)
+            return response
 
     pastes = get_pastes(context, request, 10)
 
@@ -457,10 +454,8 @@ def pastebin_view(context, request):
 @bfg_view(for_=IPasteBin, name='manage', permission='manage')
 def pastebin_manage_view(context, request):
     params = request.params
-    message = u''
-    response = webob.Response()
+    message = params.get('message', u'')
     app_url = request.application_url
-    pastebin_url = model_url(context, request)
 
     if params.has_key('form.submitted'):
         form = marshal(request.environ, request.body_file)
@@ -468,22 +463,26 @@ def pastebin_manage_view(context, request):
         for checkbox in checkboxes:
             del context[checkbox]
         message = '%s pastes deleted' % len(checkboxes)
-        response.status = '301 Moved Permanently'
-        response.headers['Location'] = pastebin_url
+        response = Response()
+        response.status = '302'
+        url = model_url(context, request, 'manage', query={'message':message})
+        response.headers['Location'] = url
+        return response
 
+    pastebin_url = model_url(context, request)
     pastes = get_pastes(context, request, sys.maxint)
 
     return render_template_to_response(
         'templates/pastebin_manage.pt',
         api = API(context, request),
         pastes = pastes,
+        message = message,
         application_url = app_url,
         pastebin_url = pastebin_url,
         )
         
 @bfg_view(for_=IPasteBin, name='rss', permission='view')
 def pastebin_rss_view(context, request):
-    response = webob.Response()
     app_url = request.application_url
     pastebin_url = model_url(context, request)
     pastes = get_pastes(context, request, sys.maxint)
@@ -514,8 +513,8 @@ def captcha_jpeg(context, request):
     data = output.getvalue()
     session = site.sessions.get(request.environ['repoze.browserid'])
     session['captcha_solutions'] = captcha.solutions
-    r = webob.Response(data, '200 OK', [ ('Content-Type', 'image/jpeg'),
-                                         ('Content-Length', len(data)) ])
+    r = Response(data, '200 OK', [ ('Content-Type', 'image/jpeg'),
+                                   ('Content-Length', len(data)) ])
     return r
 
 class API:

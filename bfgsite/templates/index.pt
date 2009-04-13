@@ -37,18 +37,13 @@
 
     <div id="content">
       <div id="subnav">
-        <div id="news"> <span class="header">Recent pastes</span>
-        <ul>
-          <li tal:repeat="paste pastes">
-             <a href="${paste['url']}">${paste['title']}</a>
-          </li>
-        </ul>
-        <span class="header">Recent tutorials</span>
-        <ul>
-          <li tal:repeat="tutorial tutorials">
-            <a href="${tutorial.url}">${tutorial.title}, by ${tutorial.author} on ${tutorial.date}</a>
-          </li>
-        </ul>
+        <div id="news">
+          <span class="header">Recent tutorials</span>
+          <ul>
+            <li tal:repeat="tutorial tutorials">
+              <a href="${tutorial.url}">${tutorial.title}, by ${tutorial.author} on ${tutorial.date}</a>
+            </li>
+          </ul>
         </div>
       </div>
 
