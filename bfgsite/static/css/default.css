@@ -168,6 +168,17 @@ span.subheader{
         text-align: center;
 }
 
+#bar{
+	width:796px;
+	height:10px;
+	margin:0 auto;
+	padding:1px;
+	background:url(../images/site/subheader.jpg) no-repeat top center;
+	border-left:#999 1px solid;
+	border-bottom:#999 1px solid;
+	border-right:#999 1px solid;
+}
+
 .box{
 	color:#f4ec0b;
 	font-size:29px;

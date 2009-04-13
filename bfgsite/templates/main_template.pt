@@ -46,6 +46,9 @@
 
       </div>
       
+      <div id="bar" tal:condition="api.request.url[:-1] != application_url">
+      </div>
+
       <div metal:define-slot="content"/>
 
       <div id="footer">
