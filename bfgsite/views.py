@@ -10,8 +10,6 @@ from paste import urlparser
 
 import formencode
 
-from zope.component import getMultiAdapter
-
 from pygments import lexers
 from pygments import formatters
 from pygments import highlight
@@ -38,7 +36,6 @@ from bfgsite.interfaces import IPasteBin
 from bfgsite.interfaces import IPasteEntry
 from bfgsite.interfaces import IWebSite
 from bfgsite.interfaces import ITutorial
-from bfgsite.interfaces import INavigation
 
 from bfgsite.utils import preferred_author
 from bfgsite.utils import COOKIE_AUTHOR
@@ -518,12 +515,62 @@ def captcha_jpeg(context, request):
     return r
 
 class API:
+    nav_links = (
+        {'view_iface':IWebSite,
+         'nav_ifaces':(IWebSite,),
+         'view_name':'documentation',
+         'title':'Documentation'},
+        {'view_iface':IWebSite,
+         'nav_ifaces':(IWebSite,),
+         'view_name':'software',
+         'title':'Software'},
+        {'view_iface':IWebSite,
+         'nav_ifaces':(IWebSite,),
+         'view_name':'community',
+         'title':'Community'},
+        {'view_iface':IWebSite,
+         'nav_ifaces':(IPasteBin, IPasteEntry),
+         'view_name':'pastebin',
+         'title':'Pastes'},
+        {'view_iface':IWebSite,
+         'nav_ifaces':(ITutorialBin, ITutorial),
+         'view_name':'tutorialbin',
+         'title':'Tutorials'},
+        )
     def __init__(self, context, request):
         self.context = context
         self.site = find_interface(context, IWebSite)
         self.request = request
         self.main_template = get_template('templates/main_template.pt')
-        self.navitems = getMultiAdapter((context, request), INavigation).items()
+        self.navitems = get_navigation(context, request, self.nav_links)
 
+def get_navigation(context, request, links):
 
+    items = []
 
+    for link in links:
+        state = 'notcurrent'
+        view_iface = link['view_iface']
+        nav_ifaces = link['nav_ifaces']
+        view_name = link['view_name']
+
+        if view_iface.providedBy(context):
+            if request.view_name == view_name:
+                state = 'current'
+        else:
+            for nav_iface in nav_ifaces:
+                if nav_iface.providedBy(context):
+                    state = 'current'
+                    break
+
+        viewcontext = find_interface(context, view_iface)
+
+        items.append(
+            {'state':state,
+             'href':model_url(viewcontext, request, view_name),
+             'title':link['title'],
+             })
+
+    return items
+
+    

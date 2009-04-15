@@ -9,10 +9,4 @@
     factory="repoze.bfg.security.RemoteUserACLSecurityPolicy"
     />
 
-  <adapter
-    factory=".adapters.DefaultNavigation"
-    for="* *"
-    provides=".interfaces.INavigation"
-    />
-
 </configure>
