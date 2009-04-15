@@ -3,9 +3,6 @@ import sys
 import urlparse
 from StringIO import StringIO
 
-from zope.component import getMultiAdapter
-from zope.component import getUtility
-
 from webob import Response
 from webob.exc import HTTPUnauthorized
 
@@ -27,7 +24,6 @@ from repoze.bfg.security import authenticated_userid
 from repoze.bfg.security import has_permission
 from repoze.bfg.url import model_url
 from repoze.bfg.wsgi import wsgiapp
-from repoze.bfg.interfaces import ILogger
 
 from repoze.monty import marshal
 
@@ -41,7 +37,6 @@ from bfgsite.interfaces import IPasteBin
 from bfgsite.interfaces import IPasteEntry
 from bfgsite.interfaces import IWebSite
 from bfgsite.interfaces import ITutorial
-from bfgsite.interfaces import IBatchInfo
 
 from bfgsite.utils import preferred_author
 from bfgsite.utils import COOKIE_AUTHOR
@@ -529,16 +524,15 @@ def searchresults(context, request):
             if i < batch_start:
                 continue
             path = catalog.document_map.address_for_docid(docid)
-            try:
-                content = find_model(context, path)
-            except KeyError:
-                # no uncatalog
-                logger = getUtility(ILogger, 'repoze.bfg.debug')
-                logger.warn('missing document at %s' % path)
-                continue
-            if content is not None:
-                content_info = getMultiAdapter((content, request), IBatchInfo)()
-                batch.append(content_info)
+            md = dict(catalog.document_map.get_metadata(docid))
+            if path.startswith('/'):
+                model = find_model(context, path)
+                url = model_url(model, request)
+            else:
+                scheme, rest = path.split(':', 1)
+                url = rest
+            md['url'] = url
+            batch.append(md)
 
     def _batchURL(self, query, batch_start=0):
         query['batch_start'] = batch_start

@@ -1,5 +1,7 @@
 import datetime
 
+from zope.component import queryAdapter
+
 from repoze.bfg.traversal import model_path
 
 from repoze.folder.interfaces import IFolder
@@ -7,6 +9,7 @@ from repoze.folder.interfaces import IFolder
 from repoze.lemonade.content import is_content
 
 from bfgsite.catalog import find_catalog
+from bfgsite.interfaces import IMetadata
 
 def postorder(startnode):
     def visit(node):
@@ -26,6 +29,10 @@ def index_content(object, event):
                 path = model_path(node)
                 docid = catalog.document_map.add(path)
                 catalog.index_doc(docid, node)
+                adapter = queryAdapter(node, IMetadata)
+                if adapter is not None:
+                    metadata = adapter()
+                    catalog.document_map.add_metadata(docid, metadata)
 
 def unindex_content(object, event):
     """ Unindex content (an IObjectWillBeRemovedEvent subscriber) """
@@ -45,6 +52,12 @@ def reindex_content(object, event):
         path = model_path(object)
         docid = catalog.document_map.docid_for_address(path)
         catalog.reindex_doc(docid, object)
+        catalog.document_map.remove_metadata(docid)
+        adapter = queryAdapter(object, IMetadata)
+        if adapter is not None:
+            metadata = adapter()
+            catalog.document_map.add_metadata(docid, metadata)
+        
 
 def set_modified(object, event):
     """ Set the modified date on a single piece of content

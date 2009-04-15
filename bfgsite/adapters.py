@@ -1,9 +1,7 @@
 from zope.interface import implements
 
-from repoze.bfg.url import model_url
-
 from bfgsite.interfaces import ISearchText
-from bfgsite.interfaces import IBatchInfo
+from bfgsite.interfaces import IMetadata
 
 class TutorialSearchTextAdapter(object):
     implements(ISearchText)
@@ -20,15 +18,13 @@ class TutorialSearchTextAdapter(object):
                 strings.append(val)
         return ' '.join(strings)
     
-class TutorialBatchInfoAdapter(object):
-    implements(IBatchInfo)
-    def __init__(self, context, request):
+class TutorialMetadataAdapter(object):
+    implements(IMetadata)
+    def __init__(self, context):
         self.context = context
-        self.request = request
 
     def __call__(self):
-        return {'type':'Tutorial', 'title':self.context.title,
-                'url':model_url(self.context, self.request)}
+        return {'type':'Tutorial', 'title':self.context.title}
         
 class PasteEntrySearchTextAdapter(object):
     implements(ISearchText)
@@ -44,16 +40,14 @@ class PasteEntrySearchTextAdapter(object):
                 strings.append(val)
         return ' '.join(strings)
 
-class PasteEntryBatchInfoAdapter(object):
-    implements(IBatchInfo)
-    def __init__(self, context, request):
+class PasteEntryMetadataAdapter(object):
+    implements(IMetadata)
+    def __init__(self, context):
         self.context = context
-        self.request = request
 
     def __call__(self):
         return {
             'type':'Paste Entry',
             'title':'%s %s...' % (self.context.author_name,
                                   self.context.paste[:100]),
-            'url':model_url(self.context, self.request)
             }

@@ -2,6 +2,7 @@ import time
 
 from zope.interface import providedBy
 from zope.component import queryAdapter
+from zope.interface.declarations import Declaration
 
 from repoze.bfg.traversal import model_path
 from repoze.bfg.traversal import find_interface
@@ -46,7 +47,12 @@ def get_path(object, default):
     return model_path(object)
 
 def get_interfaces(object, default):
-    return list(providedBy(object))
+    # we unwind all derived and immediate interfaces using spec.flattened()
+    # (providedBy would just give us the immediate interfaces)
+    provided_by = list(providedBy(object))
+    spec = Declaration(provided_by)
+    ifaces = list(spec.flattened())
+    return ifaces
 
 def populate_catalog(site):
     catalog = site.catalog = Catalog()

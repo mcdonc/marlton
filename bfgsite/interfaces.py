@@ -24,5 +24,8 @@ class IObjectModifiedEvent(Interface):
 class ISearchText(Interface):
     pass
 
-class IBatchInfo(Interface):
+class IMetadata(Interface):
+    pass
+
+class IExternalPage(Interface):
     pass

@@ -60,15 +60,15 @@
     />
 
   <adapter
-    for=".interfaces.ITutorial repoze.bfg.interfaces.IRequest"
-    provides=".interfaces.IBatchInfo"
-    factory=".adapters.TutorialBatchInfoAdapter"
+    for=".interfaces.ITutorial"
+    provides=".interfaces.IMetadata"
+    factory=".adapters.TutorialMetadataAdapter"
     />
 
   <adapter
-    for=".interfaces.IPasteEntry repoze.bfg.interfaces.IRequest"
-    provides=".interfaces.IBatchInfo"
-    factory=".adapters.PasteEntryBatchInfoAdapter"
+    for=".interfaces.IPasteEntry"
+    provides=".interfaces.IMetadata"
+    factory=".adapters.PasteEntryMetadataAdapter"
     />
 
 </configure>
