@@ -39,6 +39,8 @@ requires = [
     'PIL',
     'repoze.session',
     'repoze.browserid',
+    'repoze.catalog',
+    'repoze.lemonade',
     ]
 
 setup(name='bfgsite',

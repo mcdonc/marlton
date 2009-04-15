@@ -7,7 +7,7 @@
   <div metal:fill-slot="headinclude">
     
     <link rel="stylesheet" type="text/css"
-          href="${application_url}/static/styles.css" />
+          href="${api.application_url}/static/styles.css" />
     
   </div>
   

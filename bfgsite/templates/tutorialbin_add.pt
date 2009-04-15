@@ -29,7 +29,7 @@
         
         <div class="userinfo" tal:condition="user">
           You are currently logged in as <b>${user}</b>
-          <a href="${application_url}/logout">Log Out</a>
+          <a href="${api.application_url}/logout">Log Out</a>
         </div>
         
         <div class="left">
@@ -70,7 +70,7 @@
               </div>
               <div class="field">
                 <label for="captcha_image"></label>
-                <img src="${application_url}/captcha.jpg" id="captcha_image"/>
+                <img src="${api.application_url}/captcha.jpg" id="captcha_image"/>
               </div>
               <div class="field">
                 <legend>Required</legend>

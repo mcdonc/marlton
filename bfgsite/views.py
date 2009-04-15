@@ -3,6 +3,9 @@ import sys
 import urlparse
 from StringIO import StringIO
 
+from zope.component import getMultiAdapter
+from zope.component import getUtility
+
 from webob import Response
 from webob.exc import HTTPUnauthorized
 
@@ -18,11 +21,13 @@ from pygments import util
 from repoze.bfg.chameleon_zpt import get_template
 from repoze.bfg.chameleon_zpt import render_template_to_response
 from repoze.bfg.traversal import find_interface
+from repoze.bfg.traversal import find_model
 from repoze.bfg.view import bfg_view
 from repoze.bfg.security import authenticated_userid
 from repoze.bfg.security import has_permission
 from repoze.bfg.url import model_url
 from repoze.bfg.wsgi import wsgiapp
+from repoze.bfg.interfaces import ILogger
 
 from repoze.monty import marshal
 
@@ -36,12 +41,15 @@ from bfgsite.interfaces import IPasteBin
 from bfgsite.interfaces import IPasteEntry
 from bfgsite.interfaces import IWebSite
 from bfgsite.interfaces import ITutorial
+from bfgsite.interfaces import IBatchInfo
 
 from bfgsite.utils import preferred_author
 from bfgsite.utils import COOKIE_AUTHOR
 from bfgsite.utils import COOKIE_LANGUAGE
 from bfgsite.utils import sort_byint
 from bfgsite.utils import nl_to_br
+
+from bfgsite.catalog import find_catalog
 
 here = os.path.abspath(os.path.dirname(__file__))
 static = urlparser.StaticURLParser(os.path.join(here))
@@ -57,40 +65,32 @@ def logout_view(context, request):
 
 @bfg_view(for_=IWebSite, permission='view')
 def index_view(context, request):
-    app_url = request.application_url
     tutorials = get_tutorials(context['tutorialbin'], request, 5)
     return render_template_to_response(
         'templates/index.pt',
         api = API(context, request),
-        application_url = app_url,
         tutorials = tutorials,
         )
 
 @bfg_view(for_=IWebSite, name='documentation', permission='view')
 def docs_view(context, request):
-    app_url = request.application_url
     return render_template_to_response(
         'templates/documentation.pt',
         api = API(context, request),
-        application_url = app_url,
         )
 
 @bfg_view(for_=IWebSite, name='community', permission='view')
 def community_view(context, request):
-    app_url = request.application_url
     return render_template_to_response(
         'templates/community.pt',
         api = API(context, request),
-        application_url = app_url,
         )
 
 @bfg_view(for_=IWebSite, name='software', permission='view')
 def software_view(context, request):
-    app_url = request.application_url
     return render_template_to_response(
         'templates/software.pt',
         api = API(context, request),
-        application_url = app_url,
         )
 
 def get_tutorials(context, request, max):
@@ -151,7 +151,6 @@ def tutorial_view(context, request):
         text = text,
         tutorials = tutorials,
         message = None,
-        application_url = request.application_url,
         title = context.title,
         tutorialbin_url = model_url(context.__parent__, request)
         )
@@ -164,7 +163,6 @@ for name, aliases, filetypes, mimetypes_ in all_lexers:
 
 @bfg_view(for_=ITutorialBin, permission='view')
 def tutorialbin_view(context,request):
-    app_url = request.application_url
     tutorialbin_url = model_url(context, request)
     tutorials = get_tutorials(context, request, sys.maxint)
     if tutorials:
@@ -198,7 +196,6 @@ def tutorialbin_view(context,request):
         last_date = last_date,
         latest = latest,
         message = None,
-        application_url = app_url,
         tutorialbin_url = tutorialbin_url,
         user = user,
         can_manage = can_manage,
@@ -220,7 +217,6 @@ def tutorialbin_add_view(context, request):
     text = u''
     code = u''
     message = u''
-    app_url = request.application_url
     tutorialbin_url = model_url(context, request)
     user = authenticated_userid(request)
     can_manage = has_permission('manage', context, request)
@@ -275,7 +271,6 @@ def tutorialbin_add_view(context, request):
         lexers = lexer_info,
         message = message,
         tutorials = tutorials,
-        application_url = app_url,
         tutorialbin_url = tutorialbin_url,
         user = user,
         can_manage = can_manage,
@@ -285,7 +280,6 @@ def tutorialbin_add_view(context, request):
 def tutorialbin_manage_view(context, request):
     params = request.params
     message = params.get('message', u'')
-    app_url = request.application_url
 
     if params.has_key('form.submitted'):
         form = marshal(request.environ, request.body_file)
@@ -307,13 +301,11 @@ def tutorialbin_manage_view(context, request):
         api = API(context, request),
         message = message,
         tutorials = tutorials,
-        application_url = app_url,
         tutorialbin_url = tutorialbin_url,
         )
         
 @bfg_view(for_=ITutorialBin, name='rss', permission='view')
 def tutorialbin_rss_view(context, request):
-    app_url = request.application_url
     tutorialbin_url = model_url(context, request)
     tutorials = get_tutorials(context, request, sys.maxint)
     if tutorials:
@@ -326,7 +318,6 @@ def tutorialbin_rss_view(context, request):
         'templates/tutorialbin_rss.pt',
         tutorials = tutorials,
         last_date = last_date,
-        application_url = app_url,
         tutorialbin_url = tutorialbin_url,
         )
     response.content_type = 'application/rss+xml'
@@ -386,7 +377,6 @@ def entry_view(context, request):
         paste = formatted_paste,
         pastes = pastes,
         message = None,
-        application_url = request.application_url,
         pastebin_url = model_url(context.__parent__, request)
         )
 
@@ -407,7 +397,6 @@ def pastebin_view(context, request):
     language = u''
     paste = u''
     message = u''
-    app_url = request.application_url
     pastebin_url = model_url(context, request)
     user = authenticated_userid(request)
     can_manage = has_permission('manage', context, request)
@@ -442,7 +431,6 @@ def pastebin_view(context, request):
         lexers = lexer_info,
         message = message,
         pastes = pastes,
-        application_url = app_url,
         pastebin_url = pastebin_url,
         user = user,
         can_manage = can_manage,
@@ -452,7 +440,6 @@ def pastebin_view(context, request):
 def pastebin_manage_view(context, request):
     params = request.params
     message = params.get('message', u'')
-    app_url = request.application_url
 
     if params.has_key('form.submitted'):
         form = marshal(request.environ, request.body_file)
@@ -474,13 +461,11 @@ def pastebin_manage_view(context, request):
         api = API(context, request),
         pastes = pastes,
         message = message,
-        application_url = app_url,
         pastebin_url = pastebin_url,
         )
         
 @bfg_view(for_=IPasteBin, name='rss', permission='view')
 def pastebin_rss_view(context, request):
-    app_url = request.application_url
     pastebin_url = model_url(context, request)
     pastes = get_pastes(context, request, sys.maxint)
     if pastes:
@@ -493,7 +478,6 @@ def pastebin_rss_view(context, request):
         'templates/pastebin_rss.pt',
         pastes = pastes,
         last_date = last_date,
-        application_url = app_url,
         pastebin_url = pastebin_url,
         )
     response.content_type = 'application/rss+xml'
@@ -513,6 +497,101 @@ def captcha_jpeg(context, request):
     r = Response(data, '200 OK', [ ('Content-Type', 'image/jpeg'),
                                    ('Content-Length', len(data)) ])
     return r
+
+@bfg_view(name='searchresults', for_=IWebSite, permission='view')
+def searchresults(context, request):
+    posts = []
+    catalog = find_catalog(context)
+
+    text = request.params.get('text')
+    batch_size = int(request.params.get('batch_size', 50))
+    batch_start = int(request.params.get('batch_start', 0))
+    sort_index = request.params.get('sort_index', 'modified')
+    reverse = bool(request.params.get('reverse', False))
+
+
+    if text is not None:
+        numdocs, docids = catalog.search(sort_index=sort_index,
+                                         reverse=reverse,
+                                         text=text)
+    else:
+        numdocs, docids = 0, []
+
+    i = 0
+
+    batch = []
+
+    if numdocs > 0:
+        for docid in docids:
+            i += 1
+            if i > batch_start+ batch_size:
+                break
+            if i < batch_start:
+                continue
+            path = catalog.document_map.address_for_docid(docid)
+            try:
+                content = find_model(context, path)
+            except KeyError:
+                # no uncatalog
+                logger = getUtility(ILogger, 'repoze.bfg.debug')
+                logger.warn('missing document at %s' % path)
+                continue
+            if content is not None:
+                content_info = getMultiAdapter((content, request), IBatchInfo)()
+                batch.append(content_info)
+
+    def _batchURL(self, query, batch_start=0):
+        query['batch_start'] = batch_start
+        return model_url(context, request, request.view_name,
+                         query=query)
+
+    batch_info = {}
+
+    previous_start = batch_start - batch_size
+
+    if previous_start < 0:
+        previous_batch_info = None
+    else:
+        previous_end = previous_start + batch_size
+        if previous_end > numdocs:
+            previous_end = numdocs
+        size = previous_end - previous_start
+        previous_batch_info = {}
+        query = {'text':text, 'reverse':reverse, 'batch_size':batch_size}
+        previous_batch_info['url'] = _batchURL(query, previous_start)
+        previous_batch_info['name'] = (
+            'Previous %s entries (%s - %s)' % (size, previous_start+1,
+                                               previous_end))
+    batch_info['previous_batch'] = previous_batch_info
+
+    next_start = batch_start + batch_size
+    if next_start >= numdocs:
+        next_batch_info = None
+    else:
+        next_end = next_start + batch_size
+        if next_end > numdocs:
+            next_end = numdocs
+        size = next_end - next_start
+        next_batch_info = {}
+        query = {'text':text, 'reverse':reverse, 'batch_size':batch_size}
+        next_batch_info['url'] = _batchURL(query, next_start)
+        next_batch_info['name'] = (
+            'Next %s entries (%s - %s of %s)' % (size,
+                                                 next_start+1,
+                                                 next_end,
+                                                 numdocs))
+    batch_info['next_batch'] = next_batch_info
+    batch_info['batching_required'] = next_batch_info or previous_batch_info
+
+    return render_template_to_response(
+        'templates/searchresults.pt',
+        batch = batch,
+        batch_info = batch_info,
+        numdocs = numdocs,
+        api = API(context, request),
+        )
+        
+
 
 class API:
     nav_links = (
@@ -543,6 +622,7 @@ class API:
         self.request = request
         self.main_template = get_template('templates/main_template.pt')
         self.navitems = get_navigation(context, request, self.nav_links)
+        self.application_url = request.application_url
 
 def get_navigation(context, request, links):
 

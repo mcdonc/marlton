@@ -1,12 +1,74 @@
 <configure xmlns="http://namespaces.repoze.org/bfg"
+           xmlns:lemonade="http://namespaces.repoze.org/lemonade"
 	   i18n_domain="repoze.bfg">
 
   <include package="repoze.bfg.includes" />
+  <include package="repoze.lemonade.includes" file="meta.zcml"/>
+
   <scan package="."/>
 
   <utility
     provides="repoze.bfg.interfaces.ISecurityPolicy"
     factory="repoze.bfg.security.RemoteUserACLSecurityPolicy"
+    />
+
+  <subscriber
+      for="repoze.lemonade.interfaces.IContent
+           repoze.folder.interfaces.IObjectWillBeRemovedEvent"
+      handler=".subscribers.unindex_content"/>
+    
+  <subscriber
+      for="repoze.lemonade.interfaces.IContent
+           repoze.folder.interfaces.IObjectAddedEvent"
+      handler=".subscribers.index_content"/>
+  
+  <subscriber
+      for="repoze.lemonade.interfaces.IContent
+           .interfaces.IObjectModifiedEvent"
+      handler=".subscribers.reindex_content"/>
+
+  <subscriber
+      for="repoze.lemonade.interfaces.IContent
+           repoze.folder.interfaces.IObjectWillBeAddedEvent"
+      handler=".subscribers.set_created"/>
+
+  <subscriber
+      for="repoze.lemonade.interfaces.IContent
+           .interfaces.IObjectModifiedEvent"
+      handler=".subscribers.set_modified"/>
+
+  <lemonade:content
+      factory=".models.PasteEntry"
+      type=".interfaces.IPasteEntry"
+      />
+
+  <lemonade:content
+      factory=".models.Tutorial"
+      type=".interfaces.ITutorial"
+      />
+
+  <adapter
+    for=".interfaces.ITutorial"
+    provides=".interfaces.ISearchText"
+    factory=".adapters.TutorialSearchTextAdapter"
+    />
+
+  <adapter
+    for=".interfaces.IPasteEntry"
+    provides=".interfaces.ISearchText"
+    factory=".adapters.PasteEntrySearchTextAdapter"
+    />
+
+  <adapter
+    for=".interfaces.ITutorial repoze.bfg.interfaces.IRequest"
+    provides=".interfaces.IBatchInfo"
+    factory=".adapters.TutorialBatchInfoAdapter"
+    />
+
+  <adapter
+    for=".interfaces.IPasteEntry repoze.bfg.interfaces.IRequest"
+    provides=".interfaces.IBatchInfo"
+    factory=".adapters.PasteEntryBatchInfoAdapter"
     />
 
 </configure>

@@ -7,9 +7,9 @@
   <head>
     <title>B F G</title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <link rel="stylesheet" type="text/css" href="${application_url}/static/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="${api.application_url}/static/css/default.css" />
     <!--[if IE 6]>
-        <link rel="stylesheet" href="${application_url}/static/css/fix.css" type="text/css" />
+        <link rel="stylesheet" href="${api.application_url}/static/css/fix.css" type="text/css" />
         <![endif]-->
 
    <metal:block define-slot="headinclude"/>
@@ -22,14 +22,14 @@
       <div id="header">
 
           <div id="title">
-            <a href="${application_url}">
-            <img class="bfglogo" src="${application_url}/static/images/site/rg-gray-sh.png" height="60" /><span>B F G</span>
+            <a href="${api.application_url}">
+            <img class="bfglogo" src="${api.application_url}/static/images/site/rg-gray-sh.png" height="60" /><span>B F G</span>
             </a>
           </div>
 
           <div id="searchbox">
-            <form action="#" method="post">
-                <input type="text" value="" />
+            <form action="${api.application_url}/searchresults" method="post">
+                <input type="text" name="text" value="" />
                 <input type="submit" value="search" />
             </form>
           </div>
@@ -46,7 +46,7 @@
 
       </div>
       
-      <div id="bar" tal:condition="api.request.url[:-1] != application_url">
+      <div id="bar" tal:condition="api.request.url[:-1] != api.application_url">
       </div>
 
       <div metal:define-slot="content"/>

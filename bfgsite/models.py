@@ -19,6 +19,8 @@ from bfgsite.interfaces import ITutorialBin
 from bfgsite.interfaces import IPasteEntry
 from bfgsite.interfaces import ITutorial
 
+from bfgsite.catalog import populate_catalog
+
 class WebSite(Folder):
     implements(IWebSite, ILocation)
     __name__ = __parent__ = None
@@ -73,7 +75,9 @@ class Tutorial(Persistent):
         
 def appmaker(root):
     if not root.has_key('bfgsite'):
-        root['bfgsite'] = WebSite()
+        website = WebSite()
+        root['bfgsite'] = website
+        populate_catalog(website)
         import transaction
         transaction.commit()
     return root['bfgsite']

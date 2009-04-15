@@ -18,3 +18,11 @@ class IPasteEntry(Interface):
 class ITutorial(Interface):
     pass
 
+class IObjectModifiedEvent(Interface):
+    pass
+
+class ISearchText(Interface):
+    pass
+
+class IBatchInfo(Interface):
+    pass
