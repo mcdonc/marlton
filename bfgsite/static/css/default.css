@@ -327,7 +327,7 @@ code{
 	font:normal 11px "Courier New", Courier, monospace;
 }
 .highlight{
-	color:#3C8C06;
+	color:#3270a9;
 	font-weight:bold;
 }
 
@@ -407,6 +407,8 @@ form input{
 form label{
 	display:block;
 	color:#000;
+        font-weight: bold;
+        font-size: 0.9em;
 }
 form textarea{
 	padding:1px;
@@ -423,10 +425,12 @@ form legend{
 	font-weight:lighter;
 	margin:15px 0 0 0;
 	padding-bottom:4px;
-	line-height:85%;
-	color:#000000;
-	font-size:15px;
+	color:#308006;
+	font-size:18px;
         font-weight:bold;
+}
+.field {
+    margin: 5px 0px 10px 0px;
 }
 .noborder{
 	border:0;
@@ -564,4 +568,8 @@ width. Also be sure to account for the border.*/
 	font-weight: bold;
         color: red;
 	border:1px solid #ddd;
+}
+
+.tutorialtext {
+    margin: 8px 5px;
 }

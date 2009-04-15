@@ -69,11 +69,8 @@
                 <textarea name="code" rows="8" cols="80">${code}</textarea>
               </div>
               <div class="field">
-                <label for="captcha_image"></label>
                 <img src="${api.application_url}/captcha.jpg" id="captcha_image"/>
-              </div>
-              <div class="field">
-                <legend>Required</legend>
+                <h3>Required</h3>
                 <label for="captcha_answer">Type the word above:</label>
                 <input type="text" name="captcha_answer" id="captcha_answer" 
                        size="40" tal:attributes="value captcha_answer|''"/>
