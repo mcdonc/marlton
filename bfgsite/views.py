@@ -565,11 +565,13 @@ def get_navigation(context, request, links):
 
         viewcontext = find_interface(context, view_iface)
 
-        items.append(
-            {'state':state,
-             'href':model_url(viewcontext, request, view_name),
-             'title':link['title'],
-             })
+        if viewcontext is not None:
+
+            items.append(
+                {'state':state,
+                 'href':model_url(viewcontext, request, view_name),
+                 'title':link['title'],
+                 })
 
     return items
 
