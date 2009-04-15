@@ -25,7 +25,7 @@ def main(argv=sys.argv):
         me = sys.argv[0]
         me = os.path.abspath(me)
         sandbox = os.path.dirname(os.path.dirname(me))
-        config = os.path.join(sandbox, 'website.ini')
+        config = os.path.join(sandbox, 'bfgsite.ini')
     exe = sys.executable
     sandbox = os.path.dirname(os.path.dirname(os.path.abspath(exe)))
     app = loadapp('config:%s' % config, name='website')
