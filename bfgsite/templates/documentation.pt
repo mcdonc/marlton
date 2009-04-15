@@ -7,6 +7,14 @@
   <div metal:fill-slot="content">
     <div id="content">
       <h1>Documentation</h1> 
+      <h2>Search for Documentation</h2>
+      <div style="margin-top: 10px">
+        <form action="${api.application_url}/searchresults" method="post">
+          <input type="text" name="text" value="" />
+          <input type="submit" value="search" />
+        </form>
+      </div>
+      <h2>Browse Documentation</h2>
       <p>One of BFG's most important goals is to keep every single part of the framework documented. From here you can jump to our extensive documentation. If you find anything on the code that is not documented properly or undocumented, please <a href="mailto:repoze-dev@repoze.org">let us know.</a></p>
       <ul>
         <li><a class="reference external" href="http://docs.repoze.org/bfg/#narrative-documentation">Narrative documentation</a></li>

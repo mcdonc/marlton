@@ -24,8 +24,12 @@ class TutorialMetadataAdapter(object):
         self.context = context
 
     def __call__(self):
-        return {'type':'Tutorial', 'title':self.context.title}
-        
+        return {
+            'type':'Tutorial',
+            'title':self.context.title,
+            'teaser':self.context.text[:300]
+            }
+    
 class PasteEntrySearchTextAdapter(object):
     implements(ISearchText)
     def __init__(self, context):
@@ -48,8 +52,8 @@ class PasteEntryMetadataAdapter(object):
     def __call__(self):
         return {
             'type':'Paste Entry',
-            'title':'%s %s...' % (self.context.author_name,
-                                  self.context.paste[:100]),
+            'title':'Paste Entry by %s' % self.context.author_name,
+            'teaser':self.context.paste[:300],
             }
 
 class SphinxDocumentSearchTextAdapter(object):

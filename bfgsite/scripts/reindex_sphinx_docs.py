@@ -68,19 +68,19 @@ def main(argv=sys.argv):
 
         for path, directories, files in gen:
             relpath = path[len(textpath):]
-            for file in files:
-                if file.endswith('.txt'):
-                    text = open(os.path.join(path, file)).read()
+            for filename in files:
+                if filename.endswith('.txt'):
+                    text = open(os.path.join(path, filename)).read()
                     ob = SphinxDocument(text)
-                    token = os.path.join(relpath, file[:-4])
-                    address = 'external:%s/%s.html' % (url_prefix, token)
+                    filename_no_ext = filename[:-4]
+                    path_info = os.path.join(relpath, filename_no_ext)
+                    address = 'sphinx:%s/%s.html' % (url_prefix, path_info)
                     docid = catalog.document_map.add(address)
                     catalog.index_doc(docid, ob)
-                    content = text[:100]
-                    catalog.document_map.add_metadata(
-                        docid,
-                        {'title':content, 'type':'Documentation'})
-                    print 'cataloged %s with content %s' % (address, content)
+                    data = {'title':filename_no_ext,
+                            'type':'Documentation',
+                            'text':text}
+                    catalog.document_map.add_metadata(docid, data)
 
         transaction.commit()
         

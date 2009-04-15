@@ -22,7 +22,7 @@
 
       </form>
 
-      <div tal:condition="batch_info.batching_required">
+      <div tal:condition="batch_info.batching_required" style="padding-bottom: 10px">
         <a tal:condition="batch_info.previous_batch"
            tal:content="batch_info.previous_batch.name"
            tal:attributes="href batch_info.previous_batch.url">Previous Batch</a>
@@ -34,13 +34,15 @@
         <span tal:condition="not batch_info.next_batch">No more entries</span>
       </div>
       
-      <div tal:condition="not batch_info.batching_required">
+      <div tal:condition="not batch_info.batching_required" style="padding-bottom: 10px">
         <span tal:content="'%d entries' % numdocs"># of entries</span>
       </div>
       
       <div tal:condition="batch" tal:omit-tag="">
-        <div tal:repeat="item batch">
-          <a href="${item.url}">${item.title}</a> (${item.type})
+        <div tal:repeat="item batch" style="padding-bottom: 10px">
+          <div><a href="${item.url}">${item.title}</a> (${item.type})</div> 
+          <div>${item.teaser}</div>
+          <div><a href="${item.url}">${item.url}</a></div>
         </div>
       </div>
       

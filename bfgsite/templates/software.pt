@@ -10,15 +10,27 @@
 
       <h1>Software</h1> 
 
+      <h2>Installing BFG</h2>
+
+      <p>To install BFG, read the instructions within the <a
+      href="http://docs.repoze.org/bfg/narr/install.html">install
+      documentation</a></p>.
+
+      <h2>Obtaining the Code via Subversion</h2>
+
       <p>Browse and check out tagged and trunk versions of BFG via the
       <a class="reference external"
       href="http://svn.repoze.org/repoze.bfg/">Repoze Subversion
       repository</a>.  To check out the trunk via Subversion, use this
-      command:</p>
+      command:
 
       <div class="highlight">
         <pre>svn co http://svn.repoze.org/repoze.bfg/trunk repoze.bfg</pre>
       </div>
+
+      </p>
+
+      <h2>Contributing</h2>
 
       <p>If you want to collaborate on BFG development, you may
       become a contributor. To find out how to become a contributor to
@@ -26,32 +38,16 @@
       href="http://repoze.org/contributing.html">contributor&#8217;s
       page</a>.</p>
 
+      <h2>Related Software</h2>
+
       <p>Although BFG itself is a minimal framework, we have developed
       several pieces of code which can be useful to you when
       developing with BFG. Note that they are not BFG specific. Most
       of them can be used as middleware on a WSGI stack, so they could
-      be used on any Python web application.</p>
+      be used on any Python web application.  See the <a
+      href="http://repoze.org">Repoze</a> website for more
+      information.</p>
 
-      <ul>
-        
-        <li><a href="http://docs.repoze.org/bfg">repoze.bfg</a></li>
-        <li><a href="http://docs.repoze.org/catalog">repoze.catalog</a></li>
-        <li><a href="http://docs.repoze.org/evolution">repoze.evolution</a></li>
-        <li><a href="http://docs.repoze.org/folder">repoze.folder</a></li>
-        <li><a href="http://docs.repoze.org/urispace">repoze.urispace</a></li>
-        <li><a href="http://docs.repoze.org/who">repoze.who</a></li>
-        
-        <li><a href="http://docs.repoze.org/workflow">repoze.workflow</a></li>
-        <li><a href="http://docs.repoze.org/zodbconn">repoze.zodbconn</a></li>
-        <li><a href="http://docs.repoze.org/lemonade">repoze.lemonade</a></li>
-        <li><a href="http://docs.repoze.org/session">repoze.session</a></li>
-        <li><a href="http://docs.repoze.org/tm2">repoze.tm2</a></li>
-        <li><a href="http://docs.repoze.org/what">repoze.what</a></li>
-        
-        <li><a href="http://docs.repoze.org/zcml">repoze.zcml</a></li>
-        <li><a href="http://docs.repoze.org/xmlrpc">repoze.bfg.xmlrpc</a></li>
-      </ul>
-      
     </div>
   </div>
 </div>

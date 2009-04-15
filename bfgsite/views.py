@@ -499,9 +499,9 @@ def searchresults(context, request):
     catalog = find_catalog(context)
 
     text = request.params.get('text')
-    batch_size = int(request.params.get('batch_size', 50))
+    batch_size = int(request.params.get('batch_size', 20))
     batch_start = int(request.params.get('batch_start', 0))
-    sort_index = request.params.get('sort_index', 'modified')
+    sort_index = request.params.get('sort_index', None)
     reverse = bool(request.params.get('reverse', False))
 
 
@@ -525,16 +525,25 @@ def searchresults(context, request):
                 continue
             path = catalog.document_map.address_for_docid(docid)
             md = dict(catalog.document_map.get_metadata(docid))
-            if path.startswith('external:'):
+            if path.startswith('sphinx:'):
                 scheme, rest = path.split(':', 1)
+                if text in md['text']:
+                    firstpos = md['text'].find(text)
+                else:
+                    firstpos = 0
+                start = firstpos -150
+                if start < 0:
+                    start = 0
+                teaser = '%s ...' % md['text'][start:start+150]
                 url = rest
+                md['teaser'] = teaser
             else:
                 model = find_model(context, path)
                 url = model_url(model, request)
             md['url'] = url
             batch.append(md)
 
-    def _batchURL(self, query, batch_start=0):
+    def _batchURL(query, batch_start=0):
         query['batch_start'] = batch_start
         return model_url(context, request, request.view_name,
                          query=query)
