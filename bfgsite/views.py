@@ -525,12 +525,12 @@ def searchresults(context, request):
                 continue
             path = catalog.document_map.address_for_docid(docid)
             md = dict(catalog.document_map.get_metadata(docid))
-            if path.startswith('/'):
-                model = find_model(context, path)
-                url = model_url(model, request)
-            else:
+            if path.startswith('external:'):
                 scheme, rest = path.split(':', 1)
                 url = rest
+            else:
+                model = find_model(context, path)
+                url = model_url(model, request)
             md['url'] = url
             batch.append(md)
 
@@ -584,7 +584,7 @@ def searchresults(context, request):
         numdocs = numdocs,
         api = API(context, request),
         )
-        
+
 
 
 class API:

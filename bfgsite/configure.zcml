@@ -47,6 +47,11 @@
       type=".interfaces.ITutorial"
       />
 
+  <lemonade:content
+      factory=".models.SphinxDocument"
+      type=".interfaces.ISphinxDocument"
+      />
+
   <adapter
     for=".interfaces.ITutorial"
     provides=".interfaces.ISearchText"
@@ -69,6 +74,12 @@
     for=".interfaces.IPasteEntry"
     provides=".interfaces.IMetadata"
     factory=".adapters.PasteEntryMetadataAdapter"
+    />
+
+  <adapter
+    for=".interfaces.ISphinxDocument"
+    provides=".interfaces.ISearchText"
+    factory=".adapters.SphinxDocumentSearchTextAdapter"
     />
 
 </configure>

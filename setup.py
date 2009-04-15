@@ -41,6 +41,9 @@ requires = [
     'repoze.browserid',
     'repoze.catalog',
     'repoze.lemonade',
+    'virtualenv',
+    'Sphinx',
+    'repoze.sphinx.autointerface',
     ]
 
 setup(name='bfgsite',
@@ -69,6 +72,10 @@ setup(name='bfgsite',
       entry_points = """\
       [paste.app_factory]
       make_app = bfgsite.run:make_app
+
+      [console_scripts]
+      reindex_sphinx_docs = bfgsite.scripts.reindex_sphinx_docs:main
+      debug_bfgsite = bfgsite.scripts.debug:main
       """
       )
 

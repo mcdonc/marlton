@@ -18,6 +18,7 @@ from bfgsite.interfaces import IPasteBin
 from bfgsite.interfaces import ITutorialBin
 from bfgsite.interfaces import IPasteEntry
 from bfgsite.interfaces import ITutorial
+from bfgsite.interfaces import ISphinxDocument
 
 from bfgsite.catalog import populate_catalog
 
@@ -72,7 +73,14 @@ class Tutorial(Persistent):
         self.code = code
         self.language = language
         self.date = datetime.now()
-        
+
+class SphinxDocument: # not persistent!
+    implements(ISphinxDocument)
+    def __init__(self, text):
+        self.text = text
+        self.modified = datetime.now()
+        self.created = datetime.now()
+
 def appmaker(root):
     if not root.has_key('bfgsite'):
         website = WebSite()

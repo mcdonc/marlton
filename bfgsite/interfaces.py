@@ -27,5 +27,5 @@ class ISearchText(Interface):
 class IMetadata(Interface):
     pass
 
-class IExternalPage(Interface):
+class ISphinxDocument(Interface):
     pass

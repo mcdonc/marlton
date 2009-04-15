@@ -51,3 +51,11 @@ class PasteEntryMetadataAdapter(object):
             'title':'%s %s...' % (self.context.author_name,
                                   self.context.paste[:100]),
             }
+
+class SphinxDocumentSearchTextAdapter(object):
+    implements(ISearchText)
+    def __init__(self, context):
+        self.context = context
+
+    def __call__(self):
+        return self.context.text
