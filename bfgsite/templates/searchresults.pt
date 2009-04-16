@@ -30,20 +30,22 @@
 
       </form>
 
+      <p class="search-results">Search results</p>
+
       <div tal:condition="batch_info.batching_required" style="padding-bottom: 10px">
         <a tal:condition="batch_info.previous_batch"
            tal:content="batch_info.previous_batch.name"
            tal:attributes="href batch_info.previous_batch.url">Previous Batch</a>
-        <span class="search-results" tal:condition="not batch_info.previous_batch">No previous entries</span>
+        <span tal:condition="not batch_info.previous_batch">No previous entries</span>
         |
         <a tal:condition="batch_info.next_batch"
            tal:content="batch_info.next_batch.name"
            tal:attributes="href batch_info.next_batch.url">Next Batch</a>
-        <span class="search-results" tal:condition="not batch_info.next_batch">No more entries</span>
+        <span tal:condition="not batch_info.next_batch">No more entries</span>
       </div>
       
       <div tal:condition="not batch_info.batching_required" style="padding-bottom: 10px">
-        <span class="search-results" tal:content="'%d entries' % numdocs"># of entries</span>
+        <span tal:content="'%d entries' % numdocs"># of entries</span>
       </div>
       
       <div tal:condition="batch" tal:omit-tag="">
