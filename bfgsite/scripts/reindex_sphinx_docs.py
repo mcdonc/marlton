@@ -94,4 +94,6 @@ def main(argv=sys.argv):
 
         transaction.commit()
         
+if __name__ == '__main__':
+        main()
 
