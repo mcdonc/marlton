@@ -3,10 +3,10 @@ import sys
 import urlparse
 from StringIO import StringIO
 
+from zope.component import getUtility
+
 from webob import Response
 from webob.exc import HTTPUnauthorized
-
-from paste import urlparser
 
 import formencode
 
@@ -17,11 +17,13 @@ from pygments import util
 
 from repoze.bfg.chameleon_zpt import get_template
 from repoze.bfg.chameleon_zpt import render_template_to_response
+from repoze.bfg.interfaces import ISettings
+from repoze.bfg.security import authenticated_userid
+from repoze.bfg.security import has_permission
 from repoze.bfg.traversal import find_interface
 from repoze.bfg.traversal import find_model
 from repoze.bfg.view import bfg_view
-from repoze.bfg.security import authenticated_userid
-from repoze.bfg.security import has_permission
+from repoze.bfg.view import static
 from repoze.bfg.url import model_url
 from repoze.bfg.wsgi import wsgiapp
 
@@ -46,13 +48,12 @@ from bfgsite.utils import nl_to_br
 
 from bfgsite.catalog import find_catalog
 
-here = os.path.abspath(os.path.dirname(__file__))
-static = urlparser.StaticURLParser(os.path.join(here))
+static_dir = os.path.join(os.path.dirname(__file__), 'static')
+static_app = static(static_dir)
 
 @bfg_view(for_=IWebSite, name='static', permission='view')
-@wsgiapp
-def static_view(environ, start_response):
-    return static(environ, start_response)
+def static_view(context, request):
+    return static_app(context, request)
 
 @bfg_view(for_=IWebSite, name='logout', permission='view')
 def logout_view(context, request):
@@ -658,4 +659,20 @@ def get_navigation(context, request, links):
 
     return items
 
+@bfg_view(name='trac', for_=IWebSite, permission='view')
+@wsgiapp
+def trac_view(environ, start_response):
+    settings = getUtility(ISettings)
+    os.environ['TRAC_ENV_PARENT_DIR'] = settings.trac_env_parent_dir
+    import trac.web.main
+    trac_app = trac.web.main.dispatch_request
+    from trac.web import HTTPException
+    try:
+        return trac_app(environ, start_response)
+    except HTTPException, exc:
+        r = Response()
+        r.status_int = exc.code
+        r.write(exc.message)
+        return r(environ, start_response)
+        
     

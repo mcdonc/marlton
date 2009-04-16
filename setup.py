@@ -44,6 +44,7 @@ requires = [
     'virtualenv',
     'Sphinx',
     'repoze.sphinx.autointerface',
+    'Trac',
     ]
 
 setup(name='bfgsite',
