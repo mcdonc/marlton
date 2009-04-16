@@ -24,7 +24,7 @@
       repository</a>.  To check out the trunk via Subversion, use this
       command:
 
-      <div class="highlight">
+      <div class="highlight-paragraph">
         <pre>svn co http://svn.repoze.org/repoze.bfg/trunk repoze.bfg</pre>
       </div>
 

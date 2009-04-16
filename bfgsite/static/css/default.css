@@ -326,11 +326,28 @@ code{
 	color:#000;
 	font:normal 11px "Courier New", Courier, monospace;
 }
-.highlight{
+.highlight-paragraph{
 	color:#3270a9;
 	font-weight:bold;
 }
-
+.highlight{
+        color: black;
+        font-weight: bold;
+}
+.search-results {
+        font-size: 1.5em;
+        color: #000;
+}
+.search-title a{
+        font-size: 1.2em;
+        font-weight: bold;
+}
+.search-teaser{
+        font-size: 0.9em;
+}
+.search-link a:link, .search-link a:visited {
+        color: #308006;
+}
 .header{
 	color:#3C8C06;
 	font-size:14px;

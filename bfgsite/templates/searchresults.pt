@@ -4,6 +4,14 @@
     xmlns:metal="http://xml.zope.org/namespaces/metal"
     metal:use-macro="api.main_template.macros['master']">
 
+  <div metal:fill-slot="headinclude">
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+      <script src="${api.application_url}/static/js/jquery.highlight-3.js"></script>
+      <script type="text/javascript">
+          $(document).ready( function() { $('div').highlight('${api.request.params['text']}'); });
+      </script>
+  </div>
+
   <div metal:fill-slot="content">
     <div id="content">
 
@@ -26,23 +34,23 @@
         <a tal:condition="batch_info.previous_batch"
            tal:content="batch_info.previous_batch.name"
            tal:attributes="href batch_info.previous_batch.url">Previous Batch</a>
-        <span tal:condition="not batch_info.previous_batch">No previous entries</span>
+        <span class="search-results" tal:condition="not batch_info.previous_batch">No previous entries</span>
         |
         <a tal:condition="batch_info.next_batch"
            tal:content="batch_info.next_batch.name"
            tal:attributes="href batch_info.next_batch.url">Next Batch</a>
-        <span tal:condition="not batch_info.next_batch">No more entries</span>
+        <span class="search-results" tal:condition="not batch_info.next_batch">No more entries</span>
       </div>
       
       <div tal:condition="not batch_info.batching_required" style="padding-bottom: 10px">
-        <span tal:content="'%d entries' % numdocs"># of entries</span>
+        <span class="search-results" tal:content="'%d entries' % numdocs"># of entries</span>
       </div>
       
       <div tal:condition="batch" tal:omit-tag="">
         <div tal:repeat="item batch" style="padding-bottom: 10px">
-          <div><a href="${item.url}">${item.title}</a> (${item.type})</div> 
-          <div>${item.teaser}</div>
-          <div><a href="${item.url}">${item.url}</a></div>
+            <div class="search-title"><a href="${item.url}">${item.title}</a> (${item.type})</div> 
+          <div class="search-teaser">${item.teaser}</div>
+          <div class="search-link"><a href="${item.url}">${item.url}</a></div>
         </div>
       </div>
       
