@@ -527,14 +527,14 @@ def searchresults(context, request):
             md = dict(catalog.document_map.get_metadata(docid))
             if path.startswith('sphinx:'):
                 scheme, rest = path.split(':', 1)
-                if text in md['text']:
-                    firstpos = md['text'].find(text)
+                if text.lower() in md['text'].lower():
+                    firstpos = md['text'].lower().find(text.lower())
                 else:
                     firstpos = 0
                 start = firstpos -150
                 if start < 0:
                     start = 0
-                teaser = '%s ...' % md['text'][start:start+150]
+                teaser = '%s ...' % md['text'][start:start+300]
                 url = rest
                 md['teaser'] = teaser
             else:
