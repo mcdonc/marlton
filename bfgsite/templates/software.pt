@@ -16,13 +16,14 @@
       href="http://docs.repoze.org/bfg/narr/install.html">install
       documentation</a>.</p>
 
-      <h2>Obtaining the Code via Subversion</h2>
+      <h2>Browsing and Obtaining Development BFG Code</h2>
 
-      <p>Browse and check out tagged and trunk versions of BFG via the
-      <a class="reference external"
-      href="http://svn.repoze.org/repoze.bfg/">Repoze Subversion
-      repository</a>.  To check out the trunk via Subversion, use this
-      command:
+      <p>Browse BFG and related software via the <a class="reference
+      external"
+      href="http://bfg.repoze.org/trac/browser/repoze.bfg/">SVN
+      Repository Browser</a>.</p>
+
+      <p>To check out the BFG trunk via Subversion, use this command:
 
       <div class="highlight-paragraph">
         <pre>svn co http://svn.repoze.org/repoze.bfg/trunk repoze.bfg</pre>
