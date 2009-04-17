@@ -109,6 +109,14 @@ body{
 	border-right:#999 1px solid;
 }
 
+#header img {
+        margin: 0px;
+}
+	
+#header :link, #header :visited, #header :link:hover, #header :visited:hover {
+        color:#3270a9;
+}
+
 #title{
 	width:350px;
 	margin-top:5px;
@@ -550,9 +558,11 @@ width. Also be sure to account for the border.*/
 	background:url(../images/site/headerbg.png) repeat-x top left;
 	float:left;
 	clear:both;
-	
+	border-top: 0;
 	border-right:#999 1px solid;
 	border-left:#999 1px solid;	
+	color: #fff;
+	font-size: 13px;
 }
 .copy{
 	float:left;
@@ -589,4 +599,50 @@ width. Also be sure to account for the border.*/
 
 .tutorialtext {
     margin: 8px 5px;
+}
+
+/* override some trac styles */
+
+#ctxtnav {
+        background-color: #fff;
+        padding-top: 8px;
+}
+
+.nav {
+        background-color: #fff;
+        padding-bottom: 8px;
+}
+
+.nav ul {
+        color: #000;
+}
+
+:link, :visited {
+        border-bottom:1px dotted #BBBBBB;
+        color:#3270a9;
+        text-decoration:none;
+}
+
+#mainnav {
+        background-color: #fff;
+        margin: 0;
+}
+
+#content.error .message, div.system-message {
+        margin: 0;
+        padding:0.5em;
+}
+
+#altlinks {
+        padding: 8px;
+        background-color: #fff;
+        color: #000;
+}
+
+.icon {
+        display: none;
+}
+
+.fullrow, .col1, .col2 {
+        border: 0;
 }
