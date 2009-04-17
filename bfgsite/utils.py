@@ -51,7 +51,7 @@ class API:
          'title':'Docs'},
         {'view_iface':IWebSite,
          'nav_ifaces':(IWebSite,),
-         'view_name':'software',
+         'view_name':'trac',
          'title':'Software'},
         {'view_iface':IWebSite,
          'nav_ifaces':(IWebSite,),
@@ -65,10 +65,6 @@ class API:
          'nav_ifaces':(ITutorialBin, ITutorial),
          'view_name':'tutorialbin',
          'title':'Tutorials'},
-        {'view_iface':IWebSite,
-         'nav_ifaces':(IWebSite),
-         'view_name':'trac',
-         'title':'Bugs'},
         )
     def __init__(self, context, request):
         self.context = context
