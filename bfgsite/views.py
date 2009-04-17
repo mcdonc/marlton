@@ -1,10 +1,8 @@
 import os
-import itertools
 import sys
 import urlparse
 import lxml.html
 from lxml import etree
-from webob import Request
 from StringIO import StringIO
 
 from zope.component import getUtility
@@ -30,7 +28,6 @@ from repoze.bfg.traversal import find_model
 from repoze.bfg.view import bfg_view
 from repoze.bfg.view import static
 from repoze.bfg.url import model_url
-from repoze.bfg.wsgi import wsgiapp2
 
 from repoze.monty import marshal
 
