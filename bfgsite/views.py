@@ -6,6 +6,7 @@ from lxml import etree
 from StringIO import StringIO
 
 from zope.component import getUtility
+from zope.index.text.parsetree import ParseError
 
 from webob import Response
 from webob.exc import HTTPUnauthorized
@@ -509,9 +510,12 @@ def searchresults(context, request):
 
 
     if text is not None:
-        numdocs, docids = catalog.search(sort_index=sort_index,
-                                         reverse=reverse,
-                                         text=text)
+        try:
+            numdocs, docids = catalog.search(sort_index=sort_index,
+                                             reverse=reverse,
+                                             text=text)
+        except ParseError:
+            numdocs, docids = 0, []
     else:
         numdocs, docids = 0, []
 
