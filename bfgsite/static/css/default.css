@@ -497,6 +497,7 @@ width. Also be sure to account for the border.*/
 	width: 800px;
 	border-bottom: 1px solid #999;
 	font:11.3px Verdana,Arial,Helvetica,sans-serif;
+	color: #eee;
 }
 #left{
 	width:375px;
@@ -601,48 +602,3 @@ width. Also be sure to account for the border.*/
     margin: 8px 5px;
 }
 
-/* override some trac styles */
-
-#ctxtnav {
-        background-color: #fff;
-        padding-top: 8px;
-}
-
-.nav {
-        background-color: #fff;
-        padding-bottom: 8px;
-}
-
-.nav ul {
-        color: #000;
-}
-
-:link, :visited {
-        border-bottom:1px dotted #BBBBBB;
-        color:#3270a9;
-        text-decoration:none;
-}
-
-#mainnav {
-        background-color: #fff;
-        margin: 0;
-}
-
-#content.error .message, div.system-message {
-        margin: 0;
-        padding:0.5em;
-}
-
-#altlinks {
-        padding: 8px;
-        background-color: #fff;
-        color: #000;
-}
-
-.icon {
-        display: none;
-}
-
-.fullrow, .col1, .col2 {
-        border: 0;
-}

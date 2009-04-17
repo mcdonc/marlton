@@ -10,6 +10,7 @@
     <link rel="alternate" href="/trac/wiki/WikiStart?format=txt" type="text/x-trac-wiki" title="Plain Text" />
     <link rel="start" href="/trac/wiki" />
     <link rel="stylesheet" href="/trac/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/trac/chrome/common/css/wiki.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/trac_overrides.css" type="text/css" />
     <link rel="shortcut icon" href="/trac/chrome/common/trac.ico" type="image/x-icon" />
     <link rel="icon" href="/trac/chrome/common/trac.ico" type="image/x-icon" />
     <link type="application/opensearchdescription+xml" rel="search" href="/trac/search/opensearch" title="Search BFG" />
