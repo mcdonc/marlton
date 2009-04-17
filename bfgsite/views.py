@@ -1,6 +1,10 @@
 import os
+import itertools
 import sys
 import urlparse
+import lxml.html
+from lxml import etree
+from webob import Request
 from StringIO import StringIO
 
 from zope.component import getUtility
@@ -16,6 +20,7 @@ from pygments import highlight
 from pygments import util
 
 from repoze.bfg.chameleon_zpt import get_template
+from repoze.bfg.chameleon_zpt import render_template
 from repoze.bfg.chameleon_zpt import render_template_to_response
 from repoze.bfg.interfaces import ISettings
 from repoze.bfg.security import authenticated_userid
@@ -25,7 +30,7 @@ from repoze.bfg.traversal import find_model
 from repoze.bfg.view import bfg_view
 from repoze.bfg.view import static
 from repoze.bfg.url import model_url
-from repoze.bfg.wsgi import wsgiapp
+from repoze.bfg.wsgi import wsgiapp2
 
 from repoze.monty import marshal
 
@@ -659,20 +664,47 @@ def get_navigation(context, request, links):
 
     return items
 
+
 @bfg_view(name='trac', for_=IWebSite, permission='view')
-@wsgiapp
-def trac_view(environ, start_response):
+def trac_view(context, request):
+    theme = render_template('templates/trac_theme.pt',
+                            api=API(context, request))
     settings = getUtility(ISettings)
-    os.environ['TRAC_ENV_PARENT_DIR'] = settings.trac_env_parent_dir
     import trac.web.main
     trac_app = trac.web.main.dispatch_request
     from trac.web import HTTPException
+    environ = request.environ
+    environ['trac.env_path'] = getattr(settings, 'trac.env_path')
+    if not 'REMOTE_USER' in environ:
+        environ['REMOTE_USER'] = 'Anyonymous'
+    environ['REMOTE_EMAIL'] = 'foo@example.com'
+    environ['REMOTE_ID'] = environ['REMOTE_USER']
+    while 1:
+        segment = request.path_info_pop()
+        if segment == request.view_name:
+            break
     try:
-        return trac_app(environ, start_response)
+        response = request.get_response(trac_app)
     except HTTPException, exc:
-        r = Response()
+        r = Response(exc.message)
         r.status_int = exc.code
-        r.write(exc.message)
-        return r(environ, start_response)
-        
-    
+        return r
+    if 'html' in response.content_type or 'xhtml' in response.content_type:
+        body_string = response.body
+        body_lxml = lxml.html.document_fromstring(body_string)
+        theme_lxml = lxml.html.document_fromstring(theme)
+        themecontent = theme_lxml.xpath('//div[@id="themecontent"]')
+        for expr in ('//div[@id="metanav"]', '//div[@id="mainnav"]',
+                     '//div[@id="main"]'):
+            bodycontent = body_lxml.xpath(expr)
+            themecontent[0].append(bodycontent[0])
+        body = etree.tostring(theme_lxml)
+        response.body = body
+    return response
+
+@bfg_view(name='theme.html')
+def theme(context, request):
+    return render_template_to_response(
+        'templates/theme.pt',
+        api = API(context, request),
+        )
