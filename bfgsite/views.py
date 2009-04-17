@@ -691,7 +691,7 @@ def trac_view(context, request):
     try:
         response = request.get_response(trac_app)
     except HTTPException, exc:
-        r = Response(exc.message)
+        r = Response(str(exc))
         r.status_int = exc.code
         return r
     if 'html' in response.content_type or 'xhtml' in response.content_type:
