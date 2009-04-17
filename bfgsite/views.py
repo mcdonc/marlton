@@ -711,9 +711,3 @@ def trac_view(context, request):
         response.body = body
     return response
 
-@bfg_view(name='theme.html')
-def theme(context, request):
-    return render_template_to_response(
-        'templates/theme.pt',
-        api = API(context, request),
-        )
