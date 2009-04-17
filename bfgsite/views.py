@@ -605,9 +605,13 @@ def searchresults(context, request):
 class API:
     nav_links = (
         {'view_iface':IWebSite,
+         'nav_ifaces':(IWebSite),
+         'view_name':'searchresults',
+         'title':'Search'},
+        {'view_iface':IWebSite,
          'nav_ifaces':(IWebSite,),
          'view_name':'documentation',
-         'title':'Documentation'},
+         'title':'Docs'},
         {'view_iface':IWebSite,
          'nav_ifaces':(IWebSite,),
          'view_name':'software',

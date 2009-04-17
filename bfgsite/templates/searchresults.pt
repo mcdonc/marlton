@@ -8,7 +8,10 @@
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
       <script src="${api.application_url}/static/js/jquery.highlight-3.js"></script>
       <script type="text/javascript">
-          $(document).ready( function() { $('div').highlight('${api.request.params['text']}'); });
+          text = "${api.request.params.get('text', '')}"
+          if (text) {
+              $(document).ready( function() { $('div').highlight(text) } );
+          }
       </script>
   </div>
 
@@ -30,7 +33,7 @@
 
       </form>
 
-      <p class="search-results">Search results</p>
+      <p class="search-results" tal:condition="api.request.params.get('text')">Search results</p>
 
       <div tal:condition="batch_info.batching_required" style="padding-bottom: 10px">
         <a tal:condition="batch_info.previous_batch"
@@ -45,7 +48,7 @@
       </div>
       
       <div tal:condition="not batch_info.batching_required" style="padding-bottom: 10px">
-        <span tal:content="'%d entries' % numdocs"># of entries</span>
+        <span tal:content="'%d entries' % numdocs" tal:condition="api.request.params.get('text')"># of entries</span>
       </div>
       
       <div tal:condition="batch" tal:omit-tag="">
