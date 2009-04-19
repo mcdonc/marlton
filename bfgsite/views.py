@@ -622,10 +622,7 @@ def trac_view(context, request):
     from trac.web import HTTPException
     environ = request.environ
     environ['trac.env_path'] = getattr(settings, 'trac.env_path')
-    if not 'REMOTE_USER' in environ:
-        environ['REMOTE_USER'] = 'Anyonymous'
-    environ['REMOTE_EMAIL'] = 'foo@example.com'
-    environ['REMOTE_ID'] = environ['REMOTE_USER']
+
     while 1:
         segment = request.path_info_pop()
         if segment == request.view_name:
@@ -636,15 +633,22 @@ def trac_view(context, request):
         r = Response(str(exc))
         r.status_int = exc.code
         return r
-    if 'html' in response.content_type or 'xhtml' in response.content_type:
+
+    body_string = response.body
+
+    if (body_string and ('html' in response.content_type
+                         or 'xhtml' in response.content_type)):
         # assumes trac returns utf-8 responses (not the default)
-        body_string = response.body
         parser = utf8_html_parser
-        body_lxml = lxml.html.document_fromstring(body_string, parser=parser)
         theme_lxml = lxml.html.document_fromstring(theme, parser=parser)
+        body_lxml = lxml.html.document_fromstring(body_string, parser=parser)
         themecontent = theme_lxml.xpath('//div[@id="themecontent"]')
-        for expr in ('//div[@id="metanav"]', '//div[@id="mainnav"]',
-                     '//div[@id="main"]'):
+        exprs = (
+#            '//div[@id="metanav"]', # this is the login and preferences links
+            '//div[@id="mainnav"]',
+            '//div[@id="main"]'
+            )
+        for expr in exprs:
             bodycontent = body_lxml.xpath(expr)
             themecontent[0].append(bodycontent[0])
         body = etree.tostring(theme_lxml)
