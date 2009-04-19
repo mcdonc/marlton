@@ -10,6 +10,7 @@ from zope.index.text.parsetree import ParseError
 
 from webob import Response
 from webob.exc import HTTPUnauthorized
+from webob.exc import HTTPFound
 
 import formencode
 
@@ -245,16 +246,14 @@ def tutorialbin_add_view(context, request):
             except formencode.validators.Invalid, why:
                 message = str(why)
             else:
-                response = Response()
-                response.set_cookie(COOKIE_AUTHOR, author_name, max_age=864000)
-                response.set_cookie(COOKIE_LANGUAGE, language)
 
                 pobj = Tutorial(title, author_name, text, author_url, code,
                                 language)
                 tutorialid = context.add(pobj)
-                response.status = '302'
-                response.headers['Location'] = '%s%s' % (tutorialbin_url,
-                                                         tutorialid)
+                response = HTTPFound(location = '%s%s' % (tutorialbin_url,
+                                                          tutorialid))
+                response.set_cookie(COOKIE_AUTHOR, author_name, max_age=864000)
+                response.set_cookie(COOKIE_LANGUAGE, language)
                 return response
 
     tutorials = get_tutorials(context, request, 10)
@@ -286,10 +285,8 @@ def tutorialbin_manage_view(context, request):
         for checkbox in checkboxes:
             del context[checkbox]
         message = '%s tutorials deleted' % len(checkboxes)
-        response = Response()
-        response.status = '302'
         url = model_url(context, request, 'manage', query={'message':message})
-        response.headers['Location'] = url
+        response = HTTPFound(location=url)
         return response
 
     tutorials = get_tutorials(context, request, sys.maxint)
@@ -411,13 +408,12 @@ def pastebin_view(context, request):
         except formencode.validators.Invalid, why:
             message = str(why)
         else:
-            response = Response()
-            response.set_cookie(COOKIE_AUTHOR, author_name, max_age=864000)
-            response.set_cookie(COOKIE_LANGUAGE, language)
             pobj = PasteEntry(author_name, paste, language)
             pasteid = context.add(pobj)
-            response.status = '302'
-            response.headers['Location'] = '%s%s' % (pastebin_url, pasteid)
+            url = '%s%s' % (pastebin_url, pasteid)
+            response = HTTPFound(location=url)
+            response.set_cookie(COOKIE_AUTHOR, author_name, max_age=864000)
+            response.set_cookie(COOKIE_LANGUAGE, language)
             return response
 
     pastes = get_pastes(context, request, 10)
@@ -446,9 +442,8 @@ def pastebin_manage_view(context, request):
         for checkbox in checkboxes:
             del context[checkbox]
         message = '%s pastes deleted' % len(checkboxes)
-        response = Response()
-        response.status = '302'
         url = model_url(context, request, 'manage', query={'message':message})
+        response = HTTPFound(location=url)
         response.headers['Location'] = url
         return response
 
