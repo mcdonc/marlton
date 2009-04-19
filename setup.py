@@ -28,7 +28,7 @@ requires = [
     'repoze.tm2',
     'repoze.monty',
     'repoze.who',
-    'repoze.whoplugins.zodb'
+    'repoze.whoplugins.zodb',
     'repoze.retry',
     'ZODB3',
     'Pygments',
