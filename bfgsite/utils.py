@@ -1,3 +1,6 @@
+from pygments import formatters
+from pygments import lexers
+
 from repoze.bfg.chameleon_zpt import get_template
 
 from repoze.bfg.traversal import find_interface
@@ -104,3 +107,14 @@ def get_navigation(context, request, links):
                  })
 
     return items
+
+formatter = formatters.HtmlFormatter(linenos=True,
+                                     cssclass="source")
+style_defs = formatter.get_style_defs()
+
+all_lexers = list(lexers.get_all_lexers())
+all_lexers.sort()
+lexer_info = []
+for name, aliases, filetypes, mimetypes_ in all_lexers:
+    lexer_info.append({'alias':aliases[0], 'name':name})
+

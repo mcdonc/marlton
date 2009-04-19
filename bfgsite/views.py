@@ -14,10 +14,9 @@ from webob.exc import HTTPFound
 
 import formencode
 
-from pygments import lexers
-from pygments import formatters
 from pygments import highlight
 from pygments import util
+from pygments import lexers
 
 from repoze.bfg.chameleon_zpt import render_template
 from repoze.bfg.chameleon_zpt import render_template_to_response
@@ -49,6 +48,9 @@ from bfgsite.utils import COOKIE_LANGUAGE
 from bfgsite.utils import sort_byint
 from bfgsite.utils import nl_to_br
 from bfgsite.utils import API
+from bfgsite.utils import lexer_info
+from bfgsite.utils import formatter
+from bfgsite.utils import style_defs
 
 from bfgsite.catalog import find_catalog
 
@@ -119,10 +121,6 @@ def get_tutorials(context, request, max):
         tutorials.append(new)
     return tutorials
 
-formatter = formatters.HtmlFormatter(linenos=True,
-                                     cssclass="source")
-style_defs = formatter.get_style_defs()
-
 @bfg_view(for_=ITutorial, permission='view')
 def tutorial_view(context, request):
     text = context.text or u''
@@ -154,12 +152,6 @@ def tutorial_view(context, request):
         title = context.title,
         tutorialbin_url = model_url(context.__parent__, request)
         )
-
-all_lexers = list(lexers.get_all_lexers())
-all_lexers.sort()
-lexer_info = []
-for name, aliases, filetypes, mimetypes_ in all_lexers:
-    lexer_info.append({'alias':aliases[0], 'name':name})
 
 @bfg_view(for_=ITutorialBin, permission='view')
 def tutorialbin_view(context,request):
@@ -343,10 +335,6 @@ def get_pastes(context, request, max):
         pastes.append(new)
     return pastes
 
-formatter = formatters.HtmlFormatter(linenos=True,
-                                     cssclass="source")
-style_defs = formatter.get_style_defs()
-
 @bfg_view(for_=IPasteEntry, permission='view')
 def entry_view(context, request):
     paste = context.paste or u''
@@ -375,12 +363,6 @@ def entry_view(context, request):
         message = None,
         pastebin_url = model_url(context.__parent__, request)
         )
-
-all_lexers = list(lexers.get_all_lexers())
-all_lexers.sort()
-lexer_info = []
-for name, aliases, filetypes, mimetypes_ in all_lexers:
-    lexer_info.append({'alias':aliases[0], 'name':name})
 
 class PasteAddSchema(formencode.Schema):
     allow_extra_fields = True
