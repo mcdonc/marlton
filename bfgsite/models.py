@@ -112,9 +112,3 @@ def appmaker(root):
 def find_users_via_root(root):
     return root['bfgsite'].users
 
-def NonPersistentRootFinder(db_path):
-    site = WebSite()
-    def get_root(environ):
-        return site
-    return get_root
-
