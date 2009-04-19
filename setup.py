@@ -45,6 +45,7 @@ requires = [
     'Sphinx',
     'repoze.sphinx.autointerface',
     'Trac',
+    'repoze.whoplugins.zodb'
     ]
 
 setup(name='bfgsite',

@@ -29,3 +29,9 @@ class IMetadata(Interface):
 
 class ISphinxDocument(Interface):
     pass
+
+class IProfile(Interface):
+    pass
+
+class IProfiles(Interface):
+    pass

@@ -1,12 +1,15 @@
 from datetime import datetime
 from persistent import Persistent
+import transaction
 
 from zope.interface import implements
-from repoze.bfg.interfaces import ILocation
 
+from repoze.bfg.interfaces import ILocation
 from repoze.bfg.security import Allow
 from repoze.bfg.security import Everyone
 from repoze.bfg.security import Authenticated
+
+from repoze.who.plugins.zodb.users import Users
 
 from repoze.session.manager import SessionDataManager
 
@@ -19,13 +22,15 @@ from bfgsite.interfaces import ITutorialBin
 from bfgsite.interfaces import IPasteEntry
 from bfgsite.interfaces import ITutorial
 from bfgsite.interfaces import ISphinxDocument
+from bfgsite.interfaces import IProfile
+from bfgsite.interfaces import IProfiles
 
 from bfgsite.catalog import populate_catalog
 
 class WebSite(Folder):
     implements(IWebSite, ILocation)
     __name__ = __parent__ = None
-    __acl__ = [ (Allow, Everyone, 'view'), (Allow, Authenticated, 'manage') ]
+    __acl__ = [ (Allow, Everyone, 'view'), (Allow, 'admin', 'manage') ]
 
     def __init__(self):
         super(WebSite, self).__init__()
@@ -81,14 +86,31 @@ class SphinxDocument: # not persistent!
         self.modified = datetime.now()
         self.created = datetime.now()
 
+class Profile(Persistent):
+    implements(IProfile)
+    def __init__(self, fullname, email):
+        self.fullname = fullname
+        self.email = email
+
+class Profiles(Folder):
+    implements(IProfiles)
+
 def appmaker(root):
     if not root.has_key('bfgsite'):
         website = WebSite()
         root['bfgsite'] = website
         populate_catalog(website)
-        import transaction
+        profiles = Profiles()
+        profiles['admin'] = Profile('Ad Min', 'admin@example.com')
+        website.profiles = profiles
+        users = Users()
+        users.add('admin', 'admin', 'admin', groups=('admin',))
+        website.users = users
         transaction.commit()
     return root['bfgsite']
+
+def find_users_via_root(root):
+    return root['bfgsite'].users
 
 def NonPersistentRootFinder(db_path):
     site = WebSite()
