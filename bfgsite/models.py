@@ -7,7 +7,6 @@ from zope.interface import implements
 from repoze.bfg.interfaces import ILocation
 from repoze.bfg.security import Allow
 from repoze.bfg.security import Everyone
-from repoze.bfg.security import Authenticated
 
 from repoze.who.plugins.zodb.users import Users
 
@@ -40,7 +39,7 @@ class WebSite(Folder):
 
 class Bin(Folder):
     implements(IBin)
-    __acl__ = [ (Allow, Everyone, 'view'), (Allow, Authenticated, 'manage') ]
+    __acl__ = [ (Allow, Everyone, 'view'), (Allow, 'admin', 'manage') ]
 
     current_id = -1
 
