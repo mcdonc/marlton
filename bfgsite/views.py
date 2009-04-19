@@ -35,7 +35,6 @@ from repoze.monty import marshal
 
 from Captcha.Visual.Tests import PseudoGimpy
 
-from bfgsite.authentication import authenticated_bfg_view
 
 from bfgsite.models import Tutorial
 from bfgsite.models import PasteEntry
@@ -301,7 +300,7 @@ def tutorialbin_add_view(context, request):
         can_manage = can_manage,
         )
 
-@authenticated_bfg_view(for_=ITutorialBin, name='manage', permission='manage')
+@bfg_view(for_=ITutorialBin, name='manage', permission='manage')
 def tutorialbin_manage_view(context, request):
     params = request.params
     message = params.get('message', u'')
