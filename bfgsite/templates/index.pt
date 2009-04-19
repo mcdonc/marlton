@@ -37,7 +37,7 @@
 
     <div id="content">
       <div id="subnav">
-        <div id="news">
+        <div id="news" tal:condition="tutorials">
           <span class="header">Recent tutorials</span>
           <ul>
             <li tal:repeat="tutorial tutorials">
