@@ -9,7 +9,6 @@ from zope.component import getUtility
 from zope.index.text.parsetree import ParseError
 
 from webob import Response
-from webob.exc import HTTPUnauthorized
 from webob.exc import HTTPFound
 
 import formencode
@@ -21,6 +20,7 @@ from pygments import lexers
 from repoze.bfg.chameleon_zpt import render_template
 from repoze.bfg.chameleon_zpt import render_template_to_response
 from repoze.bfg.interfaces import ISettings
+from repoze.bfg.interfaces import ISecurityPolicy
 from repoze.bfg.security import authenticated_userid
 from repoze.bfg.security import has_permission
 from repoze.bfg.traversal import find_interface
@@ -29,9 +29,13 @@ from repoze.bfg.view import bfg_view
 from repoze.bfg.view import static
 from repoze.bfg.url import model_url
 
+from repoze.who.plugins.zodb.users import get_sha_password
+
 from repoze.monty import marshal
 
 from Captcha.Visual.Tests import PseudoGimpy
+
+from bfgsite.authentication import authenticated_bfg_view
 
 from bfgsite.models import Tutorial
 from bfgsite.models import PasteEntry
@@ -51,6 +55,7 @@ from bfgsite.utils import API
 from bfgsite.utils import lexer_info
 from bfgsite.utils import formatter
 from bfgsite.utils import style_defs
+from bfgsite.utils import find_users
 
 from bfgsite.catalog import find_catalog
 
@@ -63,7 +68,37 @@ def static_view(context, request):
 
 @bfg_view(for_=IWebSite, name='logout', permission='view')
 def logout_view(context, request):
-    return HTTPUnauthorized()
+    policy = getUtility(ISecurityPolicy)
+    headers = policy.auth.forget(request.environ, None)
+    return HTTPFound(location=model_url(context, request), headers=headers)
+
+@bfg_view(for_=IWebSite, name='login', permission='view')
+def login_view(context, request):
+    login = ''
+    password = ''
+    policy = getUtility(ISecurityPolicy)
+    if 'form.submitted' in request.params:
+        login = request.params['login']
+        password = request.params['password']
+        users = find_users(context)
+        info = users.get_by_login(login)
+        if info:
+            if info['password'] == get_sha_password(password):
+                identity = {}
+                identity['repoze.who.userid'] = info['id']
+                headers = policy.auth.remember(request.environ, identity)
+                url = model_url(context, request, 'login')
+                return HTTPFound(location=url, headers=headers)
+
+    logged_in = policy.authenticated_userid(request)
+        
+    return render_template_to_response(
+        'templates/login.pt',
+        api = API(context, request),
+        login = login,
+        password = password,
+        logged_in = logged_in,
+        )
 
 @bfg_view(for_=IWebSite, permission='view')
 def index_view(context, request):
@@ -266,7 +301,7 @@ def tutorialbin_add_view(context, request):
         can_manage = can_manage,
         )
 
-@bfg_view(for_=ITutorialBin, name='manage', permission='manage')
+@authenticated_bfg_view(for_=ITutorialBin, name='manage', permission='manage')
 def tutorialbin_manage_view(context, request):
     params = request.params
     message = params.get('message', u'')

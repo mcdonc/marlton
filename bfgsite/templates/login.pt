@@ -1,0 +1,39 @@
+<div 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    metal:use-macro="api.main_template.macros['master']">
+
+  <div metal:fill-slot="content">
+    <div id="content">
+
+      <form action="login" method="POST" tal:condition="not logged_in">
+        
+        <div>
+          
+          <fieldset id="username">
+            <legend>Username</legend>
+            <input id="login" type="text" name="login" value=""
+                   tal:attributes="value login | ''" />
+            <legend>Password</legend>
+            <input id="password" type="password" name="password" value=""
+                   tal:attributes="value password | ''" />
+            <div>
+            <input type="submit" name="form.submitted" value="Log In" />
+            </div>
+          </fieldset>
+          
+        </div>
+
+      </form>
+
+      <div tal:condition="logged_in">
+         You've been logged in.
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+

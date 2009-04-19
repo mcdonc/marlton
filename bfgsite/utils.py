@@ -1,9 +1,12 @@
+from zope.component import getUtility
+
 from pygments import formatters
 from pygments import lexers
 
 from repoze.bfg.chameleon_zpt import get_template
 
 from repoze.bfg.traversal import find_interface
+from repoze.bfg.interfaces import ISecurityPolicy
 
 from repoze.bfg.url import model_url
 
@@ -74,8 +77,31 @@ class API:
         self.site = find_interface(context, IWebSite)
         self.request = request
         self.main_template = get_template('templates/main_template.pt')
-        self.navitems = get_navigation(context, request, self.nav_links)
         self.application_url = request.application_url
+
+    @property
+    def navitems(self):
+        items = get_navigation(self.context, self.request, self.nav_links)
+        policy = getUtility(ISecurityPolicy)
+        logged_in = policy.authenticated_userid(self.request)
+        if logged_in:
+            items.extend(
+                get_navigation(self.context, self.request,
+                               [{'view_iface':IWebSite,
+                                'nav_ifaces':(IWebSite,),
+                                'view_name':'logout',
+                                'title':'Log Out'}])
+                )
+        else:
+            items.extend(
+                get_navigation(self.context, self.request,
+                               [{'view_iface':IWebSite,
+                                'nav_ifaces':(IWebSite,),
+                                'view_name':'login',
+                                'title':'Log In'}])
+                )
+        return items
+        
 
 def get_navigation(context, request, links):
 
@@ -117,4 +143,10 @@ all_lexers.sort()
 lexer_info = []
 for name, aliases, filetypes, mimetypes_ in all_lexers:
     lexer_info.append({'alias':aliases[0], 'name':name})
+
+def find_users(context):
+    return find_interface(context, IWebSite).users
+
+def find_profiles(context):
+    return find_interface(context, IWebSite).profiles
 

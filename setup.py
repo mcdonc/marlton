@@ -28,6 +28,7 @@ requires = [
     'repoze.tm2',
     'repoze.monty',
     'repoze.who',
+    'repoze.whoplugins.zodb'
     'repoze.retry',
     'ZODB3',
     'Pygments',
@@ -45,7 +46,6 @@ requires = [
     'Sphinx',
     'repoze.sphinx.autointerface',
     'Trac',
-    'repoze.whoplugins.zodb'
     ]
 
 setup(name='bfgsite',

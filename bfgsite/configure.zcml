@@ -9,7 +9,7 @@
 
   <utility
     provides="repoze.bfg.interfaces.ISecurityPolicy"
-    factory="repoze.bfg.security.RemoteUserACLSecurityPolicy"
+    factory=".security.BFGSiteSecurityPolicy"
     />
 
   <subscriber
