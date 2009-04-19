@@ -10,7 +10,7 @@
       <script type="text/javascript">
           text = "${api.request.params.get('text', '')}"
           if (text) {
-              $(document).ready( function() { $('div').highlight(text) } );
+              $(document).ready( function() { $('.search-teaser').highlight(text) } );
           }
       </script>
   </div>
