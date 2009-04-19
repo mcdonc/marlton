@@ -22,11 +22,11 @@ class StandaloneSecurityPolicy(ACLSecurityPolicy):
         return principals
 
     def permits(self, context, request, permission):
-        users = find_users(context)
         identity = self.auth.identify(request.environ)
         if identity is not None:
             userid = identity.get('repoze.who.userid')
             if userid is not None:
+                users = find_users(context)
                 info = users.get_by_id(userid)
                 if info:
                     profiles = find_profiles(context)
