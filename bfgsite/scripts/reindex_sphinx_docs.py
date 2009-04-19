@@ -53,6 +53,7 @@ def main(argv=sys.argv):
         os.system('%s/bin/virtualenv --no-site-packages %s' % (
             sys.prefix, virtual_home))
         os.system('%s/bin/easy_install Sphinx' % virtual_home)
+        os.system('%s/bin/easy_install docutils' % virtual_home)
         os.system(
             '%s/bin/easy_install repoze.sphinx.autointerface' % virtual_home)
 
