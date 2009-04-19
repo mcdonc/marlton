@@ -626,9 +626,11 @@ def trac_view(context, request):
         r.status_int = exc.code
         return r
     if 'html' in response.content_type or 'xhtml' in response.content_type:
+        # assumes trac returns utf-8 responses (not the default)
         body_string = response.body
-        body_lxml = lxml.html.document_fromstring(body_string)
-        theme_lxml = lxml.html.document_fromstring(theme)
+        parser = utf8_html_parser
+        body_lxml = lxml.html.document_fromstring(body_string, parser=parser)
+        theme_lxml = lxml.html.document_fromstring(theme, parser=parser)
         themecontent = theme_lxml.xpath('//div[@id="themecontent"]')
         for expr in ('//div[@id="metanav"]', '//div[@id="mainnav"]',
                      '//div[@id="main"]'):
@@ -638,3 +640,4 @@ def trac_view(context, request):
         response.body = body
     return response
 
+utf8_html_parser = lxml.html.HTMLParser(encoding='utf-8')
