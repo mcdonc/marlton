@@ -39,7 +39,8 @@ class WebSite(Folder):
 
 class Bin(Folder):
     implements(IBin)
-    __acl__ = [ (Allow, Everyone, 'view'), (Allow, 'admin', 'manage') ]
+    __acl__ = [ (Allow, Everyone, 'view'), (Allow, 'members', 'add'),
+                (Allow, 'admin', ('manage', 'add')) ]
 
     current_id = -1
 
@@ -68,11 +69,11 @@ class PasteEntry(Persistent):
 class Tutorial(Persistent):
     implements(ITutorial)
 
-    def __init__(self, title, author_name, text, author_url=None, code=None,
+    def __init__(self, title, author_name, text, url=None, code=None,
                  language=None):
         self.title = title
         self.author_name = author_name
-        self.author_url = author_url
+        self.url = url
         self.text = text
         self.code = code
         self.language = language

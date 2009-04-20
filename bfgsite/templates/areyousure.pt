@@ -1,0 +1,23 @@
+<div 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    metal:use-macro="api.main_template.macros['master']">
+
+  <div metal:fill-slot="content">
+    <div id="content">
+
+      <h1>${message}</h1>
+
+      <div>
+        <form action="${form_url}"/>
+        <input type="submit" name="form.yes" value="Yes"/>
+        <input type="submit" name="form.no" value="No"/>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+

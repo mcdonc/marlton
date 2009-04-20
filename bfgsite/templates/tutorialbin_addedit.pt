@@ -21,35 +21,35 @@
       
       <div id="one">
         
-        <h1>BFG Tutorial Bin</h1>
+        <h1>${pagetitle}</h1>
+
         <div class="message" tal:condition="message|None"
              tal:content="message">Error message</div>
         
         <a href="${tutorialbin_url}">Return to main page</a>
         
-        <div class="userinfo" tal:condition="user">
-          You are currently logged in as <b>${user}</b>
-          <a href="${api.application_url}/logout">Log Out</a>
-        </div>
-        
         <div class="left">
-          <p>Please enter your name and paste your text. If you already made an article or blog post somewhere, use the URL field to add it and type in a small text description.</p>
+
+          <p>Please add your tutorial. If you already made an article
+          or blog post somewhere, use the URL field to add it and type
+          in a small text description.</p>
           
-          <form action="${tutorialbin_url}add" method="POST">
+          <form action="${form_url}" method="POST">
             <input type="hidden" name="form.submitted"/>
             <fieldset>
               <legend>New tutorial</legend>
               <div class="field">
                 <label for="author_name">Author name</label>
-                <input type="text" name="author_name" value="${author_name}" size="25"/>
+                <div tal:content="api.userid" id="author_name"/>
               </div>
               <div class="field">
                 <label for="title">Tutorial title</label>
                 <input type="text" name="title" value="${title}" size="25"/>
               </div>
               <div class="field">
-                <label for="author_url">URL</label>
-                <input type="text" name="author_url" value="${author_url}" size="25"/>
+                <label for="url">URL (for additional info or code)</label>
+                <input type="text" name="url" value="${url}" 
+                       size="25"/>
               </div>
               <div class="field">
                 <label for="text">Tutorial Text or description</label>
@@ -68,14 +68,6 @@
                 <label for="code">Tutorial code</label>
                 <textarea name="code" rows="8" cols="80">${code}</textarea>
               </div>
-              <div class="field">
-                <img src="${api.application_url}/captcha.jpg" id="captcha_image"/>
-                <h3>Required</h3>
-                <label for="captcha_answer">Type the word above:</label>
-                <input type="text" name="captcha_answer" id="captcha_answer" 
-                       size="40" tal:attributes="value captcha_answer|''"/>
-              </div>
-
               <input type="submit" />
             </fieldset>
           </form>

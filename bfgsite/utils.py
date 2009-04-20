@@ -7,6 +7,7 @@ from repoze.bfg.chameleon_zpt import get_template
 
 from repoze.bfg.traversal import find_interface
 from repoze.bfg.interfaces import ISecurityPolicy
+from repoze.bfg.security import authenticated_userid
 
 from repoze.bfg.url import model_url
 
@@ -78,6 +79,7 @@ class API:
         self.request = request
         self.main_template = get_template('templates/main_template.pt')
         self.application_url = request.application_url
+        self.userid = authenticated_userid(request)
 
     @property
     def navitems(self):
@@ -150,3 +152,5 @@ def find_users(context):
 def find_profiles(context):
     return find_interface(context, IWebSite).profiles
 
+def find_site(context):
+    return find_interface(context, IWebSite)

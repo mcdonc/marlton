@@ -1,3 +1,4 @@
+import datetime
 import os
 import sys
 import urlparse
@@ -23,6 +24,7 @@ from repoze.bfg.interfaces import ISettings
 from repoze.bfg.interfaces import ISecurityPolicy
 from repoze.bfg.security import authenticated_userid
 from repoze.bfg.security import has_permission
+from repoze.bfg.security import Allow
 from repoze.bfg.traversal import find_interface
 from repoze.bfg.traversal import find_model
 from repoze.bfg.view import bfg_view
@@ -75,6 +77,7 @@ def logout_view(context, request):
 def login_view(context, request):
     login = ''
     password = ''
+    came_from = request.params.get('came_from')
     policy = getUtility(ISecurityPolicy)
     if 'form.submitted' in request.params:
         login = request.params['login']
@@ -86,8 +89,11 @@ def login_view(context, request):
                 identity = {}
                 identity['repoze.who.userid'] = info['id']
                 headers = policy.auth.remember(request.environ, identity)
-                url = model_url(context, request, 'login')
-                return HTTPFound(location=url, headers=headers)
+                if came_from:
+                    return HTTPFound(location=came_from, headers=headers)
+                else:
+                    url = model_url(context, request, 'login')
+                    return HTTPFound(location=url, headers=headers)
 
     logged_in = policy.authenticated_userid(request)
         
@@ -97,6 +103,7 @@ def login_view(context, request):
         login = login,
         password = password,
         logged_in = logged_in,
+        came_from = came_from,
         )
 
 @bfg_view(for_=IWebSite, permission='view')
@@ -141,13 +148,12 @@ def get_tutorials(context, request, max):
             pdate = tutorial.date.strftime('%x')
         else:
             pdate = 'UNKNOWN'
-        tutorial_url = urlparse.urljoin(tutorialbin_url, name)
+        tutorial_url = model_url(tutorial, request)
         new = {
             'author':tutorial.author_name,
             'title':tutorial.title,
             'date':pdate,
             'url':tutorial_url,
-            'author_url':tutorial.author_url,
             'language':tutorial.language,
             'name':name,
             'text':tutorial.text
@@ -170,12 +176,13 @@ def tutorial_view(context, request):
 
     formatted_tutorial = highlight(context.code, l, formatter)
     tutorials = get_tutorials(context, request, 10)
+    can_edit = has_permission('edit', context, request)
 
     return render_template_to_response(
         'templates/tutorial.pt',
         api = API(context, request),
         author = context.author_name,
-        author_url = context.author_url,
+        url = context.url,
         date = context.date.strftime('%x at %X'),
         style_defs = style_defs,
         lexer_name = l.name,
@@ -184,6 +191,9 @@ def tutorial_view(context, request):
         tutorials = tutorials,
         message = None,
         title = context.title,
+        can_edit = can_edit,
+        edit_url = model_url(context, request, 'edit'),
+        delete_url = model_url(context, request, 'delete'),
         tutorialbin_url = model_url(context.__parent__, request)
         )
 
@@ -208,7 +218,7 @@ def tutorialbin_view(context,request):
                   'title':latest_obj.title,
                   'text':latest_obj.text,
                   'formatted_code':formatted_code,
-                  'author_url':latest_obj.author_url}
+                  'url':latest_obj.url}
     else:
         last_date = None
         latest = None
@@ -227,18 +237,16 @@ def tutorialbin_view(context,request):
         can_manage = can_manage,
         )
 
-class TutorialAddSchema(formencode.Schema):
+class TutorialAddEditSchema(formencode.Schema):
     allow_extra_fields = True
-    author_name = formencode.validators.NotEmpty()
     title = formencode.validators.NotEmpty()
     text = formencode.validators.NotEmpty()
 
-@bfg_view(for_=ITutorialBin, name='add', permission='view')
+@bfg_view(for_=ITutorialBin, name='add', permission='add')
 def tutorialbin_add_view(context, request):
     params = request.params
-    author_name = preferred_author(request)
     title = u'',
-    author_url = u''
+    url = u''
     language = u''
     text = u''
     code = u''
@@ -249,57 +257,120 @@ def tutorialbin_add_view(context, request):
 
     if params.has_key('form.submitted'):
         site = find_interface(context, IWebSite)
-        session = site.sessions.get(request.environ['repoze.browserid'])
-        solutions = session.get('captcha_solutions', [])
-        captcha_answer = params.get('captcha_answer', '')
-        ok = False
-        for solution in solutions:
-            if captcha_answer.lower() == solution.lower():
-                ok = True
-        if not ok:
-            message = 'Bad CAPTCHA answer'
+        title = params.get('title', u'')
+        text = params.get('text', u'')
+        code = params.get('code', u'')
+        url = params.get('url', u'')
+        language = params.get('language', u'')
+        schema = TutorialAddEditSchema()
+        message = None
+        try:
+            form = schema.to_python(request.params)
+        except formencode.validators.Invalid, why:
+            message = str(why)
         else:
-            title = params.get('title', u'')
-            text = params.get('text', u'')
-            code = params.get('code', u'')
-            author_name = params.get('author_name', u'')
-            author_url = params.get('author_url', u'')
-            language = params.get('language', u'')
-            schema = TutorialAddSchema()
-            message = None
-            try:
-                form = schema.to_python(request.params)
-            except formencode.validators.Invalid, why:
-                message = str(why)
-            else:
 
-                pobj = Tutorial(title, author_name, text, author_url, code,
-                                language)
-                tutorialid = context.add(pobj)
-                response = HTTPFound(location = '%s%s' % (tutorialbin_url,
-                                                          tutorialid))
-                response.set_cookie(COOKIE_AUTHOR, author_name, max_age=864000)
-                response.set_cookie(COOKIE_LANGUAGE, language)
-                return response
+            pobj = Tutorial(title, user, text, url, code, language)
+            acl = context.__acl__[:]
+            acl.extend([(Allow, user, 'edit'), (Allow, 'admin', 'edit')])
+            pobj.__acl__ = acl
+            tutorialid = context.add(pobj)
+            response = HTTPFound(location = '%s%s' % (tutorialbin_url,
+                                                      tutorialid))
+            response.set_cookie(COOKIE_LANGUAGE, language)
+            return response
 
     tutorials = get_tutorials(context, request, 10)
 
     return render_template_to_response(
-        'templates/tutorialbin_add.pt',
+        'templates/tutorialbin_addedit.pt',
         api = API(context, request),
-        author_name = author_name,
-        author_url = author_url,
+        url = url,
         title = title,
         text = text,
         code = code,
+        url = url,
         lexers = lexer_info,
         message = message,
         tutorials = tutorials,
         tutorialbin_url = tutorialbin_url,
         user = user,
         can_manage = can_manage,
+        pagetitle = 'Add a Tutorial',
+        form_url = model_url(context, request, 'add'),
         )
 
+@bfg_view(for_=ITutorial, name='edit', permission='edit')
+def tutorial_edit_view(context, request):
+    message = u''
+    title = context.title
+    url = context.url
+    language = context.language
+    text = context.text
+    code = context.code
+    tutorialbin_url = model_url(context.__parent__, request)
+    user = authenticated_userid(request)
+    can_manage = has_permission('manage', context, request)
+
+    params = request.params
+    if params.has_key('form.submitted'):
+        site = find_interface(context, IWebSite)
+        title = params.get('title', u'')
+        url = params.get('url', u'')
+        language = params.get('language', u'')
+        text = params.get('text', u'')
+        code = params.get('code', u'')
+        schema = TutorialAddEditSchema()
+        message = None
+        try:
+            form = schema.to_python(request.params)
+        except formencode.validators.Invalid, why:
+            message = str(why)
+        else:
+            message = 'Tutorial edited'
+            context.title = title
+            context.text = text
+            context.url = url
+            context.code = code
+            context.language = language
+            context.date = datetime.now()
+
+    tutorials = get_tutorials(context, request, 10)
+
+    return render_template_to_response(
+        'templates/tutorialbin_addedit.pt',
+        api = API(context, request),
+        url = url,
+        title = title,
+        text = text,
+        code = code,
+        url = url,
+        lexers = lexer_info,
+        message = message,
+        tutorials = tutorials,
+        tutorialbin_url = tutorialbin_url,
+        user = user,
+        can_manage = can_manage,
+        pagetitle = 'Edit a Tutorial',
+        form_url = model_url(context, request, 'edit'),
+        )
+
+@bfg_view(for_=ITutorial, name='delete', permission='edit')
+def delete_tutorial_view(context, request):
+    parent = context.__parent__
+    if 'form.yes' in request.params:
+        name = context.__name__
+        del parent[name]
+        return HTTPFound(location=model_url(parent, request))
+    if 'form.no' in request.params:
+        return HTTPFound(location=model_url(context, request))
+    return render_template_to_response(
+        'templates/areyousure.pt',
+        api = API(context, request),
+        form_url = model_url(context, request, 'delete'),
+        message = 'Are you sure you want to delete %s' % context.title
+        )
+    
 @bfg_view(for_=ITutorialBin, name='manage', permission='manage')
 def tutorialbin_manage_view(context, request):
     params = request.params
@@ -684,18 +755,75 @@ def trac_view(context, request):
         response.body = body
     return response
 
-@bfg_view(name='trac_search', for_=IWebSite, permission='view')
-def trac_search(context, request):
-    settings = getUtility(ISettings)
-    from trac.env import open_environment
-    trac_path = getattr(settings, 'trac.env_path')
-    env = open_environment(trac_path, use_cache=False)
-    search = TracSearch(env) 
-    from trac.web.api import Request
-    req = Request(request.environ, None)
-    req.perm = All()
-    results = search.all_results(req, 'trac')
-    return Response(str(results))
+@bfg_view(for_=IWebSite, name='register', permission='view')
+def register_view(context, request):
+    logged_in = authenticated_userid(request)
+    login = request.params.get('login', '')
+    fullname = request.params.get('fullname', '')
+    email = request.params.get('email', '')
+    password = request.params.get('password', '')
+    password_verify = request.params.get('password_verify')
+    captcha_answer = request.params.get('captcha_answer', '')
+    message = ''
+
+    if 'form.submitted' in request.params:
+        schema = RegisterSchema()
+        message = None
+        try:
+            form = schema.to_python(request.params)
+        except formencode.validators.Invalid, why:
+            message = str(why)
+        else:
+            ok = False
+            session = context.sessions.get(request.environ['repoze.browserid'])
+            solutions = session.get('captcha_solutions', [])
+            for solution in solutions:
+                if captcha_answer.lower() == solution.lower():
+                    ok = True
+            if not ok:
+                message = 'Bad CAPTCHA answer'
+            else:
+                users = find_users(context)
+                info = users.get_by_login(login)
+                if info:
+                    message = 'Username %s already exists' % login
+                else:
+                    if password != password_verify:
+                        message = 'Password and password verify do not match'
+                    else:
+                        users.add(login, login, password, groups=('members',))
+                        identity = {}
+                        identity['repoze.who.userid'] = login
+                        policy = getUtility(ISecurityPolicy)
+                        headers = policy.auth.forget(request.environ, None)
+                        headers = policy.auth.remember(request.environ,
+                                                       identity)
+                        login_url = model_url(context, request, 'login')
+                        response = HTTPFound(location = login_url,
+                                             headers=headers)
+                        return response
+        
+    return render_template_to_response(
+        'templates/register.pt',
+        api = API(context, request),
+        logged_in = logged_in,
+        message = message,
+        email = email,
+        login = login,
+        fullname = fullname,
+        password = password,
+        password_verify = password_verify,
+        captcha_answer = captcha_answer,
+        )
+
+class RegisterSchema(formencode.Schema):
+    allow_extra_fields = True
+    login = formencode.validators.NotEmpty()
+    fullname = formencode.validators.NotEmpty()
+    email = formencode.validators.NotEmpty()
+    password = formencode.validators.NotEmpty()
+    password_verify = formencode.validators.NotEmpty()
+    captcha_answer = formencode.validators.NotEmpty()
 
 class All(object):
     def __call__(self, other):

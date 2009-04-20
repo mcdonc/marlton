@@ -7,28 +7,46 @@
   <div metal:fill-slot="content">
     <div id="content">
 
-      <form action="login" method="POST" tal:condition="not logged_in">
+      <div class="message" tal:condition="message|None"
+           tal:content="message">Error message</div>
+
+      <h1>Log In</h1>
+
+      <div tal:condition="not logged_in">
         
-        <div>
-          
-          <fieldset id="username">
-            <legend>Username</legend>
-            <input id="login" type="text" name="login" value=""
-                   tal:attributes="value login | ''" />
-            <legend>Password</legend>
-            <input id="password" type="password" name="password" value=""
-                   tal:attributes="value password | ''" />
-            <div>
-            <input type="submit" name="form.submitted" value="Log In" />
-            </div>
-          </fieldset>
-          
-        </div>
+        <p>
+          Please type your username and password.  If you don't yet
+          have an account, you can <a
+          href="${api.request.application_url}/register">register</a>.</p>
 
-      </form>
+        <form action="login" method="POST">
+          
+          <div>
+            
+            <fieldset id="username">
+              <legend>Username</legend>
+              <input id="login" type="text" name="login" value=""
+                     tal:attributes="value login | ''" />
+              <legend>Password</legend>
+              <input id="password" type="password" name="password" value=""
+                     tal:attributes="value password | ''" />
+              <div>
+                <input type="hidden" name="came_from" 
+                       tal:attributes="value came_from|''"/>
+                <input type="submit" name="form.submitted" value="Log In" />
+              </div>
+            </fieldset>
+            
+          </div>
 
+        </form>
+      </div>
+      
       <div tal:condition="logged_in">
-         You've been logged in.
+        You've been logged in as <b>${logged_in}</b>.  Use the <a
+        href="${api.request.application_url}/logout">log out</a> link
+        in the navigation links at the top right to log out at any
+        time.
       </div>
       
     </div>

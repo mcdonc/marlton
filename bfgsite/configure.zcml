@@ -82,4 +82,9 @@
     factory=".adapters.SphinxDocumentSearchTextAdapter"
     />
 
+  <utility
+    component=".security.Forbidden"
+    provides="repoze.bfg.interfaces.IUnauthorizedAppFactory"
+  />
+
 </configure>

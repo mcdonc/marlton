@@ -1,0 +1,74 @@
+<div 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    metal:use-macro="api.main_template.macros['master']">
+
+  <div metal:fill-slot="content">
+
+    <div id="content">
+
+      <div class="message" tal:condition="message|None"
+      tal:content="message">Error message</div>
+
+      <h1>Register for an Account</h1>
+
+      <div tal:condition="logged_in">
+
+         <p>You are logged in as <b>${logged_in}</b>.  Please <a
+         href="${api.request.application_url}/logout">log out</a>
+         before trying to register.</p>
+
+      </div>
+
+      <div tal:condition="not logged_in">
+
+        <p>If you already have an account, you can <a
+        href="${api.request.application_url}/login">log in</a>.  If
+        you don't already have an account, you can create one using
+        the form below.  </p>.
+
+        <form action="${api.request.application_url}/register" method="POST">
+          <input type="hidden" name="form.submitted"/>
+          <fieldset>
+            <div class="field">
+              <label for="login">Login Name</label>
+              <input type="text" id="login" name="login" 
+                     tal:attributes="value login|''" size="25"/>
+            </div>
+            <div class="field">
+              <label for="fullname">Full Name</label>
+              <input type="text" id="fullname" name="fullname" 
+                     tal:attributes="value fullname|''" size="25"/>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="text" id="email" name="email" 
+                     tal:attributes="value email|''" size="25"/>
+            </div>
+            <div class="field">
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" 
+                     tal:attributes="value password|''" size="15"/>
+            </div>
+            <div class="field">
+              <label for="password_verify">Password Verify</label>
+              <input type="password" id="password_verify" 
+                     name="password_verify" 
+                     tal:attributes="value password_verify|''" size="15"/>
+            </div>
+            <div class="field">
+              <img src="${api.application_url}/captcha.jpg" id="captcha_image"/>
+              <label for="captcha_answer">Type the word above:</label>
+              <input type="text" name="captcha_answer" id="captcha_answer" 
+                     size="40" tal:attributes="value captcha_answer|''"/>
+            </div>
+            <input type="submit" />
+          </fieldset>
+        </form>
+        
+      </div>
+      
+    </div>
+  </div>
+</div>

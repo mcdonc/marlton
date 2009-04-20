@@ -22,9 +22,12 @@
       
       <div id="one">
         
-        <h1>BFG Tutorial Bin</h1>
+        <h1>Tutorial</h1>
         <div class="message" tal:condition="message|None"
              tal:content="message">Error message</div>
+
+        <a href="${edit_url}" tal:condition="can_edit">Edit this tutorial</a>
+        &nbsp;<a href="${delete_url}" tal:condition="can_edit">Delete this tutorial</a>
         
         <div class="left">
           
@@ -35,7 +38,7 @@
           <h2>${title}</h2>
           <span class="entryheader">Author:</span> ${author} <br/>
           <span class="entryheader">Date:</span> ${date} <br/>
-          <span class="entryheader" tal:condition="author_url">External URL: <a href="${author_url}">${author_url}</a></span><br tal:condition="author_url" />
+          <span class="entryheader" tal:condition="url">External URL: <a href="${url}">${url}</a></span><br tal:condition="url" />
           <div class="tutorialtext">${text}</div>
           <div><pre>${code}</pre></div>
           
