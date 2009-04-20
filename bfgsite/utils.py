@@ -80,6 +80,8 @@ class API:
         self.main_template = get_template('templates/main_template.pt')
         self.application_url = request.application_url
         self.userid = authenticated_userid(request)
+        profiles = find_profiles(context)
+        self.fullname = getattr(profiles.get(self.userid), 'fullname', None)
 
     @property
     def navitems(self):

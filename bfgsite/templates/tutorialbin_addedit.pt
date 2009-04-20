@@ -40,7 +40,7 @@
               <legend>New tutorial</legend>
               <div class="field">
                 <label for="author_name">Author name</label>
-                <div tal:content="api.userid" id="author_name"/>
+                <div tal:content="api.fullname" id="author_name"/>
               </div>
               <div class="field">
                 <label for="title">Tutorial title</label>

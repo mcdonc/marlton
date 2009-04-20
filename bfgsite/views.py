@@ -40,6 +40,7 @@ from Captcha.Visual.Tests import PseudoGimpy
 
 from bfgsite.models import Tutorial
 from bfgsite.models import PasteEntry
+from bfgsite.models import Profile
 
 from bfgsite.interfaces import ITutorialBin
 from bfgsite.interfaces import ITutorial
@@ -57,6 +58,7 @@ from bfgsite.utils import lexer_info
 from bfgsite.utils import formatter
 from bfgsite.utils import style_defs
 from bfgsite.utils import find_users
+from bfgsite.utils import find_profiles
 
 from bfgsite.catalog import find_catalog
 
@@ -792,6 +794,9 @@ def register_view(context, request):
                         message = 'Password and password verify do not match'
                     else:
                         users.add(login, login, password, groups=('members',))
+                        profiles = find_profiles(context)
+                        profile = Profile(fullname, email)
+                        profiles[login] = profile
                         identity = {}
                         identity['repoze.who.userid'] = login
                         policy = getUtility(ISecurityPolicy)
