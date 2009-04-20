@@ -69,7 +69,8 @@
         years. This framework is a canonization of practices that "fit
         our brains".  If you're a Zope developer, BFG will be quite
         familiar to you.  If you're not a Zope developer, don't be
-        afraid; you needn't understand any Zope concepts to use BFG.
+        afraid; you needn't understand or learn any Zope concepts to
+        use BFG.
         </p>
         
         <p><b>Simplicity:</b> BFG attempts to be a "pay only for what
