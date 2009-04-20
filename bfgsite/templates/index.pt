@@ -55,11 +55,11 @@
         of the software which comprises the framework.
         </p>
 
-        <p>BFG shares project management and version control
-        facilities with the <a href="http://repoze.org">Repoze</a>
-        project, and is developed by the same primary developers, but
-        its goals are different than the overall goals of the Repoze
-        project.  BFG is inspired by, and uses technology from, the <a
+        <p>BFG shares version control facilities with the <a
+        href="http://repoze.org">Repoze</a> project, and is developed
+        by the same primary developers, but its goals are different
+        than the overall goals of the Repoze project.  BFG is inspired
+        by, and uses technology from, the <a
         href="http://zope.org">Zope</a> project.
         </p>
 
