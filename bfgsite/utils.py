@@ -197,11 +197,11 @@ class All(object):
 from trac.search.web_ui import SearchModule
 
 class TracSearch(SearchModule):
-    def all_results(self, req, term, filter=['ticket', 'wiki']):
+    def all_results(self, req, term, filter=('ticket', 'wiki')):
         query = self._get_search_terms(term)
         results = []
         for source in self.search_sources:
-            for result in source.get_search_results(req, query, filter=filter):
+            for result in source.get_search_results(req, query, filter):
                 results.append(result)
         return results
 
