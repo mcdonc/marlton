@@ -30,6 +30,9 @@
         
         <div class="left">
 
+          <a href="${manage_url}" tal:condition="can_manage">Manage tutorials</a>
+          
+
           <p>If you have a piece of code that you can share to
           enlighten the community, but don't have the time to write a
           long document, consider using our <a

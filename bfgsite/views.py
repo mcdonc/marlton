@@ -127,7 +127,6 @@ def index_view(context, request):
         'templates/index.pt',
         api = API(context, request),
         tutorials = tutorials,
-        tickets = get_tickets(request)[:5]
         )
 
 @bfg_view(for_=IWebSite, name='documentation', permission='view')
@@ -250,6 +249,7 @@ def tutorialbin_view(context,request):
         tutorialbin_url = tutorialbin_url,
         user = user,
         can_manage = can_manage,
+        manage_url = model_url(context, request, 'manage'),
         )
 
 @bfg_view(for_=ITutorialBin, name='add', permission='add')
