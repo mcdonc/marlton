@@ -27,12 +27,16 @@
           <div>
             
             <fieldset id="username">
+              <div class="field">
               <label for="login">Username</label>
               <input id="login" type="text" name="login" value=""
                      tal:attributes="value login | ''" />
+              </div>
+              <div class="field">
               <label for="password">Password</label>
               <input id="password" type="password" name="password" value=""
                      tal:attributes="value password | ''" />
+              </div>
               <div>
                 <input type="hidden" name="came_from" 
                        tal:attributes="value came_from|''"/>

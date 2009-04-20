@@ -439,7 +439,7 @@ form input{
 	padding:1px;
 }
 form label{
-	display:block;
+	display:inline;
 	color:#000;
         font-weight: bold;
         font-size: 0.9em;
@@ -465,6 +465,9 @@ form legend{
 }
 .field {
     margin: 5px 0px 10px 0px;
+}
+.field label {
+	display: block;
 }
 .noborder{
 	border:0;

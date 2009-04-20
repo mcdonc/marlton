@@ -44,3 +44,11 @@
         padding-bottom: 0;
         margin-bottom: 0;
 }
+
+.properties th, #stats th {
+        font-weight: bold;
+}
+
+.properties td, #stats td {
+        border: 0;
+}
