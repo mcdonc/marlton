@@ -386,7 +386,7 @@ def entry_view(context, request):
     pastes = get_pastes(context, request, 10)
 
     return render_template_to_response(
-        'templates/entry.pt',
+        'templates/paste_entry.pt',
         api = API(context, request),
         author = context.author_name,
         date = context.date.strftime('%x at %X'),
