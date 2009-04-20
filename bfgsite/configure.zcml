@@ -87,4 +87,10 @@
     provides="repoze.bfg.interfaces.IUnauthorizedAppFactory"
   />
 
+  <utility
+    factory="bfgsite.utilities.mail_delivery_factory"
+    provides="repoze.sendmail.interfaces.IMailDelivery"
+  />
+
+
 </configure>

@@ -6,6 +6,8 @@ import lxml.html
 from lxml import etree
 from StringIO import StringIO
 
+from email.Message import Message
+
 from zope.component import getUtility
 from zope.index.text.parsetree import ParseError
 
@@ -30,6 +32,8 @@ from repoze.bfg.traversal import find_model
 from repoze.bfg.view import bfg_view
 from repoze.bfg.view import static
 from repoze.bfg.url import model_url
+
+from repoze.sendmail.interfaces import IMailDelivery
 
 from repoze.who.plugins.zodb.users import get_sha_password
 
@@ -59,6 +63,7 @@ from bfgsite.utils import formatter
 from bfgsite.utils import style_defs
 from bfgsite.utils import find_users
 from bfgsite.utils import find_profiles
+from bfgsite.utils import random_password
 
 from bfgsite.catalog import find_catalog
 
@@ -244,11 +249,6 @@ def tutorialbin_view(context,request):
         user = user,
         can_manage = can_manage,
         )
-
-class TutorialAddEditSchema(formencode.Schema):
-    allow_extra_fields = True
-    title = formencode.validators.NotEmpty()
-    text = formencode.validators.NotEmpty()
 
 @bfg_view(for_=ITutorialBin, name='add', permission='add')
 def tutorialbin_add_view(context, request):
@@ -476,10 +476,6 @@ def entry_view(context, request):
         message = None,
         pastebin_url = model_url(context.__parent__, request)
         )
-
-class PasteAddSchema(formencode.Schema):
-    allow_extra_fields = True
-    paste = formencode.validators.NotEmpty()
 
 @bfg_view(for_=IPasteBin, permission='view')
 def pastebin_view(context, request):
@@ -884,10 +880,64 @@ def profile_edit_view(context, request):
         password_verify = password_verify,
         )
 
+@bfg_view(for_=IWebSite, name='forgot_password', permission='view')
+def forgot_password_view(context, request):
+    email = request.params.get('email', '')
+    message = ''
+    if 'form.submitted' in request.params:
+        schema = ForgotPasswordSchema()
+        try:
+            schema.to_python(request.params)
+        except formencode.validators.Invalid, why:
+            message = str(why)
+        else:
+            profiles = find_profiles(context)
+            found_profile = None
+            for profile in profiles.values():
+                if profile.email == email:
+                    found_profile = profile
+                    break
+            if found_profile is None:
+                message = 'Email %s not found' % email
+            else:
+                login = profile.__name__
+                password = random_password()
+                users = find_users(context)
+                users.change_password(login, password)
+                mailer = getUtility(IMailDelivery)
+                msg = Message()
+                frm = 'bfg.repoze.org <donotreply@repoze.org>'
+                msg['From'] = frm
+                msg['To'] = email
+                msg['Subject'] = 'Account information'
+                body = 'Your new password is "%s" for login name "%s"' % (
+                    password, login)
+                msg.set_payload(body)
+                msg.set_type('text/html')
+                message = msg.as_string()
+                mailer.send(frm, email, message)
+                message = 'Mail sent to "%s" with new password' % email
+
+    return render_template_to_response(
+        'templates/forgot_password.pt',
+        api = API(context, request),
+        email=email,
+        message=message,
+        )
+
+class TutorialAddEditSchema(formencode.Schema):
+    allow_extra_fields = True
+    title = formencode.validators.NotEmpty()
+    text = formencode.validators.NotEmpty()
+
+class ForgotPasswordSchema(formencode.Schema):
+    allow_extra_fields = True
+    email = formencode.validators.Email(not_empty=True)
+
 class ProfileSchema(formencode.Schema):
     allow_extra_fields = True
     fullname = formencode.validators.NotEmpty()
-    email = formencode.validators.NotEmpty()
+    email = formencode.validators.Email(not_empty=True)
 
 class RegisterSchema(ProfileSchema):
     login = formencode.validators.NotEmpty()
@@ -899,6 +949,11 @@ class ChangePasswordSchema(formencode.Schema):
     allow_extra_fields = True
     password = formencode.validators.NotEmpty()
     password_verify = formencode.validators.NotEmpty()
+
+class PasteAddSchema(formencode.Schema):
+    allow_extra_fields = True
+    paste = formencode.validators.NotEmpty()
+
 
 class All(object):
     def __call__(self, other):
@@ -920,3 +975,5 @@ class TracSearch(SearchModule):
         return results
 
 utf8_html_parser = lxml.html.HTMLParser(encoding='utf-8')
+
+	

@@ -46,6 +46,7 @@ requires = [
     'Sphinx',
     'repoze.sphinx.autointerface',
     'Trac',
+    'repoze.sendmail',
     ]
 
 setup(name='bfgsite',

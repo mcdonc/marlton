@@ -1,3 +1,5 @@
+from random import choice
+
 from zope.component import getUtility
 
 from pygments import formatters
@@ -166,3 +168,8 @@ def find_profiles(context):
 
 def find_site(context):
     return find_interface(context, IWebSite)
+
+def random_password():
+    friendly = ''.join(
+        [choice('bcdfghklmnprstvw')+choice('aeiou') for i in range(4)])
+    return friendly
