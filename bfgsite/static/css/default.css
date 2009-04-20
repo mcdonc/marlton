@@ -122,6 +122,7 @@ body{
 
 #header img {
         margin: 0px;
+        padding-right: 20px;
 }
 	
 #header :link, #header :visited, #header :link:hover, #header :visited:hover {
@@ -150,10 +151,7 @@ body{
 	padding-bottom:20px;
 	text-align:left;
 }
-img.logo{
-	margin-top:-10px;
-	margin-left:5px;
-}
+
 span.subheader{
 	position:absolute;
 	margin-top:0;
