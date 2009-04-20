@@ -9,6 +9,7 @@ from repoze.bfg.chameleon_zpt import get_template
 
 from repoze.bfg.traversal import find_interface
 from repoze.bfg.interfaces import ISecurityPolicy
+from repoze.bfg.interfaces import ISettings
 from repoze.bfg.security import authenticated_userid
 
 from repoze.bfg.url import model_url
@@ -173,3 +174,34 @@ def random_password():
     friendly = ''.join(
         [choice('bcdfghklmnprstvw')+choice('aeiou') for i in range(4)])
     return friendly
+
+def search_trac(request, query, filter):
+    settings = getUtility(ISettings)
+    from trac.env import open_environment
+    trac_path = getattr(settings, 'trac.env_path')
+    env = open_environment(trac_path, use_cache=False)
+    search = TracSearch(env) 
+    from trac.web.api import Request
+    req = Request(request.environ, None)
+    req.perm = All()
+    trac_results = search.all_results(req, query, filter)
+    return trac_results
+    
+class All(object):
+    def __call__(self, other):
+        return self
+
+    def __contains__(self, other):
+        return True
+
+from trac.search.web_ui import SearchModule
+
+class TracSearch(SearchModule):
+    def all_results(self, req, term, filter=['ticket', 'wiki']):
+        query = self._get_search_terms(term)
+        results = []
+        for source in self.search_sources:
+            for result in source.get_search_results(req, query, filter=filter):
+                results.append(result)
+        return results
+

@@ -64,6 +64,7 @@ from bfgsite.utils import style_defs
 from bfgsite.utils import find_users
 from bfgsite.utils import find_profiles
 from bfgsite.utils import random_password
+from bfgsite.utils import search_trac
 
 from bfgsite.catalog import find_catalog
 
@@ -126,6 +127,7 @@ def index_view(context, request):
         'templates/index.pt',
         api = API(context, request),
         tutorials = tutorials,
+        tickets = get_tickets(request)[:5]
         )
 
 @bfg_view(for_=IWebSite, name='documentation', permission='view')
@@ -594,15 +596,7 @@ def searchresults(context, request):
 
     if text is not None:
         try:
-            settings = getUtility(ISettings)
-            from trac.env import open_environment
-            trac_path = getattr(settings, 'trac.env_path')
-            env = open_environment(trac_path, use_cache=False)
-            search = TracSearch(env) 
-            from trac.web.api import Request
-            req = Request(request.environ, None)
-            req.perm = All()
-            trac_results = search.all_results(req, text)
+            trac_results = search_trac(request, text, ['wiki', 'tickets'])
             numdocs, docids = catalog.search(sort_index=sort_index,
                                              reverse=reverse,
                                              text=text)
@@ -951,25 +945,6 @@ class PasteAddSchema(formencode.Schema):
     allow_extra_fields = True
     paste = formencode.validators.NotEmpty()
 
-
-class All(object):
-    def __call__(self, other):
-        return self
-
-    def __contains__(self, other):
-        return True
-
-from trac.search.web_ui import SearchModule
-
-class TracSearch(SearchModule):
-    def all_results(self, req, term):
-        query = self._get_search_terms(term)
-        results = []
-        for source in self.search_sources:
-            for result in source.get_search_results(req, query,
-                                                    ['ticket', 'wiki']):
-                results.append(result)
-        return results
 
 utf8_html_parser = lxml.html.HTMLParser(encoding='utf-8')
 
