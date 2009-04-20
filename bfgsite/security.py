@@ -11,7 +11,8 @@ class StandaloneSecurityPolicy(ACLSecurityPolicy):
 
     def get_principals(self, request):
         # self.permits must have been called first (an invariant when
-        # running under bfg, as only .permits is called at ingress)
+        # running under bfg, as .permits is called at ingress before
+        # anything else)
         user_id = request.environ.get('REMOTE_ID')
         principals = []
         if user_id:
