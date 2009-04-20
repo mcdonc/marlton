@@ -39,3 +39,8 @@
 .fullrow, .col1, .col2 {
         border: 0;
 }
+
+#searchbox form {
+        padding-bottom: 0;
+        margin-bottom: 0;
+}
