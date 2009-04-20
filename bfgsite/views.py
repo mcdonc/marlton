@@ -655,4 +655,36 @@ def trac_view(context, request):
         response.body = body
     return response
 
+@bfg_view(name='trac_search', for_=IWebSite, permission='view')
+def trac_search(context, request):
+    settings = getUtility(ISettings)
+    from trac.env import open_environment
+    trac_path = getattr(settings, 'trac.env_path')
+    env = open_environment(trac_path, use_cache=False)
+    search = TracSearch(env) 
+    from trac.web.api import Request
+    req = Request(request.environ, None)
+    req.perm = All()
+    results = search.all_results(req, 'trac')
+    return Response(str(results))
+
+class All(object):
+    def __call__(self, other):
+        return self
+
+    def __contains__(self, other):
+        return True
+
+from trac.search.web_ui import SearchModule
+
+class TracSearch(SearchModule):
+    def all_results(self, req, term):
+        query = self._get_search_terms(term)
+        results = []
+        for source in self.search_sources:
+            for result in source.get_search_results(req, query,
+                                                    ['ticket', 'wiki']):
+                results.append(result)
+        return results
+
 utf8_html_parser = lxml.html.HTMLParser(encoding='utf-8')
