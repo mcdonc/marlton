@@ -80,6 +80,7 @@ def login_view(context, request):
     login = ''
     password = ''
     came_from = request.params.get('came_from')
+    message = request.params.get('reason')
     policy = getUtility(ISecurityPolicy)
     if 'form.submitted' in request.params:
         login = request.params['login']
@@ -96,6 +97,10 @@ def login_view(context, request):
                 else:
                     url = model_url(context, request, 'login')
                     return HTTPFound(location=url, headers=headers)
+            else:
+                message = 'Wrong password'
+        else:
+            message = 'No such user name %s' % login
 
     logged_in = policy.authenticated_userid(request)
         
@@ -106,6 +111,7 @@ def login_view(context, request):
         password = password,
         logged_in = logged_in,
         came_from = came_from,
+        message = message,
         )
 
 @bfg_view(for_=IWebSite, permission='view')
@@ -829,9 +835,11 @@ def profile_edit_view(context, request):
     login = authenticated_userid(request)
     fullname = context.fullname
     email = context.email
+    password = ''
+    password_verify = ''
     message = ''
 
-    if 'form.submitted' in request.params:
+    if 'form.editprofile' in request.params:
         schema = ProfileSchema()
         message = None
         try:
@@ -846,6 +854,23 @@ def profile_edit_view(context, request):
             profile.fullname = fullname
             profile.email = email
             message = 'Profile edited'
+
+    if 'form.changepassword' in request.params:
+        schema = ChangePasswordSchema()
+        message = None
+        try:
+            form = schema.to_python(request.params)
+        except formencode.validators.Invalid, why:
+            message = str(why)
+        else:
+            password = request.params['password']
+            password_verify = request.params['password_verify']
+            if password != password_verify:
+                message = 'Password and password verify do not match'
+            else:
+                users = find_users(context)
+                users.change_password(login, password)
+                message = 'Password changed'
         
     return render_template_to_response(
         'templates/profile_edit.pt',
@@ -855,6 +880,8 @@ def profile_edit_view(context, request):
         email = email,
         login = login,
         fullname = fullname,
+        password = password,
+        password_verify = password_verify,
         )
 
 class ProfileSchema(formencode.Schema):
@@ -867,6 +894,11 @@ class RegisterSchema(ProfileSchema):
     password = formencode.validators.NotEmpty()
     password_verify = formencode.validators.NotEmpty()
     captcha_answer = formencode.validators.NotEmpty()
+
+class ChangePasswordSchema(formencode.Schema):
+    allow_extra_fields = True
+    password = formencode.validators.NotEmpty()
+    password_verify = formencode.validators.NotEmpty()
 
 class All(object):
     def __call__(self, other):

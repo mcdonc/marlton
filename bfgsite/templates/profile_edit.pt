@@ -16,7 +16,7 @@
       <div>
 
         <form action="${api.context_url}edit" method="POST">
-          <input type="hidden" name="form.submitted"/>
+          <input type="hidden"/>
           <fieldset>
             <div class="field">
               <label for="fullname">Full Name</label>
@@ -28,7 +28,30 @@
               <input type="text" id="email" name="email" 
                      tal:attributes="value email|''" size="25"/>
             </div>
-            <input type="submit" />
+            <input type="submit" name="form.editprofile"/>
+          </fieldset>
+        </form>
+        
+      </div>
+
+      <h1>Change Your Password</h1>
+
+      <div>
+
+        <form action="${api.context_url}edit" method="POST">
+          <input type="hidden" name="form.submitted"/>
+          <fieldset>
+            <div class="field">
+              <label for="password">New Password</label>
+              <input type="password" id="password" name="password" 
+                     tal:attributes="value password|''" size="15"/>
+            </div>
+            <div class="field">
+              <label for="password_verify">New Password (Verify)</label>
+              <input type="password" id="password_verify" name="password_verify" 
+                     tal:attributes="value password_verify|''" size="15"/>
+            </div>
+            <input type="submit" name="form.changepassword"/>
           </fieldset>
         </form>
         
