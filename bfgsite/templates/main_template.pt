@@ -23,7 +23,7 @@
 
           <div id="title">
             <a href="${api.application_url}">
-            <img class="bfglogo" src="${api.application_url}/static/images/site/rg-gray-sh.png" height="60" /><span>B F G</span>
+            <img id="bfglogo" src="${api.application_url}/static/images/site/rg-gray-sh.png" height="60" border="0"/><span>B F G</span>
             </a>
           </div>
 
