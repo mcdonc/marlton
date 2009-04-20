@@ -915,7 +915,7 @@ def forgot_password_view(context, request):
                 msg.set_payload(body)
                 msg.set_type('text/html')
                 message = msg.as_string()
-                mailer.send(frm, email, message)
+                mailer.send(frm, [email], message)
                 message = 'Mail sent to "%s" with new password' % email
 
     return render_template_to_response(
