@@ -67,7 +67,10 @@
         <p><b>Familiarity:</b> As web developers, we've become
         accustomed to working in very particular ways over the
         years. This framework is a canonization of practices that "fit
-        our brains".</p>
+        our brains".  If you're a Zope developer, BFG will be quite
+        familiar to you.  If you're not a Zope developer, don't be
+        afraid; you needn't understand any Zope concepts to use BFG.
+        </p>
         
         <p><b>Simplicity:</b> BFG attempts to be a "pay only for what
         you eat" framework in which you can be productive quickly with

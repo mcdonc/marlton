@@ -534,7 +534,8 @@ def searchresults(context, request):
             numdocs, docids = catalog.search(sort_index=sort_index,
                                              reverse=reverse,
                                              text=text)
-            numdocs = numdocs + len(trac_results)
+            len_trac_results = len(trac_results)
+            numdocs = numdocs + len_trac_results
             docids = list(docids)
             docids.extend([('trac', x) for x in range(len(trac_results))])
         except ParseError:
@@ -562,7 +563,10 @@ def searchresults(context, request):
                 trac_idx = docid[1]
                 result = trac_results[trac_idx]
                 md['url'] = trac_url + result[0]
-                md['title'] = result[1]
+                title = str(result[1])
+                if title.endswith(' ...'):
+                    title = title[:-4]
+                md['title'] = title
                 md['teaser'] = result[4]
                 md['type'] = 'Trac'
             else:
