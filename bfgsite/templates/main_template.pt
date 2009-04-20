@@ -34,6 +34,10 @@
             </form>
           </div>
 
+          <div id="login_info">
+            <span tal:condition="api.userid">Logged in as <a href="${api.profile_edit_url}">${api.userid}</a></span>
+          </div>
+
           <div id="navcontainer">
             <ul id="navlist">
               <tal:block tal:repeat="navitem api.navitems">

@@ -38,6 +38,17 @@ body{
         clear:right;
 }
 
+#login_info {
+	float: right;
+        clear: both;
+	color: #fff;
+        display: inline;
+	position:absolute;
+	width:200px;
+	margin-top:75px;
+	margin-left:25px;
+}
+
 #navlist {
 	margin: 0;
 	padding: 30px 5px 0px 10px;

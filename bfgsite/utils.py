@@ -79,13 +79,19 @@ class API:
         )
     def __init__(self, context, request):
         self.context = context
+        self.context_url = model_url(context, request)
         self.site = find_interface(context, IWebSite)
         self.request = request
         self.main_template = get_template('templates/main_template.pt')
         self.application_url = request.application_url
         self.userid = authenticated_userid(request)
         profiles = find_profiles(context)
-        self.fullname = getattr(profiles.get(self.userid), 'fullname', None)
+        profile = profiles.get(self.userid)
+        self.fullname = getattr(profile, 'fullname', None)
+        if profile:
+            self.profile_edit_url = model_url(profile, request, 'edit')
+        else:
+            self.profile_edit_url = None
 
     @property
     def navitems(self):
@@ -156,7 +162,7 @@ def find_users(context):
     return find_interface(context, IWebSite).users
 
 def find_profiles(context):
-    return find_interface(context, IWebSite).profiles
+    return find_interface(context, IWebSite)['profiles']
 
 def find_site(context):
     return find_interface(context, IWebSite)

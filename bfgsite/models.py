@@ -102,7 +102,7 @@ def appmaker(root):
         populate_catalog(website)
         profiles = Profiles()
         profiles['admin'] = Profile('Ad Min', 'admin@example.com')
-        website.profiles = profiles
+        website['profiles'] = profiles
         users = Users()
         users.add('admin', 'admin', 'admin', groups=('admin',))
         website.users = users

@@ -46,6 +46,7 @@ from bfgsite.interfaces import ITutorial
 from bfgsite.interfaces import IPasteBin
 from bfgsite.interfaces import IPasteEntry
 from bfgsite.interfaces import IWebSite
+from bfgsite.interfaces import IProfile
 
 from bfgsite.utils import preferred_author
 from bfgsite.utils import COOKIE_AUTHOR
@@ -795,6 +796,10 @@ def register_view(context, request):
                         profiles = find_profiles(context)
                         profile = Profile(fullname, email)
                         profiles[login] = profile
+                        acl = context.__acl__[:]
+                        acl.extend([(Allow, login, 'edit'),
+                                    (Allow, 'admin', 'edit')])
+                        profile.__acl__ = acl
                         identity = {}
                         identity['repoze.who.userid'] = login
                         policy = getUtility(ISecurityPolicy)
@@ -819,11 +824,46 @@ def register_view(context, request):
         captcha_answer = captcha_answer,
         )
 
-class RegisterSchema(formencode.Schema):
+@bfg_view(for_=IProfile, name='edit', permission='edit')
+def profile_edit_view(context, request):
+    login = authenticated_userid(request)
+    fullname = context.fullname
+    email = context.email
+    message = ''
+
+    if 'form.submitted' in request.params:
+        schema = ProfileSchema()
+        message = None
+        try:
+            form = schema.to_python(request.params)
+        except formencode.validators.Invalid, why:
+            message = str(why)
+        else:
+            fullname = request.params['fullname']
+            email = request.params['email']
+            profiles = find_profiles(context)
+            profile = profiles[login]
+            profile.fullname = fullname
+            profile.email = email
+            message = 'Profile edited'
+        
+    return render_template_to_response(
+        'templates/profile_edit.pt',
+        api = API(context, request),
+        login = login,
+        message = message,
+        email = email,
+        login = login,
+        fullname = fullname,
+        )
+
+class ProfileSchema(formencode.Schema):
     allow_extra_fields = True
-    login = formencode.validators.NotEmpty()
     fullname = formencode.validators.NotEmpty()
     email = formencode.validators.NotEmpty()
+
+class RegisterSchema(ProfileSchema):
+    login = formencode.validators.NotEmpty()
     password = formencode.validators.NotEmpty()
     password_verify = formencode.validators.NotEmpty()
     captcha_answer = formencode.validators.NotEmpty()
