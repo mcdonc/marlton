@@ -522,17 +522,33 @@ def searchresults(context, request):
 
     if text is not None:
         try:
+            settings = getUtility(ISettings)
+            from trac.env import open_environment
+            trac_path = getattr(settings, 'trac.env_path')
+            env = open_environment(trac_path, use_cache=False)
+            search = TracSearch(env) 
+            from trac.web.api import Request
+            req = Request(request.environ, None)
+            req.perm = All()
+            trac_results = search.all_results(req, text)
             numdocs, docids = catalog.search(sort_index=sort_index,
                                              reverse=reverse,
                                              text=text)
+            numdocs = numdocs + len(trac_results)
+            docids = list(docids)
+            docids.extend([('trac', x) for x in range(len(trac_results))])
         except ParseError:
             numdocs, docids = 0, []
+            trac_results = []
     else:
-        numdocs, docids = 0, []
+            numdocs, docids = 0, []
+            trac_results = []
 
     i = 0
 
     batch = []
+
+    trac_url = model_url(context, request, 'trac')
 
     if numdocs > 0:
         for docid in docids:
@@ -541,24 +557,33 @@ def searchresults(context, request):
                 break
             if i < batch_start:
                 continue
-            path = catalog.document_map.address_for_docid(docid)
-            md = dict(catalog.document_map.get_metadata(docid))
-            if path.startswith('sphinx:'):
-                scheme, rest = path.split(':', 1)
-                if text.lower() in md['text'].lower():
-                    firstpos = md['text'].lower().find(text.lower())
-                else:
-                    firstpos = 0
-                start = firstpos -150
-                if start < 0:
-                    start = 0
-                teaser = '%s ...' % md['text'][start:start+300]
-                url = rest
-                md['teaser'] = teaser
+            if isinstance(docid, tuple):
+                md = {}
+                trac_idx = docid[1]
+                result = trac_results[trac_idx]
+                md['url'] = trac_url + result[0]
+                md['title'] = result[1]
+                md['teaser'] = result[4]
+                md['type'] = 'Trac'
             else:
-                model = find_model(context, path)
-                url = model_url(model, request)
-            md['url'] = url
+                path = catalog.document_map.address_for_docid(docid)
+                md = dict(catalog.document_map.get_metadata(docid))
+                if path.startswith('sphinx:'):
+                    scheme, rest = path.split(':', 1)
+                    if text.lower() in md['text'].lower():
+                        firstpos = md['text'].lower().find(text.lower())
+                    else:
+                        firstpos = 0
+                    start = firstpos -150
+                    if start < 0:
+                        start = 0
+                    teaser = '%s ...' % md['text'][start:start+300]
+                    md['url'] = rest
+                    md['teaser'] = teaser
+                else:
+                    model = find_model(context, path)
+                    url = model_url(model, request)
+                    md['url'] = url
             batch.append(md)
 
     def _batchURL(query, batch_start=0):

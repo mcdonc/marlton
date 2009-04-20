@@ -53,8 +53,8 @@
       
       <div tal:condition="batch" tal:omit-tag="">
         <div tal:repeat="item batch" style="padding-bottom: 10px">
-            <div class="search-title"><a href="${item.url}">${item.title}</a> (${item.type})</div> 
-          <div class="search-teaser">${item.teaser}</div>
+            <div class="search-title"><a href="${item.url}" tal:content="item.title"></a> (${item.type})</div> 
+          <div class="search-teaser" tal:content="item.teaser"></div>
           <div class="search-link"><a href="${item.url}">${item.url}</a></div>
         </div>
       </div>
