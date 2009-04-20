@@ -24,10 +24,10 @@
           <div>
             
             <fieldset id="username">
-              <legend>Username</legend>
+              <label for="login">Username</label>
               <input id="login" type="text" name="login" value=""
                      tal:attributes="value login | ''" />
-              <legend>Password</legend>
+              <label for="password">Password</label>
               <input id="password" type="password" name="password" value=""
                      tal:attributes="value password | ''" />
               <div>

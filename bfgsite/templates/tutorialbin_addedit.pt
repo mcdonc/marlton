@@ -37,7 +37,6 @@
           <form action="${form_url}" method="POST">
             <input type="hidden" name="form.submitted"/>
             <fieldset>
-              <legend>New tutorial</legend>
               <div class="field">
                 <label for="author_name">Author name</label>
                 <div tal:content="api.fullname" id="author_name"/>

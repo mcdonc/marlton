@@ -37,7 +37,6 @@ from repoze.monty import marshal
 
 from Captcha.Visual.Tests import PseudoGimpy
 
-
 from bfgsite.models import Tutorial
 from bfgsite.models import PasteEntry
 from bfgsite.models import Profile
@@ -370,7 +369,7 @@ def delete_tutorial_view(context, request):
         'templates/areyousure.pt',
         api = API(context, request),
         form_url = model_url(context, request, 'delete'),
-        message = 'Are you sure you want to delete %s' % context.title
+        message = 'Are you sure you want to delete "%s"' % context.title
         )
     
 @bfg_view(for_=ITutorialBin, name='manage', permission='manage')
@@ -478,12 +477,11 @@ class PasteAddSchema(formencode.Schema):
 @bfg_view(for_=IPasteBin, permission='view')
 def pastebin_view(context, request):
     params = request.params
-    author_name = preferred_author(request)
+    author_name = preferred_author(context, request)
     language = u''
     paste = u''
     message = u''
     pastebin_url = model_url(context, request)
-    user = authenticated_userid(request)
     can_manage = has_permission('manage', context, request)
 
     if params.has_key('form.submitted'):
@@ -516,8 +514,8 @@ def pastebin_view(context, request):
         message = message,
         pastes = pastes,
         pastebin_url = pastebin_url,
-        user = user,
         can_manage = can_manage,
+        manage_url = model_url(context, request, 'manage'),
         )
     
 @bfg_view(for_=IPasteBin, name='manage', permission='manage')

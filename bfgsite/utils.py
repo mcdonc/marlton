@@ -17,7 +17,6 @@ from bfgsite.interfaces import IPasteEntry
 from bfgsite.interfaces import ITutorialBin
 from bfgsite.interfaces import ITutorial
 
-
 COOKIE_LANGUAGE = 'website.last_lang'
 COOKIE_AUTHOR = 'website.last_author'
 
@@ -33,10 +32,15 @@ def sort_byint(keys):
     keys.reverse()
     return keys
 
-def preferred_author(request):
+def preferred_author(context, request):
     author_name = request.params.get('author_name', u'')
     if not author_name:
         author_name = request.cookies.get(COOKIE_AUTHOR, u'')
+        if not author_name:
+            userid = authenticated_userid(request)
+            profiles = find_profiles(context)
+            profile = profiles.get(userid)
+            author_name = getattr(profile, 'fullname', u'')
     if isinstance(author_name, str):
         author_name = unicode(author_name, 'utf-8')
     return author_name
