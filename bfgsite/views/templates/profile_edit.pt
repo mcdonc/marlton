@@ -58,7 +58,7 @@
 
       <h1>Change Your Password</h1>
 
-      <div class="form">
+      <div class="bfgform">
 
         <form action="${api.context_url}edit" method="POST">
           <fieldset>
