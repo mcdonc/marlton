@@ -264,4 +264,6 @@ def get_pastes(context, request, max):
 
 def get_mailer():
     mailer = getUtility(IMailDelivery)
+    return mailer
+
     
