@@ -7,11 +7,6 @@
 
   <scan package="."/>
 
-  <utility
-    provides="repoze.bfg.interfaces.ISecurityPolicy"
-    factory=".security.BFGSiteSecurityPolicy"
-    />
-
   <subscriber
       for="repoze.lemonade.interfaces.IContent
            repoze.folder.interfaces.IObjectWillBeRemovedEvent"
@@ -36,21 +31,6 @@
       for="repoze.lemonade.interfaces.IContent
            .interfaces.IObjectModifiedEvent"
       handler=".subscribers.set_modified"/>
-
-  <lemonade:content
-      factory=".models.PasteEntry"
-      type=".interfaces.IPasteEntry"
-      />
-
-  <lemonade:content
-      factory=".models.Tutorial"
-      type=".interfaces.ITutorial"
-      />
-
-  <lemonade:content
-      factory=".models.SphinxDocument"
-      type=".interfaces.ISphinxDocument"
-      />
 
   <adapter
     for=".interfaces.ITutorial"
@@ -92,5 +72,24 @@
     provides="repoze.sendmail.interfaces.IMailDelivery"
   />
 
+  <utility
+    provides="repoze.bfg.interfaces.ISecurityPolicy"
+    factory=".security.BFGSiteSecurityPolicy"
+    />
+
+  <lemonade:content
+      factory=".models.PasteEntry"
+      type=".interfaces.IPasteEntry"
+      />
+
+  <lemonade:content
+      factory=".models.Tutorial"
+      type=".interfaces.ITutorial"
+      />
+
+  <lemonade:content
+      factory=".models.SphinxDocument"
+      type=".interfaces.ISphinxDocument"
+      />
 
 </configure>

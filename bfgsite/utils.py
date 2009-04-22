@@ -1,4 +1,5 @@
 from random import choice
+import urlparse
 
 from zope.component import getUtility
 
@@ -11,8 +12,9 @@ from repoze.bfg.traversal import find_interface
 from repoze.bfg.interfaces import ISecurityPolicy
 from repoze.bfg.interfaces import ISettings
 from repoze.bfg.security import authenticated_userid
-
 from repoze.bfg.url import model_url
+
+from repoze.sendmail.interfaces import IMailDelivery
 
 from bfgsite.interfaces import IWebSite
 from bfgsite.interfaces import IPasteBin
@@ -85,7 +87,7 @@ class API:
         self.context_url = model_url(context, request)
         self.site = find_interface(context, IWebSite)
         self.request = request
-        self.main_template = get_template('templates/main_template.pt')
+        self.main_template = get_template('views/templates/main_template.pt')
         self.application_url = request.application_url
         self.userid = authenticated_userid(request)
         profiles = find_profiles(context)
@@ -99,7 +101,7 @@ class API:
     @property
     def navitems(self):
         items = get_navigation(self.context, self.request, self.nav_links)
-        policy = getUtility(ISecurityPolicy)
+        policy = get_security_policy()
         logged_in = policy.authenticated_userid(self.request)
         if logged_in:
             items.extend(
@@ -170,13 +172,19 @@ def find_profiles(context):
 def find_site(context):
     return find_interface(context, IWebSite)
 
+def get_settings():
+    return getUtility(ISettings)
+
+def get_security_policy():
+    return getUtility(ISecurityPolicy)
+
 def random_password():
     friendly = ''.join(
         [choice('bcdfghklmnprstvw')+choice('aeiou') for i in range(4)])
     return friendly
 
 def search_trac(request, query, filter):
-    settings = getUtility(ISettings)
+    settings = get_settings()
     from trac.env import open_environment
     trac_path = getattr(settings, 'trac.env_path')
     env = open_environment(trac_path, use_cache=False)
@@ -205,3 +213,55 @@ class TracSearch(SearchModule):
                 results.append(result)
         return results
 
+def get_tutorials(context, request, max):
+    tutorialbin = find_interface(context, ITutorialBin)
+    tutorials = []
+    tutorialbin_url = model_url(tutorialbin, request)
+    keys = sort_byint(tutorialbin.keys())
+    keys = keys[:max]
+    for name in keys:
+        tutorial = tutorialbin[name]
+        if tutorial.date is not None:
+            pdate = tutorial.date.strftime('%x')
+        else:
+            pdate = 'UNKNOWN'
+        tutorial_url = model_url(tutorial, request)
+        new = {
+            'author':tutorial.author_name,
+            'title':tutorial.title,
+            'date':pdate,
+            'url':tutorial_url,
+            'language':tutorial.language,
+            'name':name,
+            'text':tutorial.text
+            }
+        tutorials.append(new)
+    return tutorials
+
+def get_pastes(context, request, max):
+    pastebin = find_interface(context, IPasteBin)
+    pastes = []
+    pastebin_url = model_url(pastebin, request)
+    keys = sort_byint(pastebin.keys())
+    keys = keys[:max]
+    for name in keys:
+        entry = pastebin[name]
+        if entry.date is not None:
+            pdate = entry.date.strftime('%x')
+        else:
+            pdate = 'UNKNOWN'
+        paste_url = urlparse.urljoin(pastebin_url, name)
+        author_name = entry.author_name
+        if not author_name:
+            author_name = '{unknown}'
+        paste_title = '#%s by %s on %s (%s...)' % (name, author_name[:15],
+                                                   pdate, entry.paste[:8])
+        new = {'author':author_name, 'date':pdate, 'url':paste_url,
+               'language':entry.language,'name':name, 'body':entry.paste,
+               'title':paste_title}
+        pastes.append(new)
+    return pastes
+
+def get_mailer():
+    mailer = getUtility(IMailDelivery)
+    
