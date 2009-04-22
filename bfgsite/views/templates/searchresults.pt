@@ -20,11 +20,11 @@
 
       <form action="searchresults" method="GET">
         
-        <div>
+        <div class="bfgform">
           
           <fieldset id="srchText">
             <legend>Search Text</legend>
-            <input id="text" type="text" name="text" value=""
+            <input id="text" type="text" name="text" size="40"
                    tal:attributes="value api.request.params['text'] | ''" />
             <input type="submit" name="search" value="Search" />
           </fieldset>

@@ -22,31 +22,53 @@
           href="${api.request.application_url}/forgot_password">retrieve
           it</a> via email.</p>
 
-        <form action="login" method="POST">
-          
-          <div>
-            
-            <fieldset id="username">
-              <div class="field">
-              <label for="login">Username</label>
-              <input id="login" type="text" name="login" value=""
-                     tal:attributes="value login | ''" />
-              </div>
-              <div class="field">
-              <label for="password">Password</label>
-              <input id="password" type="password" name="password" value=""
-                     tal:attributes="value password | ''" />
-              </div>
-              <div>
-                <input type="hidden" name="came_from" 
-                       tal:attributes="value came_from|''"/>
-                <input type="submit" name="form.submitted" value="Log In" />
-              </div>
-            </fieldset>
-            
-          </div>
+      <div class="bfgform">
 
+        <form action="login" method="POST">
+          <fieldset>
+            <legend>Login Information</legend>
+            <table>
+              <tr>
+                <th>
+                  <label for="login">Username</label>
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <input type="text" id="login" name="login" 
+                         tal:attributes="value login|''" size="15"/>
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <label for="login">Password</label>
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <input id="password" type="password" name="password" value=""
+                         tal:attributes="value password | ''" size="15"/>
+                </td>
+              </tr>
+              <tr>
+                <th></th>
+              </tr>
+              <tr>
+                <th></th>
+              </tr>
+              <tr>
+                <td>
+                  <input type="hidden" name="came_from" 
+                         tal:attributes="value came_from|''"/>
+                  <input type="submit" name="form.submitted" value="Log In" />
+                </td>
+              </tr>
+            </table>
+          </fieldset>
         </form>
+            
+        </div>
+
       </div>
       
       <div tal:condition="logged_in">

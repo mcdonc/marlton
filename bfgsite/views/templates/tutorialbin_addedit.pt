@@ -33,43 +33,98 @@
           <p>Please add your tutorial. If you already made an article
           or blog post somewhere, use the URL field to add it and type
           in a small text description.</p>
-          
-          <form action="${form_url}" method="POST">
-            <input type="hidden" name="form.submitted"/>
-            <fieldset>
-              <div class="field">
-                <label for="author_name">Author name</label>
-                <div tal:content="api.fullname" id="author_name"/>
-              </div>
-              <div class="field">
-                <label for="title">Tutorial title</label>
-                <input type="text" name="title" value="${title}" size="25"/>
-              </div>
-              <div class="field">
-                <label for="url">URL (for additional info or code)</label>
-                <input type="text" name="url" value="${url}" 
-                       size="25"/>
-              </div>
-              <div class="field">
-                <label for="text">Tutorial Text or description</label>
-                <textarea name="text" rows="14" cols="80">${text}</textarea>
-              </div>
-              <div class="field">
-                <label for="language">Language</label>
-                <select name="language">
-                  <option value="" selected="selected">-- Auto detect --</option>
-                  <option tal:repeat="lexer lexers"
-                          value="${lexer.alias}"
-                          >${lexer.name}</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="code">Tutorial code</label>
-                <textarea name="code" rows="8" cols="80">${code}</textarea>
-              </div>
-              <input type="submit" />
+
+          <div class="bfgform">
+
+            <form action="${form_url}" method="POST">
+              <input type="hidden" name="form.submitted"/>
+              <fieldset>
+                <legend>Tutorial Information</legend>
+                <table>
+                  <tr>
+                    <th>
+                    <label for="author_name">Author name</label>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div tal:content="api.fullname" id="author_name"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <label for="title">Tutorial title</label>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" name="title" value="${title}" 
+                             size="25"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <label for="url">URL (for additional info or code)</label>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" name="url" value="${url}" 
+                             size="25"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <label for="text">Tutorial Text or description</label>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      <textarea name="text" rows="14" cols="60"
+                                >${text}</textarea>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <label for="language">Language</label>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      <select name="language">
+                        <option value="" selected="selected"
+                                >-- Auto detect --</option>
+                        <option tal:repeat="lexer lexers"
+                                value="${lexer.alias}"
+                                >${lexer.name}</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <label for="code">Tutorial code</label>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      <textarea name="code" rows="8" cols="60"
+                                >${code}</textarea>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="submit" name="form.submitted"
+                             value="Add"/>
+                    </td>
+                  </tr>
+                </table>
             </fieldset>
           </form>
+          </div>
           
         </div>
         

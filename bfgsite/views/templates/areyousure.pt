@@ -9,7 +9,7 @@
 
       <h1>${message}</h1>
 
-      <div>
+      <div class="bfgform">
         <form action="${form_url}"/>
         <input type="submit" name="form.yes" value="Yes"/>
         <input type="submit" name="form.no" value="No"/>

@@ -8,9 +8,9 @@
     <div id="content">
       <h1>Documentation</h1> 
       <h2>Search for Documentation</h2>
-      <div style="margin-top: 10px">
+      <div style="margin-top: 10px" class="bfgform">
         <form action="${api.application_url}/searchresults" method="post">
-          <input type="text" name="text" value="" />
+          <input type="text" name="text" value="" size="40"/>
           <input type="submit" value="search" />
         </form>
       </div>

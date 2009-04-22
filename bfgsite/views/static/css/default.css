@@ -415,74 +415,13 @@ img.floatleft{
 img.floatright{
 	margin:15px 5px 5px 18px
 }
-/*Forms*/
-form select,
-form input,
-form textarea{
+
+div.bfgform input {
 	font:11px Verdana,Arial,Helvetica,sans-serif;
 	border:1px solid #353535;
 	background-color:#eee;
 }
-form input:hover,
-form input:focus,
-form textarea:hover,
-form textarea:focus,
-form select:hover,
-form select:focus{
-	/*border:1px dotted #888;  optional thought */
-	border:1px solid #353535;
-}
-form select{
-	padding:1px;
-}
-form input{
-	padding:1px;
-}
-form label{
-	display:inline;
-	color:#000;
-        font-weight: bold;
-        font-size: 0.9em;
-}
-form textarea{
-	padding:1px;
-	line-height:16px;
-}
-form p{
-	margin:10px 0px;
-}
-form fieldset{
-        border:0;
-}
-form legend{
-	font-family:Georgia,Verdana,Arial,Helvetica,sans-serif;
-	font-weight:lighter;
-	margin:15px 0 0 0;
-	padding-bottom:4px;
-	color:#308006;
-	font-size:18px;
-        font-weight:bold;
-}
-.field {
-    margin: 5px 0px 10px 0px;
-}
-.field label {
-	display: block;
-}
-.noborder{
-	border:0;
-}
-td{
-	padding:8px;
-	border:#3270A9 1px solid;
-}
-.sourcetable td{
-        border:0;
-        font-size:80%;
-        padding: 0 0 0 5px;
-        margin:0;
-        line-height:140%;
-}
+
 /*Content Styles*/
 #content{
 	width:778px;

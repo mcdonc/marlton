@@ -28,44 +28,97 @@
         you don't already have an account, you can create one using
         the form below.  </p>
 
-        <form action="${api.request.application_url}/register" method="POST">
-          <input type="hidden" name="form.submitted"/>
-          <fieldset>
-            <div class="field">
-              <label for="login">Login Name</label>
-              <input type="text" id="login" name="login" 
-                     tal:attributes="value login|''" size="25"/>
-            </div>
-            <div class="field">
-              <label for="fullname">Full Name</label>
-              <input type="text" id="fullname" name="fullname" 
-                     tal:attributes="value fullname|''" size="25"/>
-            </div>
-            <div class="field">
-              <label for="email">Email</label>
-              <input type="text" id="email" name="email" 
-                     tal:attributes="value email|''" size="25"/>
-            </div>
-            <div class="field">
-              <label for="password">Password</label>
-              <input type="password" id="password" name="password" 
-                     tal:attributes="value password|''" size="15"/>
-            </div>
-            <div class="field">
-              <label for="password_verify">Password Verify</label>
-              <input type="password" id="password_verify" 
-                     name="password_verify" 
-                     tal:attributes="value password_verify|''" size="15"/>
-            </div>
-            <div class="field">
-              <img src="${api.application_url}/captcha.jpg" id="captcha_image"/>
-              <label for="captcha_answer">Type the word above:</label>
-              <input type="text" name="captcha_answer" id="captcha_answer" 
-                     size="40" tal:attributes="value captcha_answer|''"/>
-            </div>
-            <input type="submit" />
-          </fieldset>
-        </form>
+        <div class="bfgform">
+
+          <form action="${api.request.application_url}/register" method="POST">
+            <input type="hidden" name="form.submitted"/>
+            <fieldset>
+              <legend>Registration Information</legend>
+              <table>
+                <tr>
+                  <th>
+                    <label for="login">Login Name</label>
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="text" id="login" name="login" 
+                           tal:attributes="value login|''" size="30"/>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <label for="fullname">Full Name</label>
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="text" id="fullname" name="fullname" 
+                           tal:attributes="value fullname|''" size="40"/>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <label for="email">Email</label>
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="text" id="email" name="email" 
+                           tal:attributes="value email|''" size="40"/>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <label for="password">Password</label>
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="password" id="password" name="password" 
+                           tal:attributes="value password|''" size="20"/>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <label for="password_verify">Verify Password</label>
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="password" id="password_verify" 
+                           name="password_verify" 
+                           tal:attributes="value password_verify|''" size="20"/>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <label for="captcha_answer">Type The Word Below</label>
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="margin-bottom: 5px;">
+                      <input type="text" name="captcha_answer" id="captcha_answer" 
+                           size="20" tal:attributes="value captcha_answer|''"/>
+                    </div>
+                    <img src="${api.application_url}/captcha.jpg" id="captcha_image"/>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="submit" value="Register"/>
+                  </td>
+                </tr>
+              </table>
+            </fieldset>
+          </form>
+          
+        </div>
         
       </div>
       

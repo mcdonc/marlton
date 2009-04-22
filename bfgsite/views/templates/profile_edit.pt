@@ -13,22 +13,44 @@
 
       <h1>Edit your Profile</h1>
 
-      <div>
+      <div class="bfgform">
 
         <form action="${api.context_url}edit" method="POST">
-          <input type="hidden"/>
           <fieldset>
-            <div class="field">
-              <label for="fullname">Full Name</label>
-              <input type="text" id="fullname" name="fullname" 
-                     tal:attributes="value fullname|''" size="25"/>
-            </div>
-            <div class="field">
-              <label for="email">Email</label>
-              <input type="text" id="email" name="email" 
-                     tal:attributes="value email|''" size="25"/>
-            </div>
-            <input type="submit" name="form.editprofile"/>
+            <legend>Profile Information</legend>
+            <table>
+              <tr>
+                <th>
+                  <label for="fullname">Full name</label>
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <input type="text" id="fullname" name="fullname" 
+                         tal:attributes="value fullname|''" size="25"/>
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <label for="fullname">Email</label>
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <input type="text" id="email" name="email" 
+                         tal:attributes="value email|''" size="25"/>
+                </td>
+              </tr>
+              <tr>
+                <th>
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <input type="submit" name="form.editprofile" value="Edit"/>
+                </td>
+              </tr>
+            </table>
           </fieldset>
         </form>
         
@@ -36,22 +58,46 @@
 
       <h1>Change Your Password</h1>
 
-      <div>
+      <div class="form">
 
         <form action="${api.context_url}edit" method="POST">
-          <input type="hidden" name="form.submitted"/>
           <fieldset>
-            <div class="field">
-              <label for="password">New Password</label>
-              <input type="password" id="password" name="password" 
-                     tal:attributes="value password|''" size="15"/>
-            </div>
-            <div class="field">
-              <label for="password_verify">New Password (Verify)</label>
-              <input type="password" id="password_verify" name="password_verify" 
-                     tal:attributes="value password_verify|''" size="15"/>
-            </div>
-            <input type="submit" name="form.changepassword"/>
+            <legend>Password Information</legend>
+            <table>
+              <tr>
+                <th>
+                  <label for="password">New Password</label>
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <input type="password" id="password" name="password" 
+                         tal:attributes="value password|''" size="15"/>
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <label for="password_verify">New Password (Verify)</label>
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <input type="password" id="password_verify" 
+                         name="password_verify" 
+                         tal:attributes="value password_verify|''" size="15"/>
+                </td>
+              </tr>
+              <tr>
+                <th>
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <input type="submit" name="form.changepassword" 
+                         value="Change Password"/>
+                </td>
+              </tr>
+            </table>
           </fieldset>
         </form>
         
