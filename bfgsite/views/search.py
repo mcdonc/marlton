@@ -20,21 +20,26 @@ def searchresults(context, request):
     batch_start = int(request.params.get('batch_start', 0))
     sort_index = request.params.get('sort_index', None)
     reverse = bool(request.params.get('reverse', False))
-
+    message = ''
 
     if text is not None:
-        try:
-            trac_results = search_trac(request, text, ['wiki', 'tickets'])
-            numdocs, docids = catalog.search(sort_index=sort_index,
-                                             reverse=reverse,
-                                             text=text)
-            len_trac_results = len(trac_results)
-            numdocs = numdocs + len_trac_results
-            docids = list(docids)
-            docids.extend([('trac', x) for x in range(len(trac_results))])
-        except ParseError:
+        if text:
+            try:
+                trac_results = search_trac(request, text, ['wiki', 'tickets'])
+                numdocs, docids = catalog.search(sort_index=sort_index,
+                                                 reverse=reverse,
+                                                 text=text)
+                len_trac_results = len(trac_results)
+                numdocs = numdocs + len_trac_results
+                docids = list(docids)
+                docids.extend([('trac', x) for x in range(len(trac_results))])
+            except ParseError:
+                numdocs, docids = 0, []
+                trac_results = []
+        else:
             numdocs, docids = 0, []
             trac_results = []
+            message = 'Bad query'
     else:
             numdocs, docids = 0, []
             trac_results = []
@@ -133,5 +138,6 @@ def searchresults(context, request):
         batch_info = batch_info,
         numdocs = numdocs,
         api = API(context, request),
+        message = message,
         )
 

@@ -18,6 +18,9 @@
   <div metal:fill-slot="content">
     <div id="content">
 
+      <div class="bfgmessage" tal:condition="message|None"
+      tal:content="message">Error message</div>
+
       <form action="searchresults" method="GET">
         
         <div class="bfgform">
