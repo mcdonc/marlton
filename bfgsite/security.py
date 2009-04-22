@@ -65,7 +65,7 @@ class Forbidden:
             # resource
             api = API(context, request)
             body =  render_template(
-                'templates/forbidden.pt',
+                'views/templates/forbidden.pt',
                 api=api,
                 login_form_url = model_url(site, request, 'login'),
                 homepage_url = model_url(site, request),
