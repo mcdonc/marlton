@@ -109,7 +109,6 @@ body{
 	width:798px;
 	height:100px;
 	margin:0 auto;
-	//background:url(../images/site/headerbg.png) repeat-x top left;
         background-color:#000;
 	text-align:left;
 	border-left:#999 1px solid;
@@ -146,7 +145,6 @@ body{
 	width:800px;
 	margin:auto;
 	padding-bottom:20px;
-	text-align:left;
 }
 
 span.subheader{
@@ -201,9 +199,6 @@ span.subheader{
 h1,h2,h3,h4,h5,h6{
 	font-family:Georgia,Verdana,Arial,Helvetica,sans-serif;
 	font-weight:lighter;
-	margin:15px 0 0 0;
-	padding-bottom:4px;
-	line-height:85%;
 }
 h1{
 	color:#231eff;
@@ -256,15 +251,6 @@ del{
 	font-stretch:wider;
 	font-variant:small-caps;	
 }
-hr{
-	width:100%;
-	border:0;
-	margin:5px 0px !important;
-	margin:2px 0px 5px 0px;
-	height:1px;
-	color:#777;
-	background-color:#777;
-}
 p.firstletter:first-letter{
 	font-family:Georgia,Verdana,Arial,Helvetica,sans-serif;
 	font-size:40px;
@@ -281,20 +267,6 @@ p.firstletter:first-letter{
 }
 .blue{
 	color:#3270A9;
-}
-ul li ul li{
-	list-style-type:square;
-}
-ol li ol li{
-	list-style-type:lower-roman;
-}
-dl{
-	margin-left:8px;
-	margin-right:8px;
-}
-dt{
-	color:#000;
-	font-weight:bold;
 }
 .install{
 	border-bottom:2px solid #d0ca20;
@@ -328,17 +300,6 @@ dt{
 	display:block;
 	font-size:10px;
 	color:#999;
-}
-code{
-	display:block;
-	border-bottom:0px solid #273955;
-	border-top:0px solid #273955;
-	border-left:4px solid #505050;
-	background:url(../images/site/blockquote.png) repeat top left;
-	padding:6px 6px 4px 8px;
-	margin:12px 0;
-	color:#000;
-	font:normal 11px "Courier New", Courier, monospace;
 }
 .highlight-paragraph{
 	color:#3270a9;
@@ -538,7 +499,7 @@ width. Also be sure to account for the border.*/
 	font-size:15px;
 }
 
-.message {
+.bfgmessage {
 	margin: 10px 0px 20px 0px;
 	text-align: center;
 	font-weight: bold;

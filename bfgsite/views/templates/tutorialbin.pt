@@ -22,7 +22,7 @@
       <div id="one">
         
         <h1>BFG Tutorial Bin</h1>
-        <div class="message" tal:condition="message|None"
+        <div class="bfgmessage" tal:condition="message|None"
              tal:content="message">Error message</div>
         
         <a href="${tutorialbin_url}add" tal:condition="api.userid">Add 

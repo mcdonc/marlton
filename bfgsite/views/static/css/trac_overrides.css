@@ -25,7 +25,7 @@
         margin: 0;
 }
 
-#content.error .message, div.system-message {
+#content.error, div.system-message {
         margin: 0;
         padding:0.5em;
 }

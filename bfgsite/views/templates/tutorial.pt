@@ -23,7 +23,7 @@
       <div id="one">
         
         <h1>Tutorial</h1>
-        <div class="message" tal:condition="message|None"
+        <div class="bfgmessage" tal:condition="message|None"
              tal:content="message">Error message</div>
 
         <a href="${edit_url}" tal:condition="can_edit">Edit this tutorial</a>

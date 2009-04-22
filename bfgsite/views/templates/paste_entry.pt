@@ -23,7 +23,7 @@
       <div id="one">
         
         <h1>BFG Paste Bin</h1>
-        <div class="message" tal:condition="message|nothing"
+        <div class="bfgmessage" tal:condition="message|nothing"
              tal:content="message">Error message</div>
         
         <div class="left">
