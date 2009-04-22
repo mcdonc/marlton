@@ -374,6 +374,10 @@ img.floatright{
 	margin:15px 5px 5px 18px
 }
 
+div.bfgform {
+    text-align: left;
+}
+
 div.bfgform input {
 	font:11px Verdana,Arial,Helvetica,sans-serif;
 	border:1px solid #353535;
