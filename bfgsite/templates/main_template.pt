@@ -12,7 +12,11 @@
         <![endif]-->
 
     <metal:block define-slot="headinclude"/>
-    <link rel="stylesheet" type="text/css" href="${api.application_url}/static/css/default.css" />
+
+    <metal:block define-slot="css">
+      <link rel="stylesheet" type="text/css" href="${api.application_url}/static/css/default.css" />
+    </metal:block>
+
   </head>
 
   <body>
