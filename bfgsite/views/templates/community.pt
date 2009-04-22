@@ -14,6 +14,7 @@
       <li>Need to discuss some piece of code at the IRC channel? Use our <a href="${api.application_url}/pastebin">Pastebin</a>.</li>
       <li>Have a piece of code you are proud of or something you think worth learning but don't have time to write a long blog post or tutorial? Why not just paste it and add a brief explanation on our <a href="${api.application_url}/tutorialbin">quick and dirty tutorial maker</a>.</li>
       <li>If you prefer to use mailing lists for support and collaboration, you can use the <a href="http://lists.repoze.org/listinfo/repoze-dev">repoze.dev mailing list</a>, but be warned that it is a very low volume list, since we are usually on IRC.</li>
+      <li>If you'd like to contribute to BFG, please see the <a href="/trac">Software</a> section</li>
     </ul>
   </div>
   </div>
