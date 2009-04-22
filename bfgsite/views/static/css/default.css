@@ -43,12 +43,12 @@ body{
 	position:absolute;
 	width:200px;
 	margin-top:75px;
-	margin-left:25px;
+	margin-left:600px;
 }
 
 #navlist {
 	margin: 0;
-	padding: 30px 5px 0px 10px;
+	padding: 10px 20px 0px 10px;
 	float:right;
 	font:12px Verdana,Arial,Helvetica,sans-serif;
 }
@@ -61,6 +61,7 @@ body{
 }
 
 #navlist a:link, #navlist a:visited {
+        padding-bottom: 3px;
 	float: left;
 	line-height: 14px;
 	margin: 0 10px 4px 10px;
@@ -84,10 +85,10 @@ body{
 
 #navlist a:hover { color: #fff; }
 
-
 #searchbox{
         float:right;
-        margin-top: 10px;
+        clear:both;
+        margin-top: 17px;
         margin-right: 20px;
 }
 
@@ -126,15 +127,14 @@ body{
 }
 
 #title{
-	width:300px;
-	margin-top:5px;
+	width:290px;
+	margin-top:12px;
 	margin-left:25px;
 	position:absolute;
 	color:#fff;
-        font:28px Arial,Helvetica,sans-serif bold;
+        font:72px Arial,Helvetica,sans-serif bold;
 	cursor:default;
 	float:left;
-        font-size: 72px;
         font-weight: bold;
 }
 

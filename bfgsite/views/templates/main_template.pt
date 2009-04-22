@@ -31,13 +31,6 @@
             </a>
           </div>
 
-          <div id="searchbox">
-            <form action="${api.application_url}/searchresults" method="post">
-                <input type="text" name="text" value="" />
-                <input type="submit" value="search" />
-            </form>
-          </div>
-
           <div id="login_info">
             <span tal:condition="api.userid">Logged in as <a href="${api.profile_edit_url}">${api.userid}</a></span>
           </div>
@@ -51,6 +44,14 @@
               </tal:block>
             </ul>
           </div>
+
+          <div id="searchbox">
+            <form action="${api.application_url}/searchresults" method="post">
+                <input type="text" name="text" value="" />
+                <input type="submit" value="search" />
+            </form>
+          </div>
+
 
       </div>
       
