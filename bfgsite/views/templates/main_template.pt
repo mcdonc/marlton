@@ -5,7 +5,7 @@
       metal:define-macro="master">
 
   <head>
-    <title>B F G</title>
+    <title>BFG</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!--[if IE 6]>
         <link rel="stylesheet" href="${api.application_url}/static/css/fix.css" type="text/css" />
@@ -27,7 +27,7 @@
 
           <div id="title">
             <a href="${api.application_url}">
-            <img id="bfglogo" src="${api.application_url}/static/images/site/rg-gray-sh.png" height="60" border="0"/><span>B F G</span>
+            <img id="bfglogo" src="${api.application_url}/static/images/site/rg-gray-sh.png" alt="BFG Logo" title="BANG!" height="60" border="0"/><span>BFG</span>
             </a>
           </div>
 
