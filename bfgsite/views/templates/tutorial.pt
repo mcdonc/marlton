@@ -39,8 +39,8 @@
           <span class="entryheader">Author:</span> ${author} <br/>
           <span class="entryheader">Date:</span> ${date} <br/>
           <span class="entryheader" tal:condition="url">External URL: <a href="${url}">${url}</a></span><br tal:condition="url" />
-          <div class="tutorialtext">${text}</div>
-          <div><pre>${code}</pre></div>
+          <div class="tutorialtext"><span tal:replace="structure text"/></div>
+          <div><pre><span tal:replace="structure code"/></pre></div>
           
         </div>
         

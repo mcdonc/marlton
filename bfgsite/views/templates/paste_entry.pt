@@ -36,7 +36,7 @@
           <span class="entryheader">Author:</span> ${author} <br/>
           <span class="entryheader">Date:</span> ${date} <br/>
           <span class="entryheader">Format:</span> ${lexer_name} <br/>
-          <div>${paste}</div>
+          <div><span tal:replace="structure paste"/></div>
           
         </div>
         
