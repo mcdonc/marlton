@@ -200,7 +200,7 @@ def tutorial_edit_view(context, request):
             context.url = url
             context.code = code
             context.language = language
-            context.date = datetime.now()
+            context.date = datetime.datetime.now()
 
     tutorials = get_tutorials(context, request, 10)
 
