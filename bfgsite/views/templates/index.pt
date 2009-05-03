@@ -4,6 +4,24 @@
     xmlns:metal="http://xml.zope.org/namespaces/metal"
     metal:use-macro="api.main_template.macros['master']">
 
+  <div metal:fill-slot="headinclude">
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="${api.application_url}/static/js/feed.js"></script>
+    <script type="text/javascript">
+    google.load("feeds", "1");
+    var rss = new Object();
+    rss.url = "http://blog.repoze.org/index.rss20";
+    function initialize() {
+        var feed = new google.feeds.Feed(rss.url);
+        feed.load(function(result) {
+          if (!result.error) {
+            feed_insert('blogposts',result);
+          }
+        });
+    };
+    google.setOnLoadCallback(initialize);
+    </script>
+  </div>
   <div metal:fill-slot="content">
 
     <div id="slogan">
@@ -37,8 +55,13 @@
 
     <div id="content">
       <div id="subnav">
-        <div id="news" tal:condition="tutorials">
-          <span class="header">Recent tutorials</span>
+        <div class="news">
+          <span class="header">The repoze.bfg blog <a href="http://blog.repoze.org/index.rss20"><img border="0" src="${api.application_url}/static/images/site/feed.png" /></a></span>
+          <ul id="blogposts">
+          </ul>
+        </div>
+        <div class="news" tal:condition="tutorials">
+            <span class="header">Recent tutorials <a href="${api.application_url}/tutorialbin/rss"><img border="0" src="${api.application_url}/static/images/site/feed.png" /></a></span>
           <ul>
             <li tal:repeat="tutorial tutorials">
               <a href="${tutorial.url}">${tutorial.title}, by ${tutorial.author} on ${tutorial.date}</a>
