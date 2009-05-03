@@ -56,7 +56,7 @@
     <div id="content">
       <div id="subnav">
         <div class="news">
-          <span class="header">The repoze.bfg blog <a href="http://blog.repoze.org/index.rss20"><img border="0" src="${api.application_url}/static/images/site/feed.png" /></a></span>
+          <span class="header">The repoze.org blog <a href="http://blog.repoze.org/index.rss20"><img border="0" src="${api.application_url}/static/images/site/feed.png" /></a></span>
           <ul id="blogposts">
           </ul>
         </div>
