@@ -341,14 +341,14 @@ p.firstletter:first-letter{
         background-color:#231eff;
         line-height: 200%;
 }
-#news{
+.news{
 	width: 190px;
 	padding:2px;
         font-size:90%;
         background-color:#eee;
         line-height: 130%;
 }
-#news p{
+.news p{
 	padding:0;
 }
 /*Floats*/
