@@ -47,7 +47,7 @@
             <span class="entryheader">Date:</span> ${latest['date']} <br/>
             <span class="entryheader" tal:condition="latest['url']">External URL: <a href="${latest['url']}">${latest['url']}</a></span><br tal:condition="latest['url']"/>
             <div class="tutorialtext">${latest['text']}</div>
-            <div>${latest['formatted_code']}</div>
+            <div tal:content="structure latest['formatted_code']"></div>
           </div>
           
         </div>
