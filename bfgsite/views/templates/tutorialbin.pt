@@ -46,8 +46,8 @@
             <span class="entryheader">Author:</span> ${latest['author_name']} <br/>
             <span class="entryheader">Date:</span> ${latest['date']} <br/>
             <span class="entryheader" tal:condition="latest['url']">External URL: <a href="${latest['url']}">${latest['url']}</a></span><br tal:condition="latest['url']"/>
-            <div class="tutorialtext">${latest['text']}</div>
-            <div tal:content="latest['formatted_code']"></div>
+            <div class="tutorialtext"><span tal:replace="structure latest['text'"/></div>
+            <div><pre><span tal:replace="structure latest['formatted_code']"/></pre></div>
           </div>
           
         </div>
