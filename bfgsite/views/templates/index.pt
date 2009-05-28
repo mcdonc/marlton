@@ -10,7 +10,7 @@
     <script type="text/javascript">
     google.load("feeds", "1");
     var rss = new Object();
-    rss.url = "http://blog.repoze.org/index.rss20";
+    rss.url = "https://twitter.com/statuses/user_timeline/43004010.rss";
     function initialize() {
         var feed = new google.feeds.Feed(rss.url);
         feed.load(function(result) {
@@ -56,7 +56,7 @@
     <div id="content">
       <div id="subnav">
         <div class="news">
-          <span class="header">The repoze.org blog <a href="http://blog.repoze.org/index.rss20"><img border="0" src="${api.application_url}/static/images/site/feed.png" /></a></span>
+          <span class="header">BFG news <a href="https://twitter.com/statuses/user_timeline/43004010.rss"><img border="0" src="${api.application_url}/static/images/site/feed.png" /></a></span>
           <ul id="blogposts">
           </ul>
         </div>
