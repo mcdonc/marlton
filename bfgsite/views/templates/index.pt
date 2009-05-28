@@ -8,10 +8,9 @@
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script type="text/javascript" src="${api.application_url}/static/js/feed.js"></script>
     <script type="text/javascript">
-    <![CDATA[
     google.load("feeds", "1");
     var rss = new Object();
-    rss.url = "http://pipes.yahoo.com/pipes/pipe.run?_id=2kKHrUZL3hGGU5SI3rVd_w&_render=rss";
+    rss.url = "http://pipes.yahoo.com/pipes/pipe.run?_id=2kKHrUZL3hGGU5SI3rVd_w&amp;_render=rss";
     function initialize() {
         var feed = new google.feeds.Feed(rss.url);
         feed.load(function(result) {
@@ -21,7 +20,6 @@
         });
     };
     google.setOnLoadCallback(initialize);
-     ]]>
     </script>
   </div>
   <div metal:fill-slot="content">
