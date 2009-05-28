@@ -47,9 +47,7 @@
       <div id="right">
         <h1 class="box">Start developing now</h1>
         <h6>Install BFG on Your Computer</h6>
-        <p>Get started quickly: you'll need an environment capable of
-        compiling C code and the Python development libraries, as well
-        as a few other dependencies.</p>
+        <p>Get started quickly on UNIX, Windows, or Google App Engine</p>
         <p><a href="http://docs.repoze.org/bfg/narr/install.html"><img src="${api.application_url}/static/images/site/getbfg.png" border="0" /></a></p>
       </div>
       <div id="clearboth"></div>
