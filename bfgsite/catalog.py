@@ -44,6 +44,8 @@ def get_created_date(object, default):
     return _get_date(object, default, 'created')
 
 def get_path(object, default):
+    if not hasattr(object, '__name__'):
+        return default
     return model_path(object)
 
 def get_interfaces(object, default):
