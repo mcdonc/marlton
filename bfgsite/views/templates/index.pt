@@ -82,8 +82,11 @@
         href="http://repoze.org">Repoze</a> project, and is developed
         by the same primary developers, but its goals are different
         than the overall goals of the Repoze project.  BFG is inspired
-        by, and uses technology from, the <a
-        href="http://zope.org">Zope</a> project.
+        by <a href="http://zope.org">Zope</a>, <a
+        href="http://pylonshq.com">Pylons</a> and <a
+        href="http://djangoproject.com">Django</a>. "Under the hood",
+        BFG makes use of technologies from the Zope and Pylons
+        projects.
         </p>
 
         <h2>What makes BFG special</h2> 
