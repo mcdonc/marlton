@@ -45,7 +45,7 @@ class Bin(Folder):
 
     current_id = -1
 
-    def add(self, item):
+    def add_item(self, item):
         newid = self.current_id + 1
         self.current_id = newid
         itemid = str(newid)

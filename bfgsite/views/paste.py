@@ -82,7 +82,7 @@ def pastebin_view(context, request):
             message = str(why)
         else:
             pobj = PasteEntry(author_name, paste, language)
-            pasteid = context.add(pobj)
+            pasteid = context.add_item(pobj)
             url = '%s%s' % (pastebin_url, pasteid)
             response = HTTPFound(location=url)
             response.set_cookie(COOKIE_AUTHOR, author_name, max_age=864000)

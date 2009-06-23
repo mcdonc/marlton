@@ -132,7 +132,7 @@ def tutorialbin_view(context,request):
 @bfg_view(for_=ITutorialBin, name='add', permission='add')
 def tutorialbin_add_view(context, request):
     params = request.params
-    title = u'',
+    title = u''
     url = u''
     language = u''
     text = u''
@@ -152,17 +152,16 @@ def tutorialbin_add_view(context, request):
         language = params.get('language', u'')
         schema = TutorialAddEditSchema()
         message = None
-        attachment = params.get('attachment', u'')
+        attachment = params.get('attachment')
         try:
             form = schema.to_python(request.params)
         except formencode.validators.Invalid, why:
             message = str(why)
         else:
-            
             file_name = None
             mime_type = None
             stream = None
-            if attachment != u'':
+            if attachment is not None:
                 file_name = attachment.filename
                 mime_type = attachment.type
                 stream = attachment.file
@@ -171,7 +170,7 @@ def tutorialbin_add_view(context, request):
             acl = context.__acl__[:]
             acl.extend([(Allow, user, 'edit'), (Allow, 'admin', 'edit')])
             pobj.__acl__ = acl
-            tutorialid = context.add(pobj)
+            tutorialid = context.add_item(pobj)
             response = HTTPFound(location = '%s%s' % (tutorialbin_url,
                                                       tutorialid))
             response.set_cookie(COOKIE_LANGUAGE, language)
