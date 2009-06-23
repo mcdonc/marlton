@@ -70,6 +70,10 @@ class PasteEntry(Persistent):
 class Tutorial(Persistent):
     implements(ITutorial)
 
+    attachment_name = None
+    attachment_data = None
+    attachment_mimetype = None
+
     def __init__(self, title, author_name, text, url=None, code=None,
                  language=None, stream=None, file_name=None, mime_type=None):
         self.title = title
