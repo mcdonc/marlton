@@ -9,7 +9,6 @@ from pygments import lexers
 from repoze.bfg.chameleon_zpt import get_template
 
 from repoze.bfg.traversal import find_interface
-from repoze.bfg.interfaces import ISecurityPolicy
 from repoze.bfg.interfaces import ISettings
 from repoze.bfg.security import authenticated_userid
 from repoze.bfg.url import model_url
@@ -101,8 +100,7 @@ class API:
     @property
     def navitems(self):
         items = get_navigation(self.context, self.request, self.nav_links)
-        policy = get_security_policy()
-        logged_in = policy.authenticated_userid(self.request)
+        logged_in = authenticated_userid(self.request)
         if logged_in:
             items.extend(
                 get_navigation(self.context, self.request,
@@ -174,9 +172,6 @@ def find_site(context):
 
 def get_settings():
     return getUtility(ISettings)
-
-def get_security_policy():
-    return getUtility(ISecurityPolicy)
 
 def random_password():
     friendly = ''.join(

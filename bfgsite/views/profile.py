@@ -6,17 +6,16 @@ from webob.exc import HTTPFound
 from repoze.bfg.chameleon_zpt import render_template_to_response
 from repoze.bfg.view import bfg_view
 from repoze.bfg.security import authenticated_userid
+from repoze.bfg.security import remember
 from repoze.bfg.security import Allow
 from repoze.bfg.url import model_url
 
 from bfgsite.interfaces import IWebSite
 from bfgsite.interfaces import IProfile
-
 from bfgsite.models import Profile
 from bfgsite.utils import API
 from bfgsite.utils import find_users
 from bfgsite.utils import find_profiles
-from bfgsite.utils import get_security_policy
 from bfgsite.utils import random_password
 from bfgsite.utils import get_mailer
 
@@ -64,12 +63,7 @@ def register_view(context, request):
                         acl.extend([(Allow, login, 'edit'),
                                     (Allow, 'admin', 'edit')])
                         profile.__acl__ = acl
-                        identity = {}
-                        identity['repoze.who.userid'] = login
-                        policy = get_security_policy()
-                        headers = policy.auth.forget(request.environ, None)
-                        headers = policy.auth.remember(request.environ,
-                                                       identity)
+                        headers = remember(request.environ, 'login')
                         login_url = model_url(context, request, 'login')
                         response = HTTPFound(location = login_url,
                                              headers=headers)
