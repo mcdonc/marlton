@@ -1,16 +1,14 @@
 import os
 import sys
 
-from paste.deploy import loadapp
-
 from zope.component import getUtility
-from repoze.bfg.interfaces import ISettings
-from bfgsite.models import SphinxDocument
 
-from repoze.bfg.registry import registry_manager
-from repoze.bfg.interfaces import IRootFactory
+from repoze.bfg.interfaces import ISettings
+from repoze.bfg.paster import get_app
+from repoze.bfg.scripting import get_root
 
 from bfgsite.catalog import find_catalog
+from bfgsite.models import SphinxDocument
 
 import transaction
 
@@ -28,12 +26,10 @@ def main(argv=sys.argv):
         config = os.path.join(sandbox, 'bfgsite.ini')
     exe = sys.executable
     sandbox = os.path.dirname(os.path.dirname(os.path.abspath(exe)))
-    app = loadapp('config:%s' % config, name='website')
-    registry_manager.push(app.registry)
-    root_factory = getUtility(IRootFactory)
-    environ = {}
-    context = root_factory(environ)
-    catalog = find_catalog(context)
+    app = get_app(config, name='website')
+    app_root, closer = get_root(app)
+
+    catalog = find_catalog(app_root)
     for address in catalog.document_map.address_to_docid:
         if address.startswith('external:'):
             docid = catalog.document_map.address_to_docid[address]
@@ -82,6 +78,7 @@ def main(argv=sys.argv):
             for filename in files:
                 if filename.endswith('.txt'):
                     text = open(os.path.join(path, filename)).read()
+                    text = text.decode('utf-8')
                     ob = SphinxDocument(text)
                     filename_no_ext = filename[:-4]
                     path_info = os.path.join(relpath, filename_no_ext)
