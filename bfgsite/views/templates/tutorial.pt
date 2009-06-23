@@ -38,7 +38,8 @@
           <h2>${title}</h2>
           <span class="entryheader">Author:</span> ${author} <br/>
           <span class="entryheader">Date:</span> ${date} <br/>
-          <span class="entryheader" tal:condition="url">External URL: <a href="${url}">${url}</a></span><br tal:condition="url" />
+          <span class="entryheader" tal:condition="url">External URL: <a href="${url}">${url}</a></span><br tal:condition="python: url and not attachment_url" /><br />
+          <span class="entryheader" tal:condition="attachment_url">File Attachment: <a href="${attachment_url}">${attachment_name}</a></span><span>&nbsp;(${attachment_mimetype})</span><br tal:condition="attachment_url" />          
           <div class="tutorialtext"><span tal:replace="structure text"/></div>
           <div><pre><span tal:replace="structure code"/></pre></div>
           

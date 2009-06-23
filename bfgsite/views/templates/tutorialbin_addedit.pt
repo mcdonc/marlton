@@ -36,7 +36,7 @@
 
           <div class="bfgform">
 
-            <form action="${form_url}" method="POST">
+            <form action="${form_url}" method="POST" enctype="multipart/form-data">
               <input type="hidden" name="form.submitted"/>
               <fieldset>
                 <legend>Tutorial Information</legend>
@@ -111,6 +111,16 @@
                                 >${code}</textarea>
                     </td>
                   </tr>
+                  <tr>
+                    <th>
+                      <label for="code">Attachment</label>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                        <input name="attachment" type="file" />
+                    </td>
+                  </tr>                  
                   <tr>
                     <th>
                     </th>

@@ -2,6 +2,7 @@ import datetime
 import sys
 
 from webob.exc import HTTPFound
+from webob import Response
 
 import formencode
 
@@ -49,6 +50,10 @@ def tutorial_view(context, request):
     formatted_tutorial = highlight(context.code, l, formatter)
     tutorials = get_tutorials(context, request, 10)
     can_edit = has_permission('edit', context, request)
+    
+    attachment_url = None
+    if context.attachment_name is not None:
+        attachment_url = request.url + '/download_attachment'
 
     return render_template_to_response(
         'templates/tutorial.pt',
@@ -66,8 +71,22 @@ def tutorial_view(context, request):
         can_edit = can_edit,
         edit_url = model_url(context, request, 'edit'),
         delete_url = model_url(context, request, 'delete'),
-        tutorialbin_url = model_url(context.__parent__, request)
+        tutorialbin_url = model_url(context.__parent__, request),
+        attachment_url = attachment_url,
+        attachment_mimetype = context.attachment_mimetype,
+        attachment_name = context.attachment_name,
         )
+        
+@bfg_view(for_=ITutorial, name='download_attachment', permission='view')
+def download_attachement(context, request):
+    f = context.attachment_data.open()
+    headers = [
+        ('Content-Disposition', 
+            'attachment;filename='+context.attachment_name),
+        ('Content-Type', context.attachment_mimetype),
+        ]
+    response = Response(headerlist=headers, app_iter=f)
+    return response                
 
 @bfg_view(for_=ITutorialBin, permission='view')
 def tutorialbin_view(context,request):
@@ -119,6 +138,7 @@ def tutorialbin_add_view(context, request):
     text = u''
     code = u''
     message = u''
+    attachment= ''
     tutorialbin_url = model_url(context, request)
     user = authenticated_userid(request)
     can_manage = has_permission('manage', context, request)
@@ -132,13 +152,22 @@ def tutorialbin_add_view(context, request):
         language = params.get('language', u'')
         schema = TutorialAddEditSchema()
         message = None
+        attachment = params.get('attachment', u'')
         try:
             form = schema.to_python(request.params)
         except formencode.validators.Invalid, why:
             message = str(why)
         else:
-
-            pobj = Tutorial(title, user, text, url, code, language)
+            
+            file_name = None
+            mime_type = None
+            stream = None
+            if attachment != u'':
+                file_name = attachment.filename
+                mime_type = attachment.type
+                stream = attachment.file
+            pobj = Tutorial(title, user, text, url, code, language, 
+                            stream, file_name, mime_type)
             acl = context.__acl__[:]
             acl.extend([(Allow, user, 'edit'), (Allow, 'admin', 'edit')])
             pobj.__acl__ = acl
@@ -189,6 +218,7 @@ def tutorial_edit_view(context, request):
         code = params.get('code', u'')
         schema = TutorialAddEditSchema()
         message = None
+        attachment = params.get('attachment', u'')
         try:
             form = schema.to_python(request.params)
         except formencode.validators.Invalid, why:
@@ -201,6 +231,10 @@ def tutorial_edit_view(context, request):
             context.code = code
             context.language = language
             context.date = datetime.datetime.now()
+            if attachment != u'':
+                context.attachment_name = attachment.filename
+                context.attachment_mimetype = attachment.type
+                context.upload(attachment.file)
 
     tutorials = get_tutorials(context, request, 10)
 

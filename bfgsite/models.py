@@ -1,5 +1,6 @@
 from datetime import datetime
 from persistent import Persistent
+from ZODB.blob import Blob
 import transaction
 
 from zope.interface import implements
@@ -70,7 +71,7 @@ class Tutorial(Persistent):
     implements(ITutorial)
 
     def __init__(self, title, author_name, text, url=None, code=None,
-                 language=None):
+                 language=None, stream=None, file_name=None, mime_type=None):
         self.title = title
         self.author_name = author_name
         self.url = url
@@ -78,6 +79,17 @@ class Tutorial(Persistent):
         self.code = code
         self.language = language
         self.date = datetime.now()
+        self.attachment_data = Blob()
+        self.attachment_name = file_name
+        self.attachment_mimetype = mime_type
+        self.upload(stream)
+        
+    def upload(self, stream):
+        if stream is not None:
+            f = self.attachment_data.open('w')
+            size = save_data(stream, f)
+            f.close()
+            self.attachment_size = size        
 
 class SphinxDocument: # not persistent!
     implements(ISphinxDocument)
@@ -94,6 +106,19 @@ class Profile(Persistent):
 
 class Profiles(Folder):
     implements(IProfiles)
+    
+def file_buffer(stream, chunk_size=10000):
+    while True:
+        chunk = stream.read(chunk_size)
+        if not chunk: break
+        yield chunk    
+        
+def save_data(stream, file):
+    size = 0
+    for chunk in file_buffer(stream):
+        size += len(chunk)        
+        file.write(chunk)
+    return size        
 
 def appmaker(root):
     if not root.has_key('bfgsite'):
