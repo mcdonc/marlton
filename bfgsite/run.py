@@ -36,11 +36,10 @@ def make_app(global_config, **kw):
             settings['description'] = rootname
 
     finder = PersistentApplicationFinder(zodb_uri, appmaker)
-    def groupfinder(userid):
+    def groupfinder(userid, request=None):
         environ = {}
-        request = get_current_request()
         if request is None:
-            root = finder(environ)
+            request = get_current_request()
         else:
             root = request.root
             environ = request.environ
