@@ -5,6 +5,11 @@
   <include package="repoze.bfg.includes" />
   <include package="repoze.lemonade.includes" file="meta.zcml"/>
 
+  <route
+     name="test"
+     path=":can/test*traverse"
+   />
+
   <scan package="."/>
 
   <subscriber

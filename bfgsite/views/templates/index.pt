@@ -85,8 +85,7 @@
         by <a href="http://zope.org">Zope</a>, <a
         href="http://pylonshq.com">Pylons</a> and <a
         href="http://djangoproject.com">Django</a>. "Under the hood",
-        BFG makes use of technologies from the Zope and Pylons
-        projects.
+        BFG makes use of technologies from the Zope project.
         </p>
 
         <h2>What makes BFG special</h2> 
@@ -96,14 +95,13 @@
         
         <p><b>Simplicity:</b> BFG attempts to be a "pay only for what
         you eat" framework in which you can be productive quickly with
-        partial knowledge, in contrast to "pay up front for what
-        anyone might eventually want to eat" frameworks, which tend to
-        expect you to understand a great many concepts and
+        partial knowledge.  We contrast this with "pay up front for
+        what anyone might eventually want to eat" frameworks, which
+        tend to expect you to understand a great many concepts and
         technologies fully before you can be truly productive. BFG
         doesn't force you to use any particular technology to get your
         application written, and we try to keep the core set of
-        concepts you need to understand to a minimum. We've thrown out
-        all the cruft.</p>
+        concepts you need to understand to a minimum.</p>
         
         <p><b>Minimalism:</b> BFG provides only the very basics: URL
         to code mapping, templating, and security. There is not much
