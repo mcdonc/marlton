@@ -90,4 +90,9 @@
       type=".interfaces.ISphinxDocument"
       />
 
+  <authtktauthenticationpolicy
+    secret="sosecret"/>
+
+  <aclauthorizationpolicy/>
+
 </configure>
