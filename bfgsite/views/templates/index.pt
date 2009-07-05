@@ -120,9 +120,9 @@
         its limits when you're responsible for managing a great many
         machines: the fewer you need, the less pain you'll have.</p>
 
-        <h3>See the (slightly more technical) <a
+        <h4>See the (slightly more technical) <a
         href="${api.application_url}/trac/wiki/SalesPitch">
-        Sales Pitch</a> for more information.</h3>
+        Sales Pitch</a> for more information.</h4>
 
       </div>
     </div>
