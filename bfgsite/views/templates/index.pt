@@ -42,7 +42,7 @@
           href="${api.application_url}/trac/wiki/SalesPitch">Sales
           Pitch</a></li>
           <li>See the <a href="${api.application_url}/documentation">documentation</a></li>
-          <li>Examine the code of BFG <a href="http://docs.repoze.org/bfg/index.html#sample-applications">sample applications</a></li>
+          <li>Examine the code of BFG <a href="http://docs.repoze.org/bfg/current/index.html#sample-applications">sample applications</a></li>
           <li>Join the community on the <a href="irc://irc.freenode.net/#repoze">#repoze IRC channel</a>.</li>
         </ul>
       </div>
@@ -51,7 +51,7 @@
         <h1 class="box">Start developing now</h1>
         <h6>Install BFG on Your Computer</h6>
         <p>Get started quickly on UNIX, Windows, or Google App Engine</p>
-        <p><a href="http://docs.repoze.org/bfg/narr/install.html"><img src="${api.application_url}/static/images/site/getbfg.png" border="0" /></a></p>
+        <p><a href="http://docs.repoze.org/bfg/current/narr/install.html"><img src="${api.application_url}/static/images/site/getbfg.png" border="0" /></a></p>
       </div>
       <div id="clearboth"></div>
     </div>
