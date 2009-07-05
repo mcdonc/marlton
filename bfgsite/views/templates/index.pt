@@ -76,9 +76,9 @@
       <div id="one">
         <h1>Welcome</h1>
 
-        <p>BFG is a Python web application framework.  BFG is also
-        referred to as <i>repoze.bfg</i>, as that is the package name
-        of the software which comprises the framework.
+        <p>BFG is a Python web application framework based on <a
+        href="http://wsgi.org/wsgi/">WSGI</a>.  BFG is also referred
+        to as <i>repoze.bfg</i>.
         </p>
 
         <p>BFG shares version control facilities with the <a
