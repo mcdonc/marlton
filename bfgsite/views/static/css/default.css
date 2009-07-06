@@ -342,11 +342,19 @@ p.firstletter:first-letter{
         line-height: 200%;
 }
 .news{
-	width: 300px;
-	padding:2px;
+	width: 250;
+	padding:15px 5px 10px 10px;
         font-size:90%;
         background-color:#eee;
         line-height: 130%;
+}
+.news ul{
+        list-style:none;
+        padding-left:10px;
+}
+.news ul li {
+        padding: 10px 0px;
+        border-bottom: 1px dotted #c0c0c0;
 }
 .news p{
 	padding:0;
@@ -429,6 +437,8 @@ width. Also be sure to account for the border.*/
 /*Sub-Nav*/
 #subnav{
 	float:right;
+        border:1px solid #404040;
+        margin: 30px 5px 150px 20px;
 }
 #subnavcontainer {
 	width: 200px;	
