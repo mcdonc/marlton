@@ -342,7 +342,7 @@ p.firstletter:first-letter{
         line-height: 200%;
 }
 .news{
-	width: 250;
+	width: 250px;
 	padding:15px 5px 10px 10px;
         font-size:90%;
         background-color:#eee;
