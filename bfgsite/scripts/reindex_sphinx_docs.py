@@ -31,7 +31,7 @@ def main(argv=sys.argv):
 
     catalog = find_catalog(app_root)
     for address in catalog.document_map.address_to_docid:
-        if address.startswith('external:'):
+        if address.startswith('external:') or address.startswith('sphinx:'):
             docid = catalog.document_map.address_to_docid[address]
             catalog.unindex_doc(docid)
 
