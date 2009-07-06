@@ -1,7 +1,6 @@
 import lxml.html
 from lxml import etree
 
-from BeautifulSoup import BeautifulSoup
 from repoze.bfg.chameleon_zpt import render_template
 from repoze.bfg.view import bfg_view
 
@@ -40,16 +39,20 @@ def trac_view(context, request):
 
     if (body_string and ('html' in response.content_type
                          or 'xhtml' in response.content_type)):
-        theme_bs = BeautifulSoup(theme)
-        body_bs = BeautifulSoup(body_string)
+        # assumes trac returns utf-8 responses (not the default)
+        parser = utf8_html_parser
+        theme_lxml = lxml.html.document_fromstring(theme, parser=parser)
+        body_lxml = lxml.html.document_fromstring(body_string, parser=parser)
+        themecontent = theme_lxml.xpath('//div[@id="themecontent"]')
         exprs = (
-            'metanav',
-            'mainnav',
-            'main',
+#            '//div[@id="metanav"]', # this is the login and preferences links
+            '//div[@id="mainnav"]',
+            '//div[@id="main"]'
             )
         for expr in exprs:
-            bodycontent = body_bs.find("div",{'id':expr})
-            theme_bs.find("div",{'id':'themecontent'}).append(bodycontent)
-        response.body = str(theme_bs)
+            bodycontent = body_lxml.xpath(expr)
+            themecontent[0].append(bodycontent[0])
+        body = etree.tostring(theme_lxml)
+        response.body = body
     return response
 
