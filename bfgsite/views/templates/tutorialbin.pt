@@ -9,8 +9,8 @@
     <div id="content">
 
       <div id="subnav" tal:condition="tutorials">
-        <div id="news">
-          <div class="newsheader">Recent tutorials</div>
+        <div class="news">
+          <div class="header">Recent tutorials</div>
           <ul>
             <li tal:repeat="tutorial tutorials[:5]">
               <a href="${tutorial.url}">${tutorial.title}, by ${tutorial.author} on ${tutorial.date}</a>

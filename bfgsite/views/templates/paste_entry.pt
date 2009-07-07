@@ -9,10 +9,10 @@
     <div id="content">
       
       <div id="subnav" tal:condition="pastes">
-        <div id="news">
-          <div class="newsheader">Recent Pastes</div>
+        <div class="news">
+          <div class="header">Recent Pastes</div>
           <ul>
-            <li tal:repeat="paste pastes[:5]">
+            <li tal:repeat="paste pastes[:3]">
               <a href="${paste.url}"
                  >${paste.author} on ${paste.date} (${paste.language or 'auto'})</a>
             </li>

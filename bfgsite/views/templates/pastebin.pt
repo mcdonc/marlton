@@ -9,8 +9,8 @@
     <div id="content">
 
       <div id="subnav" tal:condition="pastes">
-        <div id="news">
-          <div class="newsheader">Previous Pastes</div>
+        <div class="news">
+          <div class="header">Previous Pastes</div>
           <ul>
             <li tal:repeat="paste pastes[:5]">
               <a href="${paste.url}"
