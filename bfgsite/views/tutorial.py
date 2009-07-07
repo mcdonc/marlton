@@ -161,7 +161,7 @@ def tutorialbin_add_view(context, request):
             file_name = None
             mime_type = None
             stream = None
-            if attachment is not None:
+            if hasattr(attachment, 'filename'):
                 file_name = attachment.filename
                 mime_type = attachment.type
                 stream = attachment.file
