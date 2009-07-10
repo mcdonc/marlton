@@ -525,3 +525,7 @@ width. Also be sure to account for the border.*/
     margin: 8px 5px;
 }
 
+div.surround {
+    display: none;
+    visibility: hidden;
+}

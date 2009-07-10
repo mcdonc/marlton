@@ -38,23 +38,23 @@
                 <table>
                   <tr>
                     <th>
-                      <label for="author_name">Your Name</label>
+                      <label for="author_name_">Your Name</label>
                     </th>
                   </tr>
                   <tr>
                     <td>
-                      <input type="text" name="author_name" 
+                      <input type="text" name="author_name_" 
                              value="${author_name}" size="25"/>
                     </td>
                   </tr>
                   <tr>
                     <th>
-                      <label for="language">Language</label>
+                      <label for="language_">Language</label>
                     </th>
                   </tr>
                   <tr>
                     <td>
-                      <select name="language">
+                      <select name="language_">
                         <option tal:repeat="lexer lexers"
                                 value="${lexer.alias}"
                                 >${lexer.name}</option>
@@ -63,12 +63,12 @@
                   </tr>
                   <tr>
                     <th>
-                      <label for="paste">Paste Text</label>
+                      <label for="paste_">Paste Text</label>
                     </th>
                   </tr>
                   <tr>
                     <td>
-                      <textarea name="paste" rows="8" cols="60"
+                      <textarea name="paste_" rows="8" cols="60"
                                 >${paste}</textarea>
                     </td>
                   </tr>
@@ -77,6 +77,9 @@
                   </tr>
                   <tr>
                     <td>
+                      <div class="surround">
+                        <input type="text" name="text" value=""/>
+                      </div>
                       <input type="submit" name="form.submitted" value="Add"/>
                     </td>
                   </tr>

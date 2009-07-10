@@ -71,9 +71,11 @@ def pastebin_view(context, request):
     can_manage = has_permission('manage', context, request)
 
     if params.has_key('form.submitted'):
-        paste = params.get('paste', '')
-        author_name = params.get('author_name', '')
-        language = params.get('language', '')
+        if params.get('text'): # trap spambots
+            return HTTPFound(location=model_url(context, request))
+        paste = params.get('paste_', '')
+        author_name = params.get('author_name_', '')
+        language = params.get('language_', '')
         schema = PasteAddSchema()
         message = None
         try:
@@ -152,6 +154,6 @@ def pastebin_rss_view(context, request):
 
 class PasteAddSchema(formencode.Schema):
     allow_extra_fields = True
-    paste = formencode.validators.NotEmpty()
+    paste_ = formencode.validators.NotEmpty()
 
 
