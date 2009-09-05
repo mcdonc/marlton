@@ -15,7 +15,7 @@ def forbidden(context, request):
         # resource
         api = API(context, request)
         body =  render_template(
-            'views/templates/forbidden.pt',
+            'templates/forbidden.pt',
             api=api,
             login_form_url = model_url(site, request, 'login'),
             homepage_url = model_url(site, request),

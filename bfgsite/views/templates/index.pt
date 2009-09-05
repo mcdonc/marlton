@@ -7,123 +7,129 @@
   <div metal:fill-slot="headinclude">
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script type="text/javascript" src="${api.application_url}/static/js/feed.js"></script>
+    
     <script type="text/javascript">
-    /* <![CDATA[ */
-    google.load("feeds", "1");
-    var rss = new Object();
-    rss.url = "http://pipes.yahoo.com/pipes/pipe.run?_id=2kKHrUZL3hGGU5SI3rVd_w&_render=rss";
-    function initialize() {
-        var feed = new google.feeds.Feed(rss.url);
-        feed.load(function(result) {
-          if (!result.error) {
-            feed_insert('blogposts',result);
-          }
-        });
-    };
-    google.setOnLoadCallback(initialize);
-    /* ]]> */
+        /* <![CDATA[ */
+            google.load("feeds", "1");
+            var rss = new Object();
+            rss.url = "http://pipes.yahoo.com/pipes/pipe.run?_id=2kKHrUZL3hGGU5SI3rVd_w&_render=rss";
+            function initialize() {
+                var feed = new google.feeds.Feed(rss.url);
+                feed.load(function(result) {
+                
+                if (!result.error) {
+                feed_insert('blogposts',result);
+                }
+            });
+            };
+            google.setOnLoadCallback(initialize);
+            /* ]]> */
+    
     </script>
   </div>
+
   <div metal:fill-slot="content">
 
-    <div id="slogan">
-      <p>Create web applications with a bang.</p>
-    </div>
-
-    <div id="twocolumn">
-      <div id="left">
-        <h1 class="box">Get to know BFG</h1>
-        <p>BFG is a "pay only for what you eat" Python web
-        framework. You can get started easily and learn new concepts
-        as you go, and only if you need them. It's simple, well
-        tested, well documented, and fast.</p>
-        <ul>
-          <li>Read the <a
-          href="${api.application_url}/trac/wiki/SalesPitch">Sales
-          Pitch</a></li>
-          <li>See the <a href="${api.application_url}/documentation">documentation</a></li>
-          <li>Examine the code of BFG <a href="http://docs.repoze.org/bfg/current/index.html#sample-applications">sample applications</a></li>
-          <li>Join the community on the <a href="irc://irc.freenode.net/#repoze">#repoze IRC channel</a>.</li>
-        </ul>
+    <div id="banner" tal:condition="api.is_home_page">
+      <div id="banner_text">
+        BFG is a "pay only for what you eat" Python web framework
       </div>
-
-      <div id="right">
-        <h1 class="box">Start developing now</h1>
-        <h6>Install BFG on Your Computer</h6>
-        <p>Get started quickly on UNIX, Windows, or Google App Engine</p>
-        <p><a href="http://docs.repoze.org/bfg/current/narr/install.html"><img src="${api.application_url}/static/images/site/getbfg.png" border="0" /></a></p>
+      <div id="banner_download">
+        <a href="http://docs.repoze.org/bfg/current/narr/install.html">
+          <h2>Download Latest<br/>BFG Version</h2>
+        </a>
       </div>
-      <div id="clearboth"></div>
     </div>
 
     <div id="content">
-      <div id="subnav">
-        <div class="news">
-          <span class="header">BFG news <a href="http://pipes.yahoo.com/pipes/pipe.run?_id=2kKHrUZL3hGGU5SI3rVd_w&amp;_render=rss"><img border="0" src="${api.application_url}/static/images/site/feed.png" /></a></span>
-          <ul id="blogposts">
-          </ul>
+        <div id="column_one">
+            <h1>Welcome</h1>
+            <p>BFG is a Python web application framework based on <a
+                href="http://wsgi.org/wsgi/">WSGI</a>.  BFG is also referred
+                to as <i>repoze.bfg</i>.
+            </p>
+
+            <p>BFG shares version control facilities with the <a
+                href="http://repoze.org">Repoze</a> project, and is developed
+                by the same primary developers, but its goals are different
+                than the overall goals of the Repoze project.  BFG is inspired
+                by <a href="http://zope.org">Zope</a>, <a
+                href="http://pylonshq.com">Pylons</a> and <a
+                href="http://djangoproject.com">Django</a>. "Under the hood",
+                BFG makes use of technologies from the Zope project.
+            </p>
+
+            <h2>What makes BFG special</h2> 
+
+            <p><b>It's Tested</b> <i>If it ain't tested, it's broke.</i>
+                We strive to test BFG 100% completely via unit tests.</p>
+        
+            <p><b>Simplicity:</b> BFG attempts to be a "pay only for what
+            you eat" framework in which you can be productive quickly with
+            partial knowledge.  We contrast this with "pay up front for
+            what anyone might eventually want to eat" frameworks, which
+            tend to expect you to understand a great many concepts and
+            technologies fully before you can be truly productive. BFG
+            doesn't force you to use any particular technology to get your
+            application written, and we try to keep the core set of
+            concepts you need to understand to a minimum.</p>
+        
+            <p><b>Minimalism:</b> BFG provides only the very basics: URL
+            to code mapping, templating, and security. There is not much
+            more to the framework than these pieces: you are expected to
+            provide the rest.</p>
+        
+            <p><b>Documentation:</b> Because BFG is so minimal, it's
+            relatively easy to keep its documentation up-to-date, which is
+            helpful to bring new developers up to speed. It's our goal
+            that nothing remain undocumented about BFG.</p>
+        
+            <p><b>Speed:</b> BFG is meant to be fast, capable of serving
+            on the order of 100-1000 requests per second on today's
+            commodity hardware for views that do "real work" given proper
+            application implementation. The "hardware is cheap" mantra has
+            its limits when you're responsible for managing a great many
+            machines: the fewer you need, the less pain you'll have.</p>
+
         </div>
-        <div class="news" tal:condition="tutorials">
-            <span class="header">Recent tutorials <a href="${api.application_url}/tutorialbin/rss"><img border="0" src="${api.application_url}/static/images/site/feed.png" /></a></span>
-          <ul>
-            <li tal:repeat="tutorial tutorials">
-              <a href="${tutorial.url}">${tutorial.title}, by ${tutorial.author} on ${tutorial.date}</a>
-            </li>
-          </ul>
+        <div id="column_two">
+            <h1>Get to know BFG</h1>
+            <p>BFG is a "pay only for what you eat" Python web
+                framework. You can get started easily and learn new concepts
+                as you go, and only if you need them. It's simple, well
+                tested, well documented, and fast.</p>
+            <ul>
+                <li>Read the <a href="http://bfg.repoze.org/trac/wiki/SalesPitch">Sales
+                    Pitch</a></li>
+                <li>See the <a href="http://bfg.repoze.org/documentation">documentation</a></li>
+                <li>Examine the code of BFG <a href="http://docs.repoze.org/bfg/current/index.html#sample-applications">sample applications</a></li>
+                <li>Join the community on the <a href="irc://irc.freenode.net/#repoze">#repoze IRC channel</a>.</li>
+            </ul>
+
+            <span class="heading">
+                <a href="${api.request.application_url}/tutorialbin/rss">
+                    Recent Tutorials
+                </a>
+            </span>
+        
+            <ul>
+                <li tal:repeat="tutorial tutorials">
+                    <a href="${tutorial.url}">${tutorial.title}, by ${tutorial.author} on ${tutorial.date}</a>
+                </li>
+            </ul>
+
+            <span class="heading">
+                <a href="http://pipes.yahoo.com/pipes/pipe.run?_id=2kKHrUZL3hGGU5SI3rVd_w&amp;_render=rss">
+                    Latest News
+                </a>
+            </span>
+            
+            <ul id="blogposts">
+            </ul>
+
         </div>
-      </div>
-
-      <div id="one">
-        <h1>Welcome</h1>
-
-        <p>BFG is a Python web application framework based on <a
-        href="http://wsgi.org/wsgi/">WSGI</a>.  BFG is also referred
-        to as <i>repoze.bfg</i>.
-        </p>
-
-        <p>BFG shares version control facilities with the <a
-        href="http://repoze.org">Repoze</a> project, and is developed
-        by the same primary developers, but its goals are different
-        than the overall goals of the Repoze project.  BFG is inspired
-        by <a href="http://zope.org">Zope</a>, <a
-        href="http://pylonshq.com">Pylons</a> and <a
-        href="http://djangoproject.com">Django</a>. "Under the hood",
-        BFG makes use of technologies from the Zope project.
-        </p>
-
-        <h2>What makes BFG special</h2> 
-
-        <p><b>It's Tested</b> <i>If it ain't tested, it's broke.</i>
-        We strive to test BFG 100% completely via unit tests.</p>
         
-        <p><b>Simplicity:</b> BFG attempts to be a "pay only for what
-        you eat" framework in which you can be productive quickly with
-        partial knowledge.  We contrast this with "pay up front for
-        what anyone might eventually want to eat" frameworks, which
-        tend to expect you to understand a great many concepts and
-        technologies fully before you can be truly productive. BFG
-        doesn't force you to use any particular technology to get your
-        application written, and we try to keep the core set of
-        concepts you need to understand to a minimum.</p>
-        
-        <p><b>Minimalism:</b> BFG provides only the very basics: URL
-        to code mapping, templating, and security. There is not much
-        more to the framework than these pieces: you are expected to
-        provide the rest.</p>
-        
-        <p><b>Documentation:</b> Because BFG is so minimal, it's
-        relatively easy to keep its documentation up-to-date, which is
-        helpful to bring new developers up to speed. It's our goal
-        that nothing remain undocumented about BFG.</p>
-        
-        <p><b>Speed:</b> BFG is meant to be fast, capable of serving
-        on the order of 100-1000 requests per second on today's
-        commodity hardware for views that do "real work" given proper
-        application implementation. The "hardware is cheap" mantra has
-        its limits when you're responsible for managing a great many
-        machines: the fewer you need, the less pain you'll have.</p>
-
-      </div>
+        <div id="clearboth"></div>
     </div>
-  </div>
+ </div>
 </div>

@@ -20,7 +20,8 @@
           href="${api.request.application_url}/register">register</a>.
           If you've forgotten your password, you can <a
           href="${api.request.application_url}/forgot_password">retrieve
-          it</a> via email.</p>
+          it</a> via email.
+        </p>
 
       <div class="bfgform">
 

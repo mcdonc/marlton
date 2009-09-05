@@ -63,7 +63,7 @@ def register_view(context, request):
                         acl.extend([(Allow, login, 'edit'),
                                     (Allow, 'admin', 'edit')])
                         profile.__acl__ = acl
-                        headers = remember(request.environ, 'login')
+                        headers = remember(request, login)
                         login_url = model_url(context, request, 'login')
                         response = HTTPFound(location = login_url,
                                              headers=headers)

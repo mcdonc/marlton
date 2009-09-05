@@ -11,6 +11,8 @@
           type="text/css" />
      <link rel="stylesheet" type="text/css" 
            href="${api.application_url}/static/css/default.css" />
+     <link rel="stylesheet" type="text/css" 
+           href="${api.application_url}/static/css/nonhomepage.css" />
     <link rel="stylesheet" href="/static/css/trac_overrides.css" 
           type="text/css" />
   </div>
@@ -45,7 +47,11 @@
 
   <div metal:fill-slot="content">
 
-    <div id="themecontent"/>
+    <div id="content">
+
+      <div id="themecontent"/>
+
+    </div>
 
   </div>
 

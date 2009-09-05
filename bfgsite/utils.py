@@ -58,8 +58,8 @@ class API:
     nav_links = (
         {'view_iface':IWebSite,
          'nav_ifaces':(IWebSite),
-         'view_name':'searchresults',
-         'title':'Search'},
+         'view_name':'',
+         'title':'Home'},
         {'view_iface':IWebSite,
          'nav_ifaces':(IWebSite,),
          'view_name':'documentation',
@@ -86,9 +86,9 @@ class API:
         self.context_url = model_url(context, request)
         self.site = find_interface(context, IWebSite)
         self.request = request
-        self.main_template = get_template('views/templates/main_template.pt')
         self.application_url = request.application_url
         self.userid = authenticated_userid(request)
+        self.is_home_page = request.url == request.application_url + '/'
         profiles = find_profiles(context)
         profile = profiles.get(self.userid)
         self.fullname = getattr(profile, 'fullname', None)
@@ -96,6 +96,13 @@ class API:
             self.profile_edit_url = model_url(profile, request, 'edit')
         else:
             self.profile_edit_url = None
+
+    @property
+    def main_template(self):
+        if self.is_home_page:
+            return get_template(
+                'views/templates/frontpage_main_template.pt')
+        return get_template('views/templates/main_template.pt')
 
     @property
     def navitems(self):

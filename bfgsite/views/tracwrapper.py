@@ -53,6 +53,9 @@ def trac_view(context, request):
             bodycontent = body_lxml.xpath(expr)
             themecontent[0].append(bodycontent[0])
         body = etree.tostring(theme_lxml)
-        response.body = body
+        response.body = STRICT + '\n' + body
     return response
 
+STRICT = """\
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"\
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">"""

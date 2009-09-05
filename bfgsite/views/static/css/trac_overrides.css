@@ -52,3 +52,9 @@
 .properties td, #stats td {
         border: 0;
 }
+
+
+:link, :visited {
+  border-bottom: 0px;
+}
+

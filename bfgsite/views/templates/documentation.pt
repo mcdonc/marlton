@@ -8,12 +8,14 @@
     <div id="content">
       <h1>Documentation</h1> 
       <h2>Search for Documentation</h2>
-      <div style="margin-top: 10px" class="bfgform">
-        <form action="${api.application_url}/searchresults" method="post">
-          <input type="text" name="text" value="" size="40"/>
-          <input type="submit" value="search" />
-        </form>
-      </div>
+
+        <div id="searchbox_in_body">
+            <form action="${api.application_url}/searchresults" method="post">
+                <input class="search_box" type="text" name="text" value="" size="40"/>
+                <input class="search_button" type="submit" value="search" />
+            </form>
+        </div>
+        
       <h2>Browse Documentation</h2>
       <p>One of BFG's most important goals is to keep every single part of the framework documented. From here you can jump to our extensive documentation. If you find anything on the code that is not documented properly or undocumented, please <a href="mailto:repoze-dev@repoze.org">let us know.</a></p>
       <ul>
