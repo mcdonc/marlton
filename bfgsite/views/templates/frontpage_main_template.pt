@@ -69,7 +69,7 @@
 
           <div id="banner">
               <div id="banner_text">
-                  BFG is an "only pay for what you eat" Python web framework
+                  BFG is a "pay only for what you eat" Python web framework
               </div>
               <div id="banner_download">
                   <a href="http://docs.repoze.org/bfg/current/narr/install.html">
