@@ -3,7 +3,11 @@
 #ctxtnav {
         background-color: #fff;
         padding-top: 8px;
+        width:856px;
+        margin: 0 auto;
 }
+
+
 
 .nav {
         background-color: #fff;
@@ -21,8 +25,9 @@
 }
 
 #mainnav {
-        background-color: #fff;
-        margin: 0;
+    background-color:#FFFFFF;
+    margin:0 auto;
+    width:852px;
 }
 
 #content.error, div.system-message {
@@ -32,7 +37,6 @@
 
 #altlinks {
         padding: 8px;
-        background-color: #fff;
         color: #000;
 }
 
@@ -53,8 +57,9 @@
         border: 0;
 }
 
-
-:link, :visited {
-  border-bottom: 0px;
+#footer :link, #footer :visited {
+color:#000000;
 }
+
+
 

@@ -30,17 +30,6 @@
 
   <div metal:fill-slot="content">
 
-    <div id="banner" tal:condition="api.is_home_page">
-      <div id="banner_text">
-        BFG is a "pay only for what you eat" Python web framework
-      </div>
-      <div id="banner_download">
-        <a href="http://docs.repoze.org/bfg/current/narr/install.html">
-          <h2>Download Latest<br/>BFG Version</h2>
-        </a>
-      </div>
-    </div>
-
     <div id="content">
         <div id="column_one">
             <h1>Welcome</h1>

@@ -11,110 +11,98 @@ colors {
 }
 */
 html{
-    height:100%;
+	height:100%;
 }
 
 body{
-    margin:0px;
-    padding:0px;
+	margin:0px;
+	padding:0px;
     color:#000;
-    background: #e9e9ce url('../images/site/site-background-no-banner.gif') repeat-x top left;
-    font:13px Arial,Verdana,Helvetica,sans-serif;
+    background: #e9e9ce url('../images/site/site-background-short.gif') repeat-x top left;   
+	font:13px Arial,Verdana,Helvetica,sans-serif;
 }
 
 /*Header*/
 .bfglogo{
-    float:left;
-    margin-top: 10px;
-    margin-right: 20px;
-    border: none;
-    background-color: transparent;
-}
-
-#login_info {
-    color: #fff;
-    display: relative;
-    float: left;
+	float:left;
+        margin-top: 20px;
+        margin-right: 20px;
+        border: none;
 }
 
 #navcontainer{
-    /*float:right;*/
+	float:right;
     clear:right;
+    width:650px;
+}
+
+#login_info {
+	float: right;
+        clear: both;
+	color: #fff;
+        display: inline;
+	position:absolute;
+	width:200px;
+	margin-top:75px;
+	margin-left:600px;
 }
 
 #navlist {
-    margin-top:32px;
-    margin-bottom:25px;
-    padding: 0px 5px 0px 5px;
-    float:right;
-    font-size:120%;
-    font:12px Verdana,Arial,Helvetica,sans-serif;
+	margin-top:32px;
+	margin-bottom:25px;
+	padding: 10px 20px 0px 10px;
+	float:right;
+	font-size:120%;
+	font:12px Verdana,Arial,Helvetica,sans-serif;
 }
 
 #navlist ul, #navlist li {
-    margin: 0;
-    padding: 0;
-    display: inline;
-    list-style-type: none;
+	margin: 0;
+	padding: 0;
+	display: inline;
+	list-style-type: none;
 }
 
 #navlist a:link, #navlist a:visited {
     padding-bottom: 3px;
-    float: left;
-    line-height: 14px;
-    margin: 0 10px 4px 10px;
-    text-decoration: none;
-    padding:8px;
-    color:#fff;
+	float: left;
+	line-height: 14px;
+	margin: 0 10px 4px 10px;
+	text-decoration: none;
+	padding:8px;
+	color:#fff;
+
 }
 
 #navlist a:hover {
-    color: #fff!important;
-    cursor: hand; /* for IE */
+	color: #fff!important;
 }
 
-#navlist a.current {
-    background:#4c81b7;
-    color:#fff;
-    padding-left:13px;
-    padding-right:13px;
-    -webkit-border-radius: 10px;
+#current {
+	background:#4c81b7!important;
+	color:#fff;
+	padding-left:13px;
+	padding-right:13px;
+	-webkit-border-radius: 10px;
     -moz-border-radius: 10px; 
 }
 
-#navlist a.notcurrent {
-    background:transparent;
-    color:#fff;
-    padding-left:13px;
-    padding-right:13px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px; 
-}
-
-#site_searchbox{
+#searchbox{
     float:right;
     clear:both;
-    margin-top: 0px;
+    margin-top: 17px;
     margin-right: 35px;
 }
 
 
-#site_searchbox input {
-    padding: 4px;
-    border: 1px;
-    vertical-align: 1px;
-    margin: 0;
+
+#searchbox .search_button {
+	background-color:#4c81b7;
+	border:1px solid #444;
+	font:11px Verdana,sans-serif;
+	color:#fff;
+	padding:2px 3px;
 }
-
-
-#site_searchbox .search_button {
-    background-color:#4c81b7;
-    border:1px solid #444;
-    font:11px Verdana,sans-serif;
-    color:#fff;
-    padding:2px 3px;
-}
-
 
 #searchbox_in_body{
     clear:both;
@@ -125,84 +113,75 @@ body{
 
 
 #searchbox_in_body .search_button {
-    background-color:#4c81b7;
-    border:1px solid #444;
-    font:11px Verdana,sans-serif;
-    color:#fff;
-    padding:5px;
-    font-size:150%;
+	background-color:#4c81b7;
+	border:1px solid #444;
+	font:11px Verdana,sans-serif;
+	color:#fff;
+	padding:5px;
+	font-size:150%;
 }
 
 #searchbox_in_body .search_box {
-    background-color:#fff;
-    border:1px solid #444;
-    font:11px Verdana,sans-serif;
-    color:#black;
-    padding:2px 3px;
-    font-size:140%;
-    height:30px;
+	background-color:#fff;
+	border:1px solid #444;
+	font:11px Verdana,sans-serif;
+	color:#black;
+	padding:2px 3px;
+	font-size:140%;
+	height:30px;
 }
 
-#site_header_container {
-    height:145px;
-    margin-top: 10px;
+#header_container {
+  height:190px;
+
 }
 
 .heading a {
-    background: #fff url('../images/site/feed.gif') no-repeat top left; 
-    width:257px;
-    height:26px;
-    display:block;
-    font-size:120%;
-    font-style:uppercase;
-    padding-top:32px;
+  background: #fff url('../images/site/feed.gif') no-repeat top left; 
+  width:257px;
+  height:26px;
+  display:block;
+  font-size:120%;
+  font-style:uppercase;
+  padding-top:32px;
 }
 
 
-#site_header{
+#header{
     width:900px;
-    margin:0 auto;
-    text-align:left;
+	margin:0 auto;
+	text-align:left;
+
 }
 
-#site_header img {
-    margin: 0px;
-    padding-right: 20px;
-    border: none;
+#header img {
+        margin: 0px;
+        padding-left: 11px;
 }
 	
-#site_header :link, #site_header :visited, #site_header :link:hover, #site_header :visited:hover {
-    color:#3270a9;
+#header :link, #header :visited, #header :link:hover, #header :visited:hover {
+        color:#3270a9;
 }
 
 #title{
     clear:both;
     float:left;
+	width:200px;
+	margin-top:25px;
+	margin-left:25px;
+	margin-bottom:20px;
 }
 
-#title :link, #title :visited, #title :link:hover, #title :visited:hover {
-    border-bottom:0 none;
-    text-decoration: none;
-    color:#3270A9;
-}
-
-#title a:hover {
-    text-decoration: none;
-}   
 
 #banner {
     background:white;
-/*     height :103px; */
+    height :103px;
     width:800px;
     margin:0 auto;
     clear:both;
-/*     -webkit-border-radius: 20px; */
-/*     -moz-border-radius: 20px;   */
-    -webkit-border-radius-topleft: 20px;
-    -moz-border-radius-topleft: 20px; 
-    -webkit-border-radius-topright: 20px;
-    -moz-border-radius-topright: 20px; 
-    padding: 10px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;  
+    padding: 16px;
 }
 
 #banner_download {
@@ -234,10 +213,13 @@ body{
     
 }
 
+#title a:hover { text-decoration: none; }
+
 /*Construction Styles*/
 #container{
-    margin:auto;
-    padding-bottom:20px;
+	margin:auto;
+	padding-bottom:20px;
+	width:900px;
 }
 
 
@@ -245,8 +227,8 @@ body{
 
 
 .box{
-    color:#f4ec0b;
-    font-size:29px;
+	color:#f4ec0b;
+	font-size:29px;
 }
 /*Styles*/
 
@@ -265,175 +247,182 @@ li {
 }
 
 h1,h2,h3,h4,h5,h6{
-    font-family:Arial,Verdana,Helvetica,sans-serif;
-    font-weight:lighter;
+	font-family:Arial,Verdana,Helvetica,sans-serif;
+	font-weight:lighter;
 }
 h1{
-    color:#4c81b7;
-    size:130%;
+	color:#4c81b7;
+	size:130%;
 }
 h2{
-    color:#4c81b7;
-    size:125%;
+	color:#4c81b7;
+	size:125%;
 }
 h3{
-    color:#4c81b7;
-    size:110%;
+	color:#4c81b7;
+	size:110%;
 }
 h4{
-    color:#4c81b7;
-    font-size:100%;
+	color:#4c81b7;
+	font-size:100%;
 }
 h5{
-    color:#f00;
-    font-size:90%;
+	color:#f00;
+	font-size:90%;
 }
 h6{
-    color:#fff;
-    font-size:90%;
-    font-weight:bold;
+	color:#fff;
+	font-size:90%;
+	font-weight:bold;
 }
 a{
-    text-decoration:none;
-    color:#3270A9;
+	text-decoration:none;
+	color:#3270A9;
 }
 a:hover{
-    text-decoration:underline;
+	text-decoration:underline;
 }
 #right a{
-    text-decoration:none;
-    color:#012346;
+	text-decoration:none;
+	color:#012346;
 }
 #right a:hover{
-    text-decoration:underline;
+	text-decoration:underline;
 }
 acronym{
-    border-bottom:1px dotted #999;
-    padding-bottom:1px;
-    cursor:help;
+	border-bottom:1px dotted #999;
+	padding-bottom:1px;
+	cursor:help;
 }
 del{
-    color:#999;
+	color:#999;
 }
 .allcaps{
-    font-stretch:wider;
-    font-variant:small-caps;	
+	font-stretch:wider;
+	font-variant:small-caps;	
 }
 p.firstletter:first-letter{
-    font-family:Georgia,Verdana,Arial,Helvetica,sans-serif;
-    font-size:40px;
-    padding:10px 3px 3px 3px;
-    float:left;
+	font-family:Georgia,Verdana,Arial,Helvetica,sans-serif;
+	font-size:40px;
+	padding:10px 3px 3px 3px;
+	float:left;
 }
 
 
 .indent{
-    border-left:2px solid #3C8C06;
-    margin-left:25px;
-    padding-left:8px;
+	border-left:2px solid #3C8C06;
+	margin-left:25px;
+	padding-left:8px;
 }
 
 
 .blockquote{
-    border-bottom:0px solid #273955;
-    border-top:0px solid #273955;
-    border-left:4px solid #505050;
-    background:url(../images/site/blockquote.png) repeat top left;
-    padding:6px 6px 4px 8px;
-    margin:12px 0;
-    color:#000;
+	border-bottom:0px solid #273955;
+	border-top:0px solid #273955;
+	border-left:4px solid #505050;
+	background:url(../images/site/blockquote.png) repeat top left;
+	padding:6px 6px 4px 8px;
+	margin:12px 0;
+	color:#000;
 }
 .blockquote h5{
-    border-bottom:1px solid #3270A9;
-    font-size:17px;
-    color:#eee;
-    margin:2px;
+	border-bottom:1px solid #3270A9;
+	font-size:17px;
+	color:#eee;
+	margin:2px;
 }
 .blockquote span{
-    padding: 3px 0;
-    display:block;
-    font-size:10px;
-    color:#999;
+	padding: 3px 0;
+	display:block;
+	font-size:10px;
+	color:#999;
 }
 .highlight-paragraph{
-    color:#3270a9;
-    font-weight:bold;
+	color:#3270a9;
+	font-weight:bold;
 }
 .highlight{
-    color: black;
-    font-weight: bold;
+        color: black;
+        font-weight: bold;
 }
 .search-results {
-    font-size: 1.5em;
-    color: #000;
+        font-size: 1.5em;
+        color: #000;
 }
 .search-title a{
-    font-size: 1.2em;
-    font-weight: bold;
+        font-size: 1.2em;
+        font-weight: bold;
 }
 .search-teaser{
-    font-size: 0.9em;
+        font-size: 0.9em;
 }
 .search-link a:link, .search-link a:visited {
-    color: #308006;
+        color: #308006;
 }
+
 .header{
-    color:#3C8C06;
-    font-size:14px;
-    letter-spacing: -1px;
+        font-size:200%;
+        height:26px;
+        padding-top:15px;
+        border-bottom:1px solid #AAA;
+        color:#4C81B7;
 }
+
 .entryheader{
-    color:#000;
-    font-weight:bold;
-    letter-spacing: -1px;
+	color:#000;
+        font-weight:bold;
+	letter-spacing: -1px;
 }
 .newsheader{
-    color:#fff;
-    padding-left: 5px;
-    font-size:14px;
-    letter-spacing: -1px;
-    background-color:#231eff;
-    line-height: 200%;
+	color:#fff;
+        padding-left: 5px;
+	font-size:14px;
+	letter-spacing: -1px;
+        background-color:#231eff;
+        line-height: 200%;
 }
 .news{
-    width: 250px;
-    padding:15px 5px 10px 10px;
-    font-size:90%;
-    background-color:#eee;
-    line-height: 130%;
+    border:0 none;
+    line-height:130%;
+    margin:0!important;
+    width:196px;
+    background:white;
 }
 .news ul{
-    list-style:none;
-    padding-left:10px;
+        list-style:none;
 }
 .news ul li {
-    padding: 10px 0px;
-    border-bottom: 1px dotted #c0c0c0;
+        padding: 0px;
 }
+
+.news ul li a {
+        color:black;
+}
+
 .news p{
-    padding:0;
+	padding:0;
 }
 /*Floats*/
 .floatleft{
-    float:left;
+	float:left;
 }
 .floatright{
-    float:right;
+	float:right;
 }
 .w50{
-    width:50%;
+	width:50%;
 }
 .floatleft p{
-    padding:0 10px 0 0; 
+	padding:0 10px 0 0; 
 }
 .floatright p{
-    padding:0 0 0 10px;
+	padding:0 0 0 10px;
 }
 img.floatleft{
-    margin:15px 18px 5px 0;
+	margin:15px 18px 5px 0;
 }
 img.floatright{
-    margin:15px 5px 5px 18px
+	margin:15px 5px 5px 18px
 }
 
 div.bfgform {
@@ -441,21 +430,19 @@ div.bfgform {
 }
 
 div.bfgform input {
-    font:11px Verdana,Arial,Helvetica,sans-serif;
-    border:1px solid #353535;
-    background-color:#eee;
+	font:11px Verdana,Arial,Helvetica,sans-serif;
+	border:1px solid #AAA;
 }
 
 /*Content Styles*/
 #content{
-    width:818px;
-    margin:0 auto;
-    color:#000;
-    /* 	padding:10px; */
-    background:#ffffff;
-    height:auto;
-    padding-bottom:30px;
-    display:relative;
+    padding:10px 40px 30px;
+    width:777px;
+	margin:0 auto;
+	color:#000;
+	background:#ffffff;
+	height:auto;
+	display:relative;
     -moz-border-radius-bottomleft:20px;
     -moz-border-radius-bottomright:20px;
     -webkit-border-bottom-left-radius:20px;
@@ -464,16 +451,15 @@ div.bfgform input {
 }
 
 #column_one{
-    width:465px;
+	width:465px;
     float:left;
     background:white;
-    margin-left:20px;
 }
 
 #column_two{
     width:272px;
     float:right;
-    margin: 0px 30px 15px 15px;
+    margin:0 0 15px 15px;
     background:white;
 }
 
@@ -482,96 +468,113 @@ div.bfgform input {
 }
 
 #blogposts li a {
-    color:#000; 
+   color:#000; 
 }
 
 /*Due to my lack of CSS skill this is hard coded, meaning that if you change 
 the width of these sections of thier padding you will need to re-adjust the
 width. Also be sure to account for the border.*/
 #twocolumn{
-    background: #999 url(../images/site/2columnbg.jpg) repeat-y top left;
-    width: 800px;
-    border-bottom: 1px solid #999;
-    font:11.3px Verdana,Arial,Helvetica,sans-serif;
-    color: #eee;
+	background: #999 url(../images/site/2columnbg.jpg) repeat-y top left;
+	width: 800px;
+	border-bottom: 1px solid #999;
+	font:11.3px Verdana,Arial,Helvetica,sans-serif;
+	color: #eee;
 }
 #left{
-    width:375px;
-    padding:10px;
-    height:100%;
-    float:left
+	width:375px;
+	padding:10px;
+	height:100%;
+	float:left
 }
 #right{
-    width:375px;
-    padding:10px;
-    height:100%;
-    float:right;
+	width:375px;
+	padding:10px;
+	height:100%;
+	float:right;
 }
 #clearboth{ clear:both; }
 
 /*Sub-Nav*/
 #subnav{
-    float:right;
-    border:1px solid #404040;
-    margin: 30px 5px 150px 20px;
+	float:right;
+	margin-top:10px;
 }
 #subnavcontainer {
-    width: 200px;	
+	width: 200px;	
 }
 #subnavcontainer ul
 {
-    padding-top:0px;
-    margin-left: 0;
-    padding-left: 0;
-    list-style-type: none;
+	padding-top:0px;
+	margin-left: 0;
+	padding-left: 0;
+	list-style-type: none;
 }
 #subnavcontainer a
 {
-    display:block;
-    padding:4px;
-    width:160px;
-    background-color:transparent;
-    border-bottom:1px solid #03509C;
+	display:block;
+	padding:4px;
+	width:160px;
+	background-color:transparent;
+	border-bottom:1px solid #03509C;
 }
 #subnavcontainer a:link, #subnavlist a:visited
 {
-    color:#EEE;
-    text-decoration:none;
+	color:#EEE;
+	text-decoration:none;
 }
 #subnavcontainer a:hover
 {
-    background-color:#384B6D;
-    color:#fff;
+	background-color:#384B6D;
+	color:#fff;
 }
 .subnavheader{
-    border-bottom:1px solid #3C8C06;
-    width:167px;
-    padding:0 0 3px 0;
-    margin-bottom:-11px;
+	border-bottom:1px solid #3C8C06;
+	width:167px;
+	padding:0 0 3px 0;
+	margin-bottom:-11px;
 }
 /*Footer*/
-#site_footer{
-    width:808px;
-    margin:0 auto;
-    padding:15px;
-    clear:both;
-    color: #000;
-    font-size: 90%;
-    height:30px; 
-    line-height:25px;
+#footer{
+	width:808px;
+	margin:0 auto;
+	padding:15px;
+	clear:both;
+	color: #000;
+	font-size: 90%;
+	height:30px; 
+	line-height:25px;
+	border:0;
+}
+
+#footer a{
+	color:#000;
 }
 
 
 
 .copy{
-    float:left;
+	float:left;
 }
 .credit{
-    float:right;
+	float:right;
 }
-#site_footer a{
-    text-decoration:underline;
-    color:black;
+#footer a{
+	text-decoration:underline;
+	color:black;
 }
 
+fieldset {
+    border: 0;
+    padding:0;
+    margin:0;
+}
 
+.source {
+    overflow:auto;
+    width:520px;
+}
+
+.linenos {
+    vertical-align:text-top;
+}

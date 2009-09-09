@@ -1,0 +1,11 @@
+body{
+	margin:0px;
+	padding:0px;
+    color:#000;
+    background: #e9e9ce url('../images/site/site-background.gif') repeat-x top left;   
+	font:13px Arial,Verdana,Helvetica,sans-serif;
+}
+
+#header_container {
+    height:334px;
+}

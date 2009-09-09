@@ -11,8 +11,6 @@
           type="text/css" />
      <link rel="stylesheet" type="text/css" 
            href="${api.application_url}/static/css/default.css" />
-     <link rel="stylesheet" type="text/css" 
-           href="${api.application_url}/static/css/nonhomepage.css" />
     <link rel="stylesheet" href="/static/css/trac_overrides.css" 
           type="text/css" />
   </div>
@@ -38,6 +36,8 @@
     <!--[if lt IE 7]>
         <script type="text/javascript" src="/trac/chrome/common/js/ie_pre7_hacks.js"></script>
         <![endif]-->
+    <!--<link rel="stylesheet" href="${api.application_url}/static/css/fixie7.css" type="text/css" />
+        <![endif]-->
     <script type="text/javascript">
       jQuery(document).ready(function($) {
       $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
@@ -47,11 +47,7 @@
 
   <div metal:fill-slot="content">
 
-    <div id="content">
-
-      <div id="themecontent"/>
-
-    </div>
+    <div id="themecontent"/>
 
   </div>
 
