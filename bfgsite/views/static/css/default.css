@@ -578,3 +578,7 @@ fieldset {
 .linenos {
     vertical-align:text-top;
 }
+
+.surround {
+    display: none;
+}
