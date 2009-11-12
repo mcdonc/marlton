@@ -8,17 +8,17 @@
     
     <div id="content">
       
-      <div id="subnav" tal:condition="pastes">
-        <div class="news">
-          <div class="header">Recent Pastes</div>
-          <ul>
-            <li tal:repeat="paste pastes[:3]">
-              <a href="${paste.url}"
-                 >${paste.author} on ${paste.date} (${paste.language or 'auto'})</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+<!--       <div id="subnav" tal:condition="pastes"> -->
+<!--         <div class="news"> -->
+<!--           <div class="header">Recent Pastes</div> -->
+<!--           <ul> -->
+<!--             <li tal:repeat="paste pastes[:3]"> -->
+<!--               <a href="${paste.url}" -->
+<!--                  >${paste.author} on ${paste.date} (${paste.language or 'auto'})</a> -->
+<!--             </li> -->
+<!--           </ul> -->
+<!--         </div> -->
+<!--       </div> -->
       
       <div id="one">
         
