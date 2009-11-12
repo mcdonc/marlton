@@ -14,7 +14,7 @@
         <div class="bfgmessage" tal:condition="message|nothing"
              tal:content="message">Error message</div>
         
-        <div class="left">
+        <div class="pasteentry">
           
           <style tal:content="style_defs"></style>
           

@@ -493,6 +493,14 @@ width. Also be sure to account for the border.*/
 	height:100%;
 	float:right;
 }
+
+#pasteentry {
+	width:500px;
+	padding:10px;
+	height:100%;
+	float:left
+}
+
 #clearboth{ clear:both; }
 
 /*Sub-Nav*/
