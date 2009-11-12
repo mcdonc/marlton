@@ -1,3 +1,5 @@
+from webob import Response
+
 from repoze.bfg.view import bfg_view
 from repoze.bfg.chameleon_zpt import render_template_to_response
 
@@ -15,3 +17,8 @@ def index_view(context, request):
         tutorials = tutorials,
         )
 
+@bfg_view(for_=IWebSite, name='robots.txt', permission='view')
+def robots_txt(context, request):
+    return Response('User-Agent: * \n'
+                    'Disallow: /trac/')
+                    
