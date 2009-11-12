@@ -19,6 +19,8 @@ def index_view(context, request):
 
 @bfg_view(for_=IWebSite, name='robots.txt', permission='view')
 def robots_txt(context, request):
-    return Response('User-Agent: * \n'
-                    'Disallow: /trac/')
+    response  = Response('User-Agent: * \nDisallow: /trac/')
+    response.content_type = 'text/plain'
+    return response
+
                     
