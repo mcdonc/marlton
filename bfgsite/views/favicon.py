@@ -3,10 +3,10 @@ from webob import Response
 
 from repoze.bfg.view import bfg_view
 
+_here = os.path.dirname(__file__)
+_icon = open(os.path.join(_here, 'static',
+                'images', 'site', 'favicon.ico')).read()
+
 @bfg_view(name='favicon.ico')
 def favicon(context, request):
-    response = Response(content_type='image/x-icon')
-    here = os.path.dirname(__file__)
-    response.body = open(os.path.join(here, 'static',
-                                      'images', 'site', 'favicon.ico')).read()
-    return response
+    return Response(content_type='image/x-icon', body=_icon)
