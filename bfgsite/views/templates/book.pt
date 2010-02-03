@@ -1,0 +1,93 @@
+<div 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    metal:use-macro="api.main_template.macros['master']">
+
+  <div metal:fill-slot="content">
+
+    <div id="content">
+      <h2>
+        <a href="https://www.createspace.com/3422488">The repoze.bfg
+        Web Application Framework, Version 1.2</a>: available for
+        purchase.
+      </h2>
+
+      <center>
+        <a href="https://www.createspace.com/3422488"><img 
+        src="${request.application_url}/static/images/bfgbook_thumbnail.jpg"
+        />
+      </a>
+      </center>
+
+      <p>
+        <a href="https://www.createspace.com/3422488">The repoze.bfg
+        Web Application Framework, Version 1.2</a> is a high-quality
+        500+ page paperback edition of the <a
+        href="http://docs.repoze.org/bfg/1.2">BFG version 1.2
+        documentation</a> by Chris McDonough, the primary author of
+        <b>repoze.bfg</b> with extras such as a foreword by <a
+        href="http://pauleveritt.wordpress.com/">Paul Everitt</a>, an
+        author introduction, and nifty cover art by <a
+        href="http://www.electrosoup.co.uk/">Electrosoup</a>.  If you
+        like BFG, and you'd like to support the project, consider via
+        <a href="https://www.createspace.com/3422488">purchasing a
+        copy!</a>.
+      </p>
+
+      <p>
+        <i>Note: The book can also be found on Amazon.com and other
+        online book outlets; however the project makes a greater
+        percentage on each book sold if you buy it via <a
+        href="https://www.createspace.com/3422488">Createspace</a>, so
+        if doing so isn't an inconvenience, please consider doing
+        so.</i>
+      </p>
+
+      <h2>Book Abstract</h2>
+
+      <p>
+        repoze.bfg is a small, fast, down-to-earth, open source Python
+        web development framework. It makes real-world web application
+        development and deployment more fun, more predictable, and
+        more productive.
+      </p>
+
+      <p>
+        This book will show you how to develop web applications using
+        repoze.bfg and Python step-by-step, including:
+      </p>
+
+      <p>
+
+        <ul>
+          <li>Using SQLAlchemy and ZODB along with repoze.bfg.</li>
+          <li>Using built-in templating facilities to render HTML and XML.</li>
+          <li>Using repoze.bfg security functionality to protect your application.</li>
+          <li>Exending an existing repoze.bfg application without changing its source code.</li>
+          <li>Using sessions within repoze.bfg.</li>
+          <li>Running repoze.bfg under mod_wsgi.</li>
+          <li>Deploying your repoze.bfg application to Google's App Engine.</li>
+        </ul>
+      </p>
+        
+      <p>
+        This book is written by the primary author of repoze.bfg. It
+        has developed along with framework itself, and therefore
+        contains the most accurate and up to date information.
+      </p>
+
+      <h2>About the Author</h2>
+
+      <p>
+        
+        Chris McDonough is the primary author of the repoze.bfg web
+        application framework. He is a Python developer and consultant
+        for Agendaless Consulting, a company based in Fredericksburg,
+        VA, USA. His other major projects include Supervisor, a Python
+        process management system.
+      </p>
+
+    </div>
+  </div>
+</div>
