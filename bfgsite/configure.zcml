@@ -5,12 +5,12 @@
   <include package="repoze.bfg.includes" />
   <include package="repoze.lemonade.includes" file="meta.zcml"/>
 
-  <route
-     name="test"
-     path=":can/test*traverse"
-   />
-
   <scan package="."/>
+
+  <static
+   name="static"
+   path="views/static"
+   />
 
   <subscriber
       for="repoze.lemonade.interfaces.IContent
@@ -95,5 +95,10 @@
     callback=".security.groupfinder"/>
 
   <aclauthorizationpolicy/>
+
+  <route
+     name="test"
+     path=":can/test*traverse"
+   />
 
 </configure>

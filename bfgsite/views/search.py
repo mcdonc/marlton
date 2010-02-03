@@ -1,6 +1,5 @@
 from zope.index.text.parsetree import ParseError
 
-from repoze.bfg.chameleon_zpt import render_template_to_response
 from repoze.bfg.traversal import find_model
 from repoze.bfg.view import bfg_view
 from repoze.bfg.url import model_url
@@ -10,9 +9,9 @@ from bfgsite.interfaces import IWebSite
 from bfgsite.utils import search_trac
 from bfgsite.utils import API
 
-@bfg_view(name='searchresults', for_=IWebSite, permission='view')
+@bfg_view(name='searchresults', for_=IWebSite, permission='view',
+          renderer='bfgsite.views:templates/searchresults.pt')
 def searchresults(context, request):
-    posts = []
     catalog = find_catalog(context)
 
     text = request.params.get('text')
@@ -132,12 +131,11 @@ def searchresults(context, request):
     batch_info['next_batch'] = next_batch_info
     batch_info['batching_required'] = next_batch_info or previous_batch_info
 
-    return render_template_to_response(
-        'templates/searchresults.pt',
+    return dict(
+        api = API(context, request),
         batch = batch,
         batch_info = batch_info,
         numdocs = numdocs,
-        api = API(context, request),
         message = message,
         )
 

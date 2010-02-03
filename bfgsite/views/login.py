@@ -1,6 +1,5 @@
 from webob.exc import HTTPFound
 
-from repoze.bfg.chameleon_zpt import render_template_to_response
 from repoze.bfg.security import forget
 from repoze.bfg.security import remember
 from repoze.bfg.security import authenticated_userid
@@ -18,7 +17,8 @@ def logout_view(context, request):
     headers = forget(request)
     return HTTPFound(location=model_url(context, request), headers=headers)
 
-@bfg_view(for_=IWebSite, name='login', permission='view')
+@bfg_view(for_=IWebSite, name='login', permission='view',
+          renderer='bfgsite.views:templates/login.pt')
 def login_view(context, request):
     login = ''
     password = ''
@@ -44,8 +44,7 @@ def login_view(context, request):
 
     logged_in = authenticated_userid(request)
         
-    return render_template_to_response(
-        'templates/login.pt',
+    return dict(
         api = API(context, request),
         login = login,
         password = password,

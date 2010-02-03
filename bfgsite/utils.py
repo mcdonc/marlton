@@ -9,7 +9,7 @@ from pygments import lexers
 from repoze.bfg.chameleon_zpt import get_template
 
 from repoze.bfg.traversal import find_interface
-from repoze.bfg.interfaces import ISettings
+from repoze.bfg.settings import get_settings
 from repoze.bfg.security import authenticated_userid
 from repoze.bfg.url import model_url
 
@@ -43,10 +43,11 @@ def preferred_author(context, request):
         if not author_name:
             userid = authenticated_userid(request)
             profiles = find_profiles(context)
-            profile = profiles.get(userid)
-            author_name = getattr(profile, 'fullname', u'')
-    if isinstance(author_name, str):
-        author_name = unicode(author_name, 'utf-8')
+            if profiles is not None:
+                profile = profiles.get(userid)
+                author_name = getattr(profile, 'fullname', u'')
+            if isinstance(author_name, str):
+                author_name = unicode(author_name, 'utf-8')
     return author_name
 
 def nl_to_br(s):
@@ -60,6 +61,10 @@ class API:
          'nav_ifaces':(IWebSite),
          'view_name':'',
          'title':'Home'},
+        {'view_iface':IWebSite,
+         'nav_ifaces':(IWebSite,),
+         'view_name':'book',
+         'title':'Book'},
         {'view_iface':IWebSite,
          'nav_ifaces':(IWebSite,),
          'view_name':'documentation',
@@ -89,9 +94,11 @@ class API:
         self.application_url = request.application_url
         self.userid = authenticated_userid(request)
         self.is_home_page = request.url == request.application_url + '/'
+        profile = None
         profiles = find_profiles(context)
-        profile = profiles.get(self.userid)
-        self.fullname = getattr(profile, 'fullname', None)
+        if profiles is not None:
+            profile = profiles.get(self.userid)
+            self.fullname = getattr(profile, 'fullname', None)
         if profile:
             self.profile_edit_url = model_url(profile, request, 'edit')
         else:
@@ -169,16 +176,19 @@ for name, aliases, filetypes, mimetypes_ in all_lexers:
     lexer_info.append({'alias':aliases[0], 'name':name})
 
 def find_users(context):
-    return find_interface(context, IWebSite).users
+    site = find_site(context)
+    if site is None:
+        return None
+    return site.users
 
 def find_profiles(context):
-    return find_interface(context, IWebSite)['profiles']
+    site = find_site(context)
+    if site is None:
+        return None
+    return site['profiles']
 
 def find_site(context):
     return find_interface(context, IWebSite)
-
-def get_settings():
-    return getUtility(ISettings)
 
 def random_password():
     friendly = ''.join(
@@ -218,7 +228,6 @@ class TracSearch(SearchModule):
 def get_tutorials(context, request, max):
     tutorialbin = find_interface(context, ITutorialBin)
     tutorials = []
-    tutorialbin_url = model_url(tutorialbin, request)
     keys = sort_byint(tutorialbin.keys())
     keys = keys[:max]
     for name in keys:

@@ -24,6 +24,20 @@
         <li><a class="reference external" href="http://docs.repoze.org/bfg/current/#tutorials">Tutorials</a></li>
         <li><a class="reference external" href="http://docs.repoze.org/bfg/current/#sample-applications">Sample Applications</a></li>
       </ul>
+
+      <h2>Buy Documentation</h2>
+
+      <p>You can <a href="${api.application_url}/book">buy printed
+      versions of BFG documentation</a>:
+      </p>
+
+      <center>
+        <a href="https://www.createspace.com/3422488"><img 
+        src="${request.application_url}/static/images/bfgbook_thumbnail.jpg"
+        />
+      </a>
+      </center>
+
     </div>
   </div>
 </div>

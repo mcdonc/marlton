@@ -1,1 +1,1 @@
-../../bin/nosetests $@
+../../bin/nosetests $*

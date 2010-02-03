@@ -1,14 +1,13 @@
 from repoze.bfg.view import bfg_view
-from repoze.bfg.chameleon_zpt import render_template_to_response
 
 from bfgsite.interfaces import IWebSite
 
 from bfgsite.utils import API
 
-@bfg_view(for_=IWebSite, name='software', permission='view')
+@bfg_view(for_=IWebSite, name='software', permission='view',
+          renderer='bfgsite.views:templates/software.pt')
 def software_view(context, request):
-    return render_template_to_response(
-        'templates/software.pt',
+    return dict(
         api = API(context, request),
         )
 

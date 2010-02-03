@@ -11,7 +11,6 @@ from pygments import util
 from pygments import highlight
 
 
-from repoze.bfg.chameleon_zpt import render_template_to_response
 from repoze.bfg.security import Allow
 from repoze.bfg.security import authenticated_userid
 from repoze.bfg.security import has_permission
@@ -27,14 +26,14 @@ from bfgsite.models import Tutorial
 
 from bfgsite.utils import API
 from bfgsite.utils import COOKIE_LANGUAGE
-from bfgsite.utils import find_site
 from bfgsite.utils import formatter
 from bfgsite.utils import get_tutorials
 from bfgsite.utils import style_defs
 from bfgsite.utils import nl_to_br
 from bfgsite.utils import lexer_info
 
-@bfg_view(for_=ITutorial, permission='view')
+@bfg_view(for_=ITutorial, permission='view',
+          renderer='bfgsite.views:templates/tutorial.pt')
 def tutorial_view(context, request):
     text = context.text or u''
     try:
@@ -42,8 +41,7 @@ def tutorial_view(context, request):
             l = lexers.get_lexer_by_name(context.language)
         else:
             l = lexers.guess_lexer(context.code)
-        language = l.aliases[0]
-    except util.ClassNotFound, err:
+    except util.ClassNotFound:
         # couldn't guess lexer
         l = lexers.TextLexer()
 
@@ -55,8 +53,7 @@ def tutorial_view(context, request):
     if context.attachment_name is not None:
         attachment_url = request.url + '/download_attachment'
 
-    return render_template_to_response(
-        'templates/tutorial.pt',
+    return dict(
         api = API(context, request),
         author = context.author_name,
         url = context.url,
@@ -88,7 +85,8 @@ def download_attachement(context, request):
     response = Response(headerlist=headers, app_iter=f)
     return response                
 
-@bfg_view(for_=ITutorialBin, permission='view')
+@bfg_view(for_=ITutorialBin, permission='view',
+          renderer='bfgsite.views:templates/tutorialbin.pt')
 def tutorialbin_view(context,request):
     tutorialbin_url = model_url(context, request)
     tutorials = get_tutorials(context, request, sys.maxint)
@@ -100,8 +98,7 @@ def tutorialbin_view(context,request):
                 l = lexers.get_lexer_by_name(latest_obj.language)
             else:
                 l = lexers.guess_lexer(latest_obj.code)
-            language = l.aliases[0]
-        except util.ClassNotFound, err:
+        except util.ClassNotFound:
             l = lexers.TextLexer()
         formatted_code= highlight(latest_obj.code, l, formatter)
         latest = {'author_name':latest_obj.author_name,
@@ -115,8 +112,7 @@ def tutorialbin_view(context,request):
         latest = None
     user = authenticated_userid(request)
     can_manage = has_permission('manage', context, request)
-    return render_template_to_response(
-        'templates/tutorialbin.pt',
+    return dict(
         api = API(context, request),
         tutorials = tutorials,
         style_defs = style_defs,
@@ -129,7 +125,8 @@ def tutorialbin_view(context,request):
         manage_url = model_url(context, request, 'manage'),
         )
 
-@bfg_view(for_=ITutorialBin, name='add', permission='add')
+@bfg_view(for_=ITutorialBin, name='add', permission='add',
+          renderer='bfgsite.views:templates/tutorialbin_addedit.pt')
 def tutorialbin_add_view(context, request):
     params = request.params
     title = u''
@@ -144,7 +141,6 @@ def tutorialbin_add_view(context, request):
     can_manage = has_permission('manage', context, request)
 
     if params.has_key('form.submitted'):
-        site = find_site(context)
         title = params.get('title', u'')
         text = params.get('text', u'')
         code = params.get('code', u'')
@@ -154,7 +150,7 @@ def tutorialbin_add_view(context, request):
         message = None
         attachment = params.get('attachment')
         try:
-            form = schema.to_python(request.params)
+            schema.to_python(request.params)
         except formencode.validators.Invalid, why:
             message = str(why)
         else:
@@ -178,8 +174,7 @@ def tutorialbin_add_view(context, request):
 
     tutorials = get_tutorials(context, request, 10)
 
-    return render_template_to_response(
-        'templates/tutorialbin_addedit.pt',
+    return dict(
         api = API(context, request),
         url = url,
         title = title,
@@ -195,7 +190,8 @@ def tutorialbin_add_view(context, request):
         form_url = model_url(context, request, 'add'),
         )
 
-@bfg_view(for_=ITutorial, name='edit', permission='edit')
+@bfg_view(for_=ITutorial, name='edit', permission='edit',
+          renderer='bfgsite.views:templates/tutorialbin_addedit.pt')
 def tutorial_edit_view(context, request):
     message = u''
     title = context.title
@@ -209,7 +205,6 @@ def tutorial_edit_view(context, request):
 
     params = request.params
     if params.has_key('form.submitted'):
-        site = find_site(context)
         title = params.get('title', u'')
         url = params.get('url', u'')
         language = params.get('language', u'')
@@ -219,7 +214,7 @@ def tutorial_edit_view(context, request):
         message = None
         attachment = params.get('attachment', u'')
         try:
-            form = schema.to_python(request.params)
+            schema.to_python(request.params)
         except formencode.validators.Invalid, why:
             message = str(why)
         else:
@@ -237,8 +232,7 @@ def tutorial_edit_view(context, request):
 
     tutorials = get_tutorials(context, request, 10)
 
-    return render_template_to_response(
-        'templates/tutorialbin_addedit.pt',
+    return dict(
         api = API(context, request),
         url = url,
         title = title,
@@ -254,7 +248,8 @@ def tutorial_edit_view(context, request):
         form_url = model_url(context, request, 'edit'),
         )
 
-@bfg_view(for_=ITutorial, name='delete', permission='edit')
+@bfg_view(for_=ITutorial, name='delete', permission='edit',
+          renderer='bfgsite.views:templates/areyousure.pt')
 def delete_tutorial_view(context, request):
     parent = context.__parent__
     if 'form.yes' in request.params:
@@ -263,14 +258,14 @@ def delete_tutorial_view(context, request):
         return HTTPFound(location=model_url(parent, request))
     if 'form.no' in request.params:
         return HTTPFound(location=model_url(context, request))
-    return render_template_to_response(
-        'templates/areyousure.pt',
+    return dict(
         api = API(context, request),
         form_url = model_url(context, request, 'delete'),
         message = 'Are you sure you want to delete "%s"' % context.title
         )
     
-@bfg_view(for_=ITutorialBin, name='manage', permission='manage')
+@bfg_view(for_=ITutorialBin, name='manage', permission='manage',
+          renderer='bfgsite.views:templates/tutorialbin_manage.pt')
 def tutorialbin_manage_view(context, request):
     params = request.params
     message = params.get('message', u'')
@@ -288,15 +283,15 @@ def tutorialbin_manage_view(context, request):
     tutorials = get_tutorials(context, request, sys.maxint)
     tutorialbin_url = model_url(context, request)
 
-    return render_template_to_response(
-        'templates/tutorialbin_manage.pt',
+    return dict(
         api = API(context, request),
         message = message,
         tutorials = tutorials,
         tutorialbin_url = tutorialbin_url,
         )
         
-@bfg_view(for_=ITutorialBin, name='rss', permission='view')
+@bfg_view(for_=ITutorialBin, name='rss', permission='view',
+          renderer='bfgsite.views:templates/tutorialbin_rss.pt')
 def tutorialbin_rss_view(context, request):
     tutorialbin_url = model_url(context, request)
     tutorials = get_tutorials(context, request, sys.maxint)
@@ -306,13 +301,12 @@ def tutorialbin_rss_view(context, request):
         last_date=None
     for tutorial in tutorials:
         tutorial['text'] = nl_to_br(tutorial['text'])
-    response = render_template_to_response(
-        'templates/tutorialbin_rss.pt',
+    response = dict(
         tutorials = tutorials,
         last_date = last_date,
         tutorialbin_url = tutorialbin_url,
         )
-    response.content_type = 'application/rss+xml'
+    request.response_content_type = 'application/rss+xml'
     return response
 
 class TutorialAddEditSchema(formencode.Schema):

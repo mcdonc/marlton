@@ -3,12 +3,12 @@ from lxml import etree
 
 from repoze.bfg.chameleon_zpt import render_template
 from repoze.bfg.view import bfg_view
+from repoze.bfg.settings import get_settings
 
 from webob import Response
 
 from bfgsite.interfaces import IWebSite
 from bfgsite.utils import API
-from bfgsite.utils import get_settings
 
 utf8_html_parser = lxml.html.HTMLParser(encoding='utf-8')
 

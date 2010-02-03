@@ -1,38 +1,42 @@
 from repoze.zodbconn.finder import PersistentApplicationFinder
-from repoze.bfg.router import make_app as bfg_make_app
+from repoze.bfg.configuration import Configurator
 
 from bfgsite.models import appmaker
 
-def make_app(global_config, **kw):
+def make_app(global_config, **settings):
     # paster app config callback
-    zodb_uri = kw.get('zodb_uri', None)
+    zodb_uri = settings.get('zodb_uri', None)
     if zodb_uri is None:
         raise ValueError('zodb_uri must not be None')        
 
     roots = {}
-    for k in kw:
+
+    for k in settings:
         if k.startswith('sphinx.'):
             prefix, rest = k.split('sphinx.', 1)
             name, setting = rest.split('.', 1)
-            settings = roots.setdefault(name, {})
-            settings[setting] = kw[k]
+            tmp = roots.setdefault(name, {})
+            tmp[setting] = settings[k]
 
-    kw['sphinx_roots'] = roots
+    settings['sphinx_roots'] = roots
 
-    for rootname, settings in roots.items():
-        if not 'url_prefix' in settings:
+    for rootname, tmp in roots.items():
+        if not 'url_prefix' in tmp:
             raise ValueError('sphinx.%s.url_prefix missing' % rootname)
-        if not 'package_dir' in settings:
+        if not 'package_dir' in tmp:
             raise ValueError('sphinx.%s.package_dir missing' % rootname)
-        if not 'docs_subpath' in settings:
+        if not 'docs_subpath' in tmp:
             raise ValueError('sphinx.%s.docs_subpath missing' % rootname)
-        if not 'title' in settings:
+        if not 'title' in tmp:
             raise ValueError('sphinx.%s.title missing' % rootname)
-        if not 'description' in settings:
-            settings['description'] = rootname
+        if not 'description' in tmp:
+            tmp['description'] = rootname
 
     finder = PersistentApplicationFinder(zodb_uri, appmaker)
-    import bfgsite
-    app = bfg_make_app(finder, bfgsite, options=kw)
+    config = Configurator(settings=settings, root_factory=finder)
+    config.begin()
+    config.load_zcml('configure.zcml')
+    config.end()
+    app = config.make_wsgi_app()
     return app
 

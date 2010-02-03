@@ -3,7 +3,6 @@ from email.Message import Message
 
 from webob.exc import HTTPFound
 
-from repoze.bfg.chameleon_zpt import render_template_to_response
 from repoze.bfg.view import bfg_view
 from repoze.bfg.security import authenticated_userid
 from repoze.bfg.security import remember
@@ -19,7 +18,8 @@ from bfgsite.utils import find_profiles
 from bfgsite.utils import random_password
 from bfgsite.utils import get_mailer
 
-@bfg_view(for_=IWebSite, name='register', permission='view')
+@bfg_view(for_=IWebSite, name='register', permission='view',
+          renderer='bfgsite.views:templates/register.pt')
 def register_view(context, request):
     logged_in = authenticated_userid(request)
     login = request.params.get('login', '')
@@ -34,7 +34,7 @@ def register_view(context, request):
         schema = RegisterSchema()
         message = None
         try:
-            form = schema.to_python(request.params)
+            schema.to_python(request.params)
         except formencode.validators.Invalid, why:
             message = str(why)
         else:
@@ -69,8 +69,7 @@ def register_view(context, request):
                                              headers=headers)
                         return response
         
-    return render_template_to_response(
-        'templates/register.pt',
+    return dict(
         api = API(context, request),
         logged_in = logged_in,
         message = message,
@@ -82,7 +81,8 @@ def register_view(context, request):
         captcha_answer = captcha_answer,
         )
 
-@bfg_view(for_=IProfile, name='edit', permission='edit')
+@bfg_view(for_=IProfile, name='edit', permission='edit',
+          renderer='bfgsite.views:templates/profile_edit.pt')
 def profile_edit_view(context, request):
     login = authenticated_userid(request)
     fullname = context.fullname
@@ -95,7 +95,7 @@ def profile_edit_view(context, request):
         schema = ProfileSchema()
         message = None
         try:
-            form = schema.to_python(request.params)
+            schema.to_python(request.params)
         except formencode.validators.Invalid, why:
             message = str(why)
         else:
@@ -111,7 +111,7 @@ def profile_edit_view(context, request):
         schema = ChangePasswordSchema()
         message = None
         try:
-            form = schema.to_python(request.params)
+            schema.to_python(request.params)
         except formencode.validators.Invalid, why:
             message = str(why)
         else:
@@ -124,8 +124,7 @@ def profile_edit_view(context, request):
                 users.change_password(login, password)
                 message = 'Password changed'
         
-    return render_template_to_response(
-        'templates/profile_edit.pt',
+    return dict(
         api = API(context, request),
         login = login,
         message = message,
@@ -135,7 +134,8 @@ def profile_edit_view(context, request):
         password_verify = password_verify,
         )
 
-@bfg_view(for_=IWebSite, name='forgot_password', permission='view')
+@bfg_view(for_=IWebSite, name='forgot_password', permission='view',
+          renderer='bfgsite.views:templates/forgot_password.pt')
 def forgot_password_view(context, request):
     email = request.params.get('email', '')
     message = ''
@@ -173,8 +173,7 @@ def forgot_password_view(context, request):
                 mailer.send(frm, [email], message)
                 message = 'Mail sent to "%s" with new password' % email
 
-    return render_template_to_response(
-        'templates/forgot_password.pt',
+    return dict(
         api = API(context, request),
         email=email,
         message=message,

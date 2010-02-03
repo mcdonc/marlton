@@ -1,7 +1,5 @@
 import unittest
 
-from repoze.bfg import testing
-
 class WebSiteModelTests(unittest.TestCase):
 
     def _getTargetClass(self):
