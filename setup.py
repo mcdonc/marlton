@@ -48,6 +48,7 @@ requires = [
     'Trac',
     'repoze.sendmail',
     'lxml',
+    'docutils',
     ]
 
 setup(name='bfgsite',
