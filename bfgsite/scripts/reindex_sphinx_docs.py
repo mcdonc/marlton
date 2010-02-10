@@ -28,10 +28,11 @@ def main(argv=sys.argv):
     app_root, closer = get_root(app)
 
     catalog = find_catalog(app_root)
-    for address in catalog.document_map.address_to_docid:
+    for address in list(catalog.document_map.address_to_docid.keys()):
         if address.startswith('external:') or address.startswith('sphinx:'):
             docid = catalog.document_map.address_to_docid[address]
             catalog.unindex_doc(docid)
+            catalog.document_map.remove_address(address)
 
     settings = get_settings()
     docroot = settings.sphinx_docroot
