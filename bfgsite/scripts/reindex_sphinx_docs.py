@@ -1,11 +1,9 @@
 import os
 import sys
 
-from zope.component import getUtility
-
-from repoze.bfg.interfaces import ISettings
 from repoze.bfg.paster import get_app
 from repoze.bfg.scripting import get_root
+from repoze.bfg.settings import get_settings
 
 from bfgsite.catalog import find_catalog
 from bfgsite.models import SphinxDocument
@@ -35,7 +33,7 @@ def main(argv=sys.argv):
             docid = catalog.document_map.address_to_docid[address]
             catalog.unindex_doc(docid)
 
-    settings = getUtility(ISettings)
+    settings = get_settings()
     docroot = settings.sphinx_docroot
     roots = settings.sphinx_roots
     oldcwd = os.getcwd()
@@ -93,5 +91,5 @@ def main(argv=sys.argv):
         transaction.commit()
         
 if __name__ == '__main__':
-        main()
+    main()
 
