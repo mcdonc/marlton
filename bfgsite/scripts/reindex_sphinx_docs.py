@@ -35,8 +35,8 @@ def main(argv=sys.argv):
             catalog.document_map.remove_address(address)
 
     settings = get_settings()
-    docroot = settings.sphinx_docroot
-    roots = settings.sphinx_roots
+    docroot = settings['sphinx_docroot']
+    roots = settings['sphinx_roots']
     oldcwd = os.getcwd()
 
     for root in roots:
