@@ -7,26 +7,35 @@
   <div metal:fill-slot="content">
 
     <div id="content">
-      <h2>
+      <h1>
         <a href="https://www.createspace.com/3422488">The repoze.bfg
-        Web Application Framework, Version 1.2</a>: available for
-        purchase.
-      </h2>
+        Web Application Framework, Version 1.2</a>
+      </h1>
 
-      <center>
-        <a href="https://www.createspace.com/3422488"><img 
-        src="${request.application_url}/static/images/bfgbook_thumbnail.jpg"
-        />
-      </a>
-      </center>
+      <div>
+        <div style="float:right">
+          <a href="https://www.createspace.com/3422488"><img 
+          src="${request.application_url}/static/images/bfgbook3d-front.png"
+          alt="Front Cover" border="false"
+          />
+          </a>
+        </div>
+        <div style="float:left">
+          <a href="https://www.createspace.com/3422488"><img 
+          src="${request.application_url}/static/images/bfgbook3d-back.png"
+          alt="Back Cover" border="false"
+          />
+          </a>
+        </div>
+      </div>
 
       <p>
         <a href="https://www.createspace.com/3422488">The repoze.bfg
         Web Application Framework, Version 1.2</a> is a high-quality
-        500+ page paperback edition of the <a
+        500+ page paperback book which includes the <a
         href="http://docs.repoze.org/bfg/1.2">BFG version 1.2
         documentation</a> by Chris McDonough, the primary author of
-        <b>repoze.bfg</b> with extras such as a foreword by <a
+        <b>repoze.bfg</b>. It also contains extras such as a foreword by <a
         href="http://pauleveritt.wordpress.com/">Paul Everitt</a>, an
         author introduction, and nifty cover art by <a
         href="http://www.electrosoup.co.uk/">Electrosoup</a>.  If you
