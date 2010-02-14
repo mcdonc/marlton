@@ -33,7 +33,7 @@
 
       <center>
         <a href="https://www.createspace.com/3422488"><img 
-        src="${request.application_url}/static/images/bfgbook3d_front.png"
+        src="${request.application_url}/static/images/bfgbook3d-front.png"
         />
       </a>
       </center>
