@@ -16,6 +16,28 @@ Should read:
    ledger-serving application and a song-serving application can be
    written using ``repoze.bfg``.
 
+pp. 42
+------
+
+The title:
+
+   Runnning The Project
+
+Should read:
+
+   Running The Project
+
+pp. 47
+------
+
+The title:
+
+   This is the function called *PasteDeploy*.
+
+Should read:
+
+   This is the function called by *PasteDeploy*.
+
 pp. 247
 -------
 
