@@ -94,7 +94,7 @@ The paragraph:
 Should read:
 
   Other arguments are ``name`` and ``factory``.  These arguments are
-  neither a predicate arguments nor view configuration information
+  neither predicate arguments nor view configuration information
   arguments.
 
 
