@@ -71,6 +71,16 @@ Should begin:
 
   It passes back the information it obtained to its caller...
 
+pp. 79
+------
+
+The sentence that begins:
+
+  The order that route are evaluated...
+
+Should instead begin:
+
+  The order that routes are evaluated...
 
 pp. 247
 -------
