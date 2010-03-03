@@ -60,6 +60,17 @@ Should read:
   In repoze.bfg 1.0 and prior versions, the root factory was passed a
   WSGI environment object...
 
+pp. 67
+------
+
+The sentence:
+
+  It passes the back the information it obtained to its caller...
+
+Should begin:
+
+  It passes back the information it obtained to its caller...
+
 
 pp. 247
 -------
