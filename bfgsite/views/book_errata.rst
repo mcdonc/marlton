@@ -38,6 +38,15 @@ Should read:
 
    This is the function called by *PasteDeploy*.
 
+pp. 51
+------
+
+In the numbered list that makes up the bottom half of the page, all
+references to line numbers in the example above except "Line 1" should
+be decremented by one.  E.g. instead of "Line 4"", it should read
+"Line 3", and instead of "Lines 6-10" it should read "Lines 5-9", and
+so on.
+
 pp. 247
 -------
 
