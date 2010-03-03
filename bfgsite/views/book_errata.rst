@@ -47,6 +47,20 @@ be decremented by one.  E.g. instead of "Line 4"", it should read
 "Line 3", and instead of "Lines 6-10" it should read "Lines 5-9", and
 so on.
 
+pp. 64
+------
+
+In the warning nearer the bottom of the page, the sentence:
+
+  In repoze.bfg 1.0 and prior versions, the root factory was passed a
+  term WSGI environment object...
+
+Should read:
+
+  In repoze.bfg 1.0 and prior versions, the root factory was passed a
+  WSGI environment object...
+
+
 pp. 247
 -------
 
