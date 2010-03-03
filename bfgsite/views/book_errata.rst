@@ -82,6 +82,22 @@ Should instead begin:
 
   The order that routes are evaluated...
 
+pp. 80
+------
+
+The paragraph:
+
+  Other arguments are ``name`` and ``factory``.  These are required
+  arguments but represent neither a predicate nor view configuration
+  information.
+
+Should read:
+
+  Other arguments are ``name`` and ``factory``.  These arguments are
+  neither a predicate arguments nor view configuration information
+  arguments.
+
+
 pp. 247
 -------
 
