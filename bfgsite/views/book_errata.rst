@@ -93,10 +93,8 @@ The paragraph:
 
 Should read:
 
-  Other arguments are ``name`` and ``factory``.  These arguments are
-  neither predicate arguments nor view configuration information
-  arguments.
-
+  Other arguments are ``name`` and ``factory``.  These arguments
+  represent neither predicates nor view configuration information.
 
 pp. 247
 -------
