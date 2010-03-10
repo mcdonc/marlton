@@ -124,3 +124,24 @@ Should read:
   write granularity time (the session will be marked as active at most
   every five seconds).
 
+pp. 360
+-------
+
+The sentence:
+
+  Maximum number of seconds after which a newly issued ticket will be
+  considered valid.
+
+Should be:
+
+  Maximum number of seconds which a newly issued ticket will be
+  considered valid.
+
+The sentence:
+
+  If this value is None, the token never expires.
+
+Should be:
+
+  If this value is None, the ticket never expires.
+
