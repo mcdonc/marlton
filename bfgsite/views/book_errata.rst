@@ -96,6 +96,21 @@ Should read:
   Other arguments are ``name`` and ``factory``.  These arguments
   represent neither predicates nor view configuration information.
 
+pp. 168
+-------
+
+The sentence:
+
+  Use the ``authorization_policy`` argument to the
+  `configuration.Configurator` class during application setup to
+  specify an authentication policy.
+
+Should read:
+
+  Use the ``authentication_policy`` argument to the
+  `configuration.Configurator` class during application setup to
+  specify an authentication policy.
+
 pp. 247
 -------
 
