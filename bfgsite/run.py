@@ -34,10 +34,10 @@ def make_app(global_config, **settings):
 
     finder = PersistentApplicationFinder(zodb_uri, appmaker)
     config = Configurator(settings=settings, root_factory=finder)
+    config.hook_zca()
     config.begin()
     config.load_zcml('configure.zcml')
     config.end()
-    config.hook_zca()
     app = config.make_wsgi_app()
     return app
 
