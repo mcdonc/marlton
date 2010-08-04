@@ -1,0 +1,40 @@
+<div 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    metal:use-macro="api.main_template.macros['master']">
+
+  <div metal:fill-slot="headinclude">
+    <script src="${request.application_url}/static/js/flowplayer/flowplayer-3.2.2.min.js"></script>
+
+
+
+  <div metal:fill-slot="content">
+
+    <div id="content">
+
+      <h1>Screencaststs</h1> 
+
+      <h2>Groundhog 1: Mapping URLs to Code</h2>
+
+      <p>In the first screencast in the Groundhog series, we use BFG
+      to begin building a clone of the open source Flask
+      "microframework".  At the end of the first video, we have built
+      enough of Groundhog to allow users to map URLs to code as they
+      might in Flask.</p>
+
+      <a
+          href="http://static.repoze.org/casts/groundhog1.flv"
+          style="display:block;width:760px;height:480px;"
+          id="player">
+      </a>
+
+      <script language="JavaScript">
+        flowplayer("player", "/static/js/flowplayer/flowplayer-3.2.2.swf");
+      </script>
+
+    </div>
+
+  </div>
+</div>
+
