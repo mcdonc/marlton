@@ -61,7 +61,7 @@
           
           <a class="myPlayer"
              href="http://static.repoze.org/casts/groundhog1.flv"
-             style="background-image:url('/static/images/casts/groundhog1.jpg')">
+             style="background-image:url('http://static.repoze.org/casts/groundhog1.jpg')">
             <img src="/static/images/play_large.png" alt="Groundhog 1"/>
           </a>
 
@@ -73,7 +73,38 @@
 
           </div>
             
+          <h3><a name="groundhog2">Groundhog 2: Generating URLs
+          (24 minutes 56 seconds)</a></h3>
+          
+          <cite>August 4, 2010</cite>
+          
+          <p>In the second screencast in this series, we give
+          Groundhog's users the ability to generate URLs based on
+          routing patterns associated with user-defined view
+          functions.  At the end of the second video, a Groundhog user
+          can use the <code>url_for</code> method of the application
+          to generate URLs which point into his application.  We also
+          teach Groundhog how to redirect to slash-appended routes and
+          we show off the interactive exception debugger (<a
+          href="http://pylonshq.com/docs/en/0.9.7/thirdparty/weberror/#module-weberror.evalexception">WebError's
+          <i>EvalException</i></a>).</p>
+          
+          <a class="myPlayer"
+             href="http://static.repoze.org/casts/groundhog2.flv"
+             style="background-image:url('http://static.repoze.org/casts/groundhog2.jpg')">
+            <img src="/static/images/play_large.png" alt="Groundhog 2"/>
+          </a>
+
+          <div style="clear: both">
+     
+            <a
+                href="http://static.repoze.org/casts/groundhog2.py.txt">View
+            the code for Groundhog #2</a>
+
+          </div>
+            
         </div>
+
         
         <div style="clear:both">
           
@@ -87,5 +118,7 @@
       </div>
 
   </div>
-  
+
 </div>
+
+
