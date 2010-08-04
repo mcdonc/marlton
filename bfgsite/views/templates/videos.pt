@@ -5,36 +5,79 @@
     metal:use-macro="api.main_template.macros['master']">
 
   <div metal:fill-slot="headinclude">
-    <script src="${request.application_url}/static/js/flowplayer/flowplayer-3.2.2.min.js"></script>
-
-
+    <script src="${request.application_url}/static/js/flowplayer/example/flowplayer-3.2.2.min.js"></script>
+    <style type="text/css">
+      /* styling of the container. */
+      a.myPlayer {
+      display:block;
+      width: 760px;
+      height: 480px; 
+      text-align:center;
+      margin:0 15px 15px 0;
+      float:left;
+      border:1px solid #999;
+      }
+      
+      /* play button */
+      a.myPlayer img {
+      margin-top:70px;
+      border:0px;
+      }
+      
+      /* when container is hovered we alter the border color */
+      a.myPlayer:hover {
+      border:1px solid #000;
+      }
+    </style>
+  </div>
 
   <div metal:fill-slot="content">
 
-    <div id="content">
+    <!--<div id="content">-->
 
-      <h1>Screencaststs</h1> 
+      <h1>Screencasts</h1> 
 
-      <h2>Groundhog 1: Mapping URLs to Code</h2>
+      <p>Screencasts which introduce BFG and demonstrate BFG features.</p>
 
-      <p>In the first screencast in the Groundhog series, we use BFG
-      to begin building a clone of the open source Flask
-      "microframework".  At the end of the first video, we have built
-      enough of Groundhog to allow users to map URLs to code as they
-      might in Flask.</p>
+      <div>
 
-      <a
-          href="http://static.repoze.org/casts/groundhog1.flv"
-          style="display:block;width:760px;height:480px;"
-          id="player">
-      </a>
-
-      <script language="JavaScript">
-        flowplayer("player", "/static/js/flowplayer/flowplayer-3.2.2.swf");
-      </script>
-
-    </div>
+        <h2>Groundhog Series: Building a Microframework using BFG</h2>
+        
+        <div>
+          
+          <h3><a name="groundhog1">Groundhog 1: Mapping URLs to Code
+          (35 minutes 49 seconds)</a></h3>
+          
+          <cite>August 3, 2010</cite>
+          
+          <p>In the first screencast in this series, we use BFG to begin
+          building (with apologies to <a
+          href="http://lucumr.pocoo.org/">Armin Ronacher</a>) a clone
+          of the open source <a
+          href="http://flask.pocoo.org">Flask</a> "microframework"
+          that we name Groundhog.  At the end of the first video, we
+          have built enough of Groundhog to allow users to map URLs to
+          code in a way that will be familiar to Flask developers.</p>
+          
+          <a class="myPlayer"
+             href="http://static.repoze.org/casts/groundhog1.flv"
+             style="background-image:url('/static/images/casts/groundhog1.jpg')">
+            <img src="/static/images/play_large.png" alt="Groundhog 1"/>
+          </a>
+          
+        </div>
+        
+        <div style="clear:both">
+          
+          <script language="JavaScript">
+            flowplayer("a.myPlayer", "/static/js/flowplayer/flowplayer-3.2.2.swf");
+          </script>
+        
+        </div>
+        
+        
+      </div>
 
   </div>
+  
 </div>
-
