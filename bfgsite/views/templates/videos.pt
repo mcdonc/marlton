@@ -110,8 +110,8 @@
           
           <p>In the third screencast in this series, we allow
           Groundhog users to render HTML using <a
-          href="jinja2.pocoo.org">Jinja2</a> and <a
-          href="chameleon.repoze.org">Chameleon-ZPT</a> templates.  We
+          href="http://jinja.pocoo.org/2/">Jinja2</a> and <a
+          href="http://chameleon.repoze.org">Chameleon-ZPT</a> templates.  We
           add a <code>render_template</code> method of the Groundhog
           application object and we provide custom <i>renderer
           globals</i>.
