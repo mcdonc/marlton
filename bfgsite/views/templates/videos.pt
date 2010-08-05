@@ -102,6 +102,34 @@
             the code for Groundhog #2</a>
 
           </div>
+
+          <h3><a name="groundhog3">Groundhog 3: HTML Templating
+          (39 minutes 38 seconds)</a></h3>
+          
+          <cite>August 5, 2010</cite>
+          
+          <p>In the third screencast in this series, we allow
+          Groundhog users to render HTML using <a
+          href="jinja2.pocoo.org">Jinja2</a> and <a
+          href="chameleon.repoze.org">Chameleon-ZPT</a> templates.  We
+          add a <code>render_template</code> method of the Groundhog
+          application object and we provide custom <i>renderer
+          globals</i>.
+          </p>
+          
+          <a class="myPlayer"
+             href="http://static.repoze.org/casts/groundhog3.flv"
+             style="background-image:url('http://static.repoze.org/casts/groundhog3.jpg')">
+            <img src="/static/images/play_large.png" alt="Groundhog 3"/>
+          </a>
+
+          <div style="clear: both">
+     
+            <a
+                href="http://static.repoze.org/casts/groundhog3.py.txt">View
+            the code for Groundhog #3</a>
+
+          </div>
             
         </div>
 
