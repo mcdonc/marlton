@@ -8,6 +8,8 @@ from bfgsite.utils import API
           renderer='bfgsite.views:templates/videos.pt')
 @bfg_view(for_=IWebSite, name='groundhog2', permission='view',
           renderer='bfgsite.views:templates/videos.pt')
+@bfg_view(for_=IWebSite, name='groundhog3', permission='view',
+          renderer='bfgsite.views:templates/videos.pt')
 def videos_view(context, request):
     return dict(
         api = API(context, request),
