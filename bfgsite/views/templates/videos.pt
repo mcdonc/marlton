@@ -130,6 +130,33 @@
             the code for Groundhog #3</a>
 
           </div>
+
+          <h3><a name="groundhog4">Groundhog 4: Sessions and Flash Messages
+          (28 minutes 0 seconds)</a></h3>
+          
+          <cite>August 6, 2010</cite>
+          
+          <p>In the fourth Groundhog screencast, we give our
+          microframework's users a way to store information in
+          <i>sessions</i> by making use of <a
+          href="http://beaker.groovie.org">Beaker</a> middleware.  We
+          then implement <i>flash messaging</i> on top of this
+          sessioning machinery.
+          </p>
+          
+          <a class="myPlayer"
+             href="http://static.repoze.org/casts/groundhog4.flv"
+             style="background-image:url('http://static.repoze.org/casts/groundhog4.jpg')">
+            <img src="/static/images/play_large.png" alt="Groundhog 4"/>
+          </a>
+
+          <div style="clear: both">
+     
+            <a
+                href="http://static.repoze.org/casts/groundhog4.py.txt">View
+            the code for Groundhog #4</a>
+
+          </div>
             
         </div>
 
