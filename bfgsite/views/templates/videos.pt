@@ -157,6 +157,37 @@
             the code for Groundhog #4</a>
 
           </div>
+
+          <h3><a name="groundhog4">Groundhog 5: Exception Handling
+          (38 minutes 33 seconds)</a></h3>
+          
+          <cite>August 10, 2010</cite>
+          
+          <p>
+            In the fifth screencast in the Groundhog series, we equip
+            our microframework with a way to translate exceptions
+            raised by developers into HTTP responses.  We then allow
+            our developers to use convenience APIs named
+            <code>abort</code> and <code>redirect</code> to raise
+            exceptions.  Finally, we allow them to customize the
+            appearance of exceptions they raise.
+          </p>
+          
+          <a class="myPlayer"
+             href="http://static.repoze.org/casts/groundhog5.flv"
+             style="background-image:url('http://static.repoze.org/casts/groundhog5.jpg')">
+            <img src="/static/images/play_large.png" alt="Groundhog 5"/>
+          </a>
+
+          <div style="clear: both">
+     
+            <a
+                href="http://static.repoze.org/casts/groundhog5.py.txt">View
+            the code for Groundhog #5</a>
+
+          </div>
+
+
             
         </div>
 
