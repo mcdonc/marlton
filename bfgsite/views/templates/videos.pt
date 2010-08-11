@@ -188,6 +188,38 @@
           </div>
 
 
+          <h3><a name="groundhog5">Groundhog 6: Events and Context Locals
+          (38 minutes 45 seconds)</a></h3>
+          
+          <cite>August 10, 2010</cite>
+          
+          <p>
+            In the sixth and final screencast in the Groundhog series,
+            we allow our microframework's users to subscribe to and
+            receive <a
+            href="http://docs.repoze.org/bfg/1.3/narr/events.html">events</a>,
+            which are objects broadcast by BFG at various well-known
+            points during its processing cycle.  We also allow our
+            users to define and <i>send</i> their own custom event
+            types.  Once we've built up some event machinery, we use
+            it to implement "importable locals" (aka "stacked object
+            proxies" or "context locals").
+          </p>
+          
+          <a class="myPlayer"
+             href="http://static.repoze.org/casts/groundhog6.flv"
+             style="background-image:url('http://static.repoze.org/casts/groundhog6.jpg')">
+            <img src="/static/images/play_large.png" alt="Groundhog 6"/>
+          </a>
+
+          <div style="clear: both">
+     
+            <a
+                href="http://static.repoze.org/casts/groundhog6.py.txt">View
+            the code for Groundhog #6</a>
+
+          </div>
+
             
         </div>
 
