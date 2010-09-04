@@ -220,9 +220,48 @@
 
           </div>
 
-            
+
         </div>
 
+      </div>
+
+
+      <div>
+
+        <h2>Deform</h2>
+        
+        <div>
+          
+          <h3><a name="deformintro">An Introduction to Deform (uses Pylons)
+          (36 minutes 37 seconds)</a></h3>
+          
+          <cite>September 3, 2010</cite>
+          
+          <p>We introduce the <a
+          href="http://docs.repoze.org/deform">Deform</a> form
+          generation library by building an application using the <a
+          href="http://pylonshq.com">Pylons</a> web framework.  Deform
+          is a framework-independent form generation library written
+          by the authors of BFG (and other Repoze projects).  In the
+          screencast, we build a small application using Deform in
+          "real time".</p>
+
+          <a class="myPlayer"
+             href="http://static.repoze.org/casts/deformscreencast.flv"
+             style="background-image:url('http://static.repoze.org/casts/deformscreencast.jpg')">
+            <img src="/static/images/play_large.png" alt="An Introduction to Deform"/>
+          </a>
+
+          <div style="clear: both">
+     
+            <a
+            href="http://svn.repoze.org/playground/chris/deformscreencast">View
+            the code for the Deform introduction screencast</a>
+
+          </div>
+
+        </div>
+            
         
         <div style="clear:both">
           
