@@ -39,6 +39,30 @@
 
       <p>Screencasts which introduce BFG and demonstrate BFG features.</p>
 
+     <div>
+
+       <h2>Introductions</h2>
+
+       <div>
+
+         <h3><a name="speedthrills">BFG: Speed Thrills</a></h3>
+
+
+         <p>Charlie Clark gives a high-level introduction to
+          <code>repoze.bfg</code> at Europython in 2010</p>
+
+          <a class="myPlayer"
+             href="http://static.repoze.org/casts/charlie_bfg_1024.flv"
+             style="background-image:url('http://static.repoze.org/casts/charlie_bfg_1024.jpg')">
+            <img src="/static/images/play_large.png" alt="Groundhog 1"/>
+          </a>
+       </div>
+
+       <div style="clear:left"/>
+
+     </div>
+
+
       <div>
 
         <h2>Groundhog Series: Building a Microframework using BFG</h2>
