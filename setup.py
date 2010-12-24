@@ -64,6 +64,8 @@ setup(name='marlton',
       url="http://www.delaguardia.com.mx",
       license="BSD-derived (http://www.repoze.org/LICENSE.txt)",
       packages=find_packages(),
+      dependency_links = [
+          'http://dist.repoze.org/bfgsite/PyCAPTCHA-0.4repoze2.tar.gz'],
       include_package_data=True,
       zip_safe=False,
       tests_require = requires,

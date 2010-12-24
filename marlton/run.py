@@ -1,5 +1,5 @@
 from repoze.zodbconn.finder import PersistentApplicationFinder
-from pyramid.configuration import Configurator
+from pyramid.config import Configurator
 
 from marlton.models import appmaker
 

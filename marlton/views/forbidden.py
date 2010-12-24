@@ -1,6 +1,6 @@
 from webob import Response
 
-from pyramid.chameleon_zpt import render_template
+from pyramid.renderers import render
 from pyramid.url import model_url
 
 from marlton.utils import find_site
@@ -14,11 +14,12 @@ def forbidden(context, request):
         # the user is authenticated but he is not allowed to access this
         # resource
         api = API(context, request)
-        body =  render_template(
+        body =  render(
             'templates/forbidden.pt',
-            api=api,
+            request,
+            dict(api=api,
             login_form_url = model_url(site, request, 'login'),
-            homepage_url = model_url(site, request),
+            homepage_url = model_url(site, request)),
             )
         headerlist = []
         headerlist.append(('Content-Type', 'text/html; charset=utf-8'))

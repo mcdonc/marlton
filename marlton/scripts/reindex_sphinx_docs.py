@@ -3,7 +3,7 @@ import sys
 
 from pyramid.paster import get_app
 from pyramid.scripting import get_root
-from pyramid.settings import get_settings
+from pyramid.threadlocal import get_current_registry
 
 from marlton.catalog import find_catalog
 from marlton.models import SphinxDocument
@@ -34,7 +34,7 @@ def main(argv=sys.argv):
             catalog.unindex_doc(docid)
             catalog.document_map.remove_address(address)
 
-    settings = get_settings()
+    settings = get_current_registry().settings
     docroot = settings['sphinx_docroot']
     roots = settings['sphinx_roots']
     oldcwd = os.getcwd()
