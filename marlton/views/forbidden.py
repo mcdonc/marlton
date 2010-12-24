@@ -1,7 +1,7 @@
 from webob import Response
 
 from pyramid.renderers import render
-from pyramid.url import model_url
+from pyramid.url import resource_url
 
 from marlton.utils import find_site
 from marlton.utils import API
@@ -18,8 +18,8 @@ def forbidden(context, request):
             'templates/forbidden.pt',
             request,
             dict(api=api,
-            login_form_url = model_url(site, request, 'login'),
-            homepage_url = model_url(site, request)),
+            login_form_url = resource_url(site, request, 'login'),
+            homepage_url = resource_url(site, request)),
             )
         headerlist = []
         headerlist.append(('Content-Type', 'text/html; charset=utf-8'))
@@ -27,7 +27,7 @@ def forbidden(context, request):
         response = Response(body, headers=headerlist, status='403 Forbidden')
     elif 'login' in referrer:
         # this request came from a user submitting the login form
-        login_url = model_url(site, request, 'login',
+        login_url = resource_url(site, request, 'login',
                               query={'reason':'Bad username or password',
                                      'came_from':request.url})
         headerlist = [('Location', login_url)]
@@ -41,7 +41,7 @@ def forbidden(context, request):
             url = url[:-1]
         if url != request.application_url: # if request isnt for homepage
             query['reason'] = 'Not logged in'
-        login_url = model_url(site, request, 'login', query=query)
+        login_url = resource_url(site, request, 'login', query=query)
         headerlist = [('Location', login_url)]
         response = Response('', headers=headerlist, status='302 Found')
     return response

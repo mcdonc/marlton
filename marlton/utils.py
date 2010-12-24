@@ -10,7 +10,7 @@ from pyramid.renderers import get_renderer
 
 from pyramid.traversal import find_interface
 from pyramid.security import authenticated_userid
-from pyramid.url import model_url
+from pyramid.url import resource_url
 
 from repoze.sendmail.interfaces import IMailDelivery
 
@@ -83,7 +83,7 @@ class API:
         )
     def __init__(self, context, request):
         self.context = context
-        self.context_url = model_url(context, request)
+        self.context_url = resource_url(context, request)
         self.site = find_interface(context, IWebSite)
         self.request = request
         self.application_url = request.application_url
@@ -95,7 +95,7 @@ class API:
             profile = profiles.get(self.userid)
             self.fullname = getattr(profile, 'fullname', None)
         if profile:
-            self.profile_edit_url = model_url(profile, request, 'edit')
+            self.profile_edit_url = resource_url(profile, request, 'edit')
         else:
             self.profile_edit_url = None
 
@@ -154,7 +154,7 @@ def get_navigation(context, request, links):
 
             items.append(
                 {'state':state,
-                 'href':model_url(viewcontext, request, view_name),
+                 'href':resource_url(viewcontext, request, view_name),
                  'title':link['title'],
                  })
 
@@ -208,7 +208,7 @@ def get_tutorials(context, request, max):
             pdate = tutorial.date.strftime('%x')
         else:
             pdate = 'UNKNOWN'
-        tutorial_url = model_url(tutorial, request)
+        tutorial_url = resource_url(tutorial, request)
         new = {
             'author':tutorial.author_name,
             'title':tutorial.title,
@@ -224,7 +224,7 @@ def get_tutorials(context, request, max):
 def get_pastes(context, request, max):
     pastebin = find_interface(context, IPasteBin)
     pastes = []
-    pastebin_url = model_url(pastebin, request)
+    pastebin_url = resource_url(pastebin, request)
     keys = sort_byint(pastebin.keys())
     keys = keys[:max]
     for name in keys:

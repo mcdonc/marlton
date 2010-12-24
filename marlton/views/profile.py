@@ -3,11 +3,11 @@ from email.Message import Message
 
 from webob.exc import HTTPFound
 
-from pyramid.view import bfg_view
+from pyramid.view import view_config
 from pyramid.security import authenticated_userid
 from pyramid.security import remember
 from pyramid.security import Allow
-from pyramid.url import model_url
+from pyramid.url import resource_url
 
 from marlton.interfaces import IWebSite
 from marlton.interfaces import IProfile
@@ -18,8 +18,8 @@ from marlton.utils import find_profiles
 from marlton.utils import random_password
 from marlton.utils import get_mailer
 
-@bfg_view(for_=IWebSite, name='register', permission='view',
-          renderer='marlton.views:templates/register.pt')
+@view_config(for_=IWebSite, name='register', permission='view',
+             renderer='marlton.views:templates/register.pt')
 def register_view(context, request):
     logged_in = authenticated_userid(request)
     login = request.params.get('login', '')
@@ -64,7 +64,7 @@ def register_view(context, request):
                                     (Allow, 'admin', 'edit')])
                         profile.__acl__ = acl
                         headers = remember(request, login)
-                        login_url = model_url(context, request, 'login')
+                        login_url = resource_url(context, request, 'login')
                         response = HTTPFound(location = login_url,
                                              headers=headers)
                         return response
@@ -81,8 +81,8 @@ def register_view(context, request):
         captcha_answer = captcha_answer,
         )
 
-@bfg_view(for_=IProfile, name='edit', permission='edit',
-          renderer='marlton.views:templates/profile_edit.pt')
+@view_config(for_=IProfile, name='edit', permission='edit',
+             renderer='marlton.views:templates/profile_edit.pt')
 def profile_edit_view(context, request):
     login = authenticated_userid(request)
     fullname = context.fullname
@@ -134,8 +134,8 @@ def profile_edit_view(context, request):
         password_verify = password_verify,
         )
 
-@bfg_view(for_=IWebSite, name='forgot_password', permission='view',
-          renderer='marlton.views:templates/forgot_password.pt')
+@view_config(for_=IWebSite, name='forgot_password', permission='view',
+             renderer='marlton.views:templates/forgot_password.pt')
 def forgot_password_view(context, request):
     email = request.params.get('email', '')
     message = ''

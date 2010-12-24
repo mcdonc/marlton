@@ -14,8 +14,8 @@ from pygments import highlight
 from pyramid.security import Allow
 from pyramid.security import authenticated_userid
 from pyramid.security import has_permission
-from pyramid.url import model_url
-from pyramid.view import bfg_view
+from pyramid.url import resource_url
+from pyramid.view import view_config
 
 from repoze.monty import marshal
 
@@ -32,8 +32,8 @@ from marlton.utils import style_defs
 from marlton.utils import nl_to_br
 from marlton.utils import lexer_info
 
-@bfg_view(for_=ITutorial, permission='view',
-          renderer='marlton.views:templates/tutorial.pt')
+@view_config(for_=ITutorial, permission='view',
+             renderer='marlton.views:templates/tutorial.pt')
 def tutorial_view(context, request):
     text = context.text or u''
     try:
@@ -66,15 +66,15 @@ def tutorial_view(context, request):
         message = None,
         title = context.title,
         can_edit = can_edit,
-        edit_url = model_url(context, request, 'edit'),
-        delete_url = model_url(context, request, 'delete'),
-        tutorialbin_url = model_url(context.__parent__, request),
+        edit_url = resource_url(context, request, 'edit'),
+        delete_url = resource_url(context, request, 'delete'),
+        tutorialbin_url = resource_url(context.__parent__, request),
         attachment_url = attachment_url,
         attachment_mimetype = context.attachment_mimetype,
         attachment_name = context.attachment_name,
         )
         
-@bfg_view(for_=ITutorial, name='download_attachment', permission='view')
+@view_config(for_=ITutorial, name='download_attachment', permission='view')
 def download_attachement(context, request):
     f = context.attachment_data.open()
     headers = [
@@ -85,10 +85,10 @@ def download_attachement(context, request):
     response = Response(headerlist=headers, app_iter=f)
     return response                
 
-@bfg_view(for_=ITutorialBin, permission='view',
-          renderer='marlton.views:templates/tutorialbin.pt')
+@view_config(for_=ITutorialBin, permission='view',
+             renderer='marlton.views:templates/tutorialbin.pt')
 def tutorialbin_view(context,request):
-    tutorialbin_url = model_url(context, request)
+    tutorialbin_url = resource_url(context, request)
     tutorials = get_tutorials(context, request, sys.maxint)
     if tutorials:
         last_date = tutorials[0]['date']
@@ -122,11 +122,11 @@ def tutorialbin_view(context,request):
         tutorialbin_url = tutorialbin_url,
         user = user,
         can_manage = can_manage,
-        manage_url = model_url(context, request, 'manage'),
+        manage_url = resource_url(context, request, 'manage'),
         )
 
-@bfg_view(for_=ITutorialBin, name='add', permission='add',
-          renderer='marlton.views:templates/tutorialbin_addedit.pt')
+@view_config(for_=ITutorialBin, name='add', permission='add',
+             renderer='marlton.views:templates/tutorialbin_addedit.pt')
 def tutorialbin_add_view(context, request):
     params = request.params
     title = u''
@@ -136,7 +136,7 @@ def tutorialbin_add_view(context, request):
     code = u''
     message = u''
     attachment= ''
-    tutorialbin_url = model_url(context, request)
+    tutorialbin_url = resource_url(context, request)
     user = authenticated_userid(request)
     can_manage = has_permission('manage', context, request)
 
@@ -187,11 +187,11 @@ def tutorialbin_add_view(context, request):
         user = user,
         can_manage = can_manage,
         pagetitle = 'Add a Tutorial',
-        form_url = model_url(context, request, 'add'),
+        form_url = resource_url(context, request, 'add'),
         )
 
-@bfg_view(for_=ITutorial, name='edit', permission='edit',
-          renderer='marlton.views:templates/tutorialbin_addedit.pt')
+@view_config(for_=ITutorial, name='edit', permission='edit',
+             renderer='marlton.views:templates/tutorialbin_addedit.pt')
 def tutorial_edit_view(context, request):
     message = u''
     title = context.title
@@ -199,7 +199,7 @@ def tutorial_edit_view(context, request):
     language = context.language
     text = context.text
     code = context.code
-    tutorialbin_url = model_url(context.__parent__, request)
+    tutorialbin_url = resource_url(context.__parent__, request)
     user = authenticated_userid(request)
     can_manage = has_permission('manage', context, request)
 
@@ -245,27 +245,27 @@ def tutorial_edit_view(context, request):
         user = user,
         can_manage = can_manage,
         pagetitle = 'Edit a Tutorial',
-        form_url = model_url(context, request, 'edit'),
+        form_url = resource_url(context, request, 'edit'),
         )
 
-@bfg_view(for_=ITutorial, name='delete', permission='edit',
-          renderer='marlton.views:templates/areyousure.pt')
+@view_config(for_=ITutorial, name='delete', permission='edit',
+             renderer='marlton.views:templates/areyousure.pt')
 def delete_tutorial_view(context, request):
     parent = context.__parent__
     if 'form.yes' in request.params:
         name = context.__name__
         del parent[name]
-        return HTTPFound(location=model_url(parent, request))
+        return HTTPFound(location=resource_url(parent, request))
     if 'form.no' in request.params:
-        return HTTPFound(location=model_url(context, request))
+        return HTTPFound(location=resource_url(context, request))
     return dict(
         api = API(context, request),
-        form_url = model_url(context, request, 'delete'),
+        form_url = resource_url(context, request, 'delete'),
         message = 'Are you sure you want to delete "%s"' % context.title
         )
     
-@bfg_view(for_=ITutorialBin, name='manage', permission='manage',
-          renderer='marlton.views:templates/tutorialbin_manage.pt')
+@view_config(for_=ITutorialBin, name='manage', permission='manage',
+             renderer='marlton.views:templates/tutorialbin_manage.pt')
 def tutorialbin_manage_view(context, request):
     params = request.params
     message = params.get('message', u'')
@@ -276,12 +276,13 @@ def tutorialbin_manage_view(context, request):
         for checkbox in checkboxes:
             del context[checkbox]
         message = '%s tutorials deleted' % len(checkboxes)
-        url = model_url(context, request, 'manage', query={'message':message})
+        url = resource_url(context, request, 'manage',
+                           query={'message':message})
         response = HTTPFound(location=url)
         return response
 
     tutorials = get_tutorials(context, request, sys.maxint)
-    tutorialbin_url = model_url(context, request)
+    tutorialbin_url = resource_url(context, request)
 
     return dict(
         api = API(context, request),
@@ -290,10 +291,10 @@ def tutorialbin_manage_view(context, request):
         tutorialbin_url = tutorialbin_url,
         )
         
-@bfg_view(for_=ITutorialBin, name='rss', permission='view',
-          renderer='marlton.views:templates/tutorialbin_rss.pt')
+@view_config(for_=ITutorialBin, name='rss', permission='view',
+             renderer='marlton.views:templates/tutorialbin_rss.pt')
 def tutorialbin_rss_view(context, request):
-    tutorialbin_url = model_url(context, request)
+    tutorialbin_url = resource_url(context, request)
     tutorials = get_tutorials(context, request, sys.maxint)
     if tutorials:
         last_date=tutorials[0]['date']

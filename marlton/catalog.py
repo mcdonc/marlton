@@ -4,7 +4,7 @@ from zope.interface import providedBy
 from zope.component import queryAdapter
 from zope.interface.declarations import Declaration
 
-from pyramid.traversal import model_path
+from pyramid.traversal import resource_path
 from pyramid.traversal import find_interface
 
 from repoze.catalog.catalog import Catalog
@@ -46,7 +46,7 @@ def get_created_date(object, default):
 def get_path(object, default):
     if not hasattr(object, '__name__'):
         return default
-    return model_path(object)
+    return resource_path(object)
 
 def get_interfaces(object, default):
     # we unwind all derived and immediate interfaces using spec.flattened()

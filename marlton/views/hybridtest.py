@@ -1,4 +1,4 @@
-from pyramid.view import bfg_view
+from pyramid.view import view_config
 from zope.component import queryUtility
 from pyramid.interfaces import IDefaultRootFactory
 from pyramid.url import route_url
@@ -6,7 +6,7 @@ from pyramid.url import route_url
 from webob import Response
 from marlton.interfaces import IWebSite
 
-@bfg_view(for_=IWebSite, route_name='test')
+@view_config(for_=IWebSite, route_name='test')
 def aview(context, request):
     url = route_url('test', request, can=1, traverse='/a/b/c', bogus=2)
     return Response(url)

@@ -2,7 +2,7 @@ import datetime
 
 from zope.component import queryAdapter
 
-from pyramid.traversal import model_path
+from pyramid.traversal import resource_path
 
 from repoze.folder.interfaces import IFolder
 
@@ -26,7 +26,7 @@ def index_content(object, event):
     if catalog is not None:
         for node in postorder(object):
             if is_content(object):
-                path = model_path(node)
+                path = resource_path(node)
                 docid = catalog.document_map.add(path)
                 catalog.index_doc(docid, node)
                 adapter = queryAdapter(node, IMetadata)
@@ -38,7 +38,7 @@ def unindex_content(object, event):
     """ Unindex content (an IObjectWillBeRemovedEvent subscriber) """
     catalog = find_catalog(object)
     if catalog is not None:
-        path = model_path(object)
+        path = resource_path(object)
         num, docids = catalog.search(path=path)
         for docid in docids:
             catalog.unindex_doc(docid)
@@ -49,7 +49,7 @@ def reindex_content(object, event):
     IObjectModifed event subscriber """
     catalog = find_catalog(object)
     if catalog is not None:
-        path = model_path(object)
+        path = resource_path(object)
         docid = catalog.document_map.docid_for_address(path)
         catalog.reindex_doc(docid, object)
         catalog.document_map.remove_metadata(docid)

@@ -9,8 +9,8 @@ from pygments import util
 from pygments import highlight
 
 from pyramid.security import has_permission
-from pyramid.url import model_url
-from pyramid.view import bfg_view
+from pyramid.url import resource_url
+from pyramid.view import view_config
 
 from repoze.monty import marshal
 
@@ -20,8 +20,8 @@ from marlton.interfaces import IPasteEntry
 from marlton.models import PasteEntry
 from marlton import utils
 
-@bfg_view(for_=IPasteEntry, permission='view',
-          renderer='marlton.views:templates/paste_entry.pt')
+@view_config(for_=IPasteEntry, permission='view',
+             renderer='marlton.views:templates/paste_entry.pt')
 def entry_view(context, request):
     paste = context.paste or u''
     try:
@@ -45,23 +45,23 @@ def entry_view(context, request):
         paste = formatted_paste,
         pastes = pastes,
         message = None,
-        pastebin_url = model_url(context.__parent__, request)
+        pastebin_url = resource_url(context.__parent__, request)
         )
 
-@bfg_view(for_=IPasteBin, permission='view',
-          renderer='marlton.views:templates/pastebin.pt')
+@view_config(for_=IPasteBin, permission='view',
+             renderer='marlton.views:templates/pastebin.pt')
 def pastebin_view(context, request):
     params = request.params
     author_name = utils.preferred_author(context, request)
     language = u''
     paste = u''
     message = u''
-    pastebin_url = model_url(context, request)
+    pastebin_url = resource_url(context, request)
     can_manage = has_permission('manage', context, request)
 
     if params.has_key('form.submitted'):
         if params.get('text'): # trap spambots
-            return HTTPFound(location=model_url(context, request))
+            return HTTPFound(location=resource_url(context, request))
         paste = params.get('paste_', '')
         author_name = params.get('author_name_', '')
         language = params.get('language_', '')
@@ -92,11 +92,11 @@ def pastebin_view(context, request):
         pastes = pastes,
         pastebin_url = pastebin_url,
         can_manage = can_manage,
-        manage_url = model_url(context, request, 'manage'),
+        manage_url = resource_url(context, request, 'manage'),
         )
     
-@bfg_view(for_=IPasteBin, name='manage', permission='manage',
-          renderer='marlton.views:templates/pastebin_manage.pt')
+@view_config(for_=IPasteBin, name='manage', permission='manage',
+             renderer='marlton.views:templates/pastebin_manage.pt')
 def pastebin_manage_view(context, request):
     params = request.params
     message = params.get('message', u'')
@@ -107,12 +107,13 @@ def pastebin_manage_view(context, request):
         for checkbox in checkboxes:
             del context[checkbox]
         message = '%s pastes deleted' % len(checkboxes)
-        url = model_url(context, request, 'manage', query={'message':message})
+        url = resource_url(context, request, 'manage',
+                           query={'message':message})
         response = HTTPFound(location=url)
         response.headers['Location'] = url
         return response
 
-    pastebin_url = model_url(context, request)
+    pastebin_url = resource_url(context, request)
     pastes = utils.get_pastes(context, request, sys.maxint)
 
     return dict(
@@ -122,10 +123,10 @@ def pastebin_manage_view(context, request):
         pastebin_url = pastebin_url,
         )
         
-@bfg_view(for_=IPasteBin, name='rss', permission='view',
-          renderer='marlton.views:templates/pastebin_rss.pt')
+@view_config(for_=IPasteBin, name='rss', permission='view',
+             renderer='marlton.views:templates/pastebin_rss.pt')
 def pastebin_rss_view(context, request):
-    pastebin_url = model_url(context, request)
+    pastebin_url = resource_url(context, request)
     pastes = utils.get_pastes(context, request, sys.maxint)
     if pastes:
         last_date=pastes[0]['date']

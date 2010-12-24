@@ -3,8 +3,8 @@ from webob.exc import HTTPFound
 from pyramid.security import forget
 from pyramid.security import remember
 from pyramid.security import authenticated_userid
-from pyramid.view import bfg_view
-from pyramid.url import model_url
+from pyramid.view import view_config
+from pyramid.url import resource_url
 
 from repoze.who.plugins.zodb.users import get_sha_password
 
@@ -12,12 +12,12 @@ from marlton.interfaces import IWebSite
 from marlton.utils import API
 from marlton.utils import find_users
 
-@bfg_view(for_=IWebSite, name='logout', permission='view')
+@view_config(for_=IWebSite, name='logout', permission='view')
 def logout_view(context, request):
     headers = forget(request)
-    return HTTPFound(location=model_url(context, request), headers=headers)
+    return HTTPFound(location=resource_url(context, request), headers=headers)
 
-@bfg_view(for_=IWebSite, name='login', permission='view',
+@view_config(for_=IWebSite, name='login', permission='view',
           renderer='marlton.views:templates/login.pt')
 def login_view(context, request):
     login = ''
@@ -35,7 +35,7 @@ def login_view(context, request):
                 if came_from:
                     return HTTPFound(location=came_from, headers=headers)
                 else:
-                    url = model_url(context, request, 'login')
+                    url = resource_url(context, request, 'login')
                     return HTTPFound(location=url, headers=headers)
             else:
                 message = 'Wrong password'

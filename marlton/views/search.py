@@ -1,15 +1,15 @@
 from zope.index.text.parsetree import ParseError
 
 from pyramid.traversal import find_model
-from pyramid.view import bfg_view
-from pyramid.url import model_url
+from pyramid.view import view_config
+from pyramid.url import resource_url
 
 from marlton.catalog import find_catalog
 from marlton.interfaces import IWebSite
 from marlton.utils import API
 
-@bfg_view(name='searchresults', for_=IWebSite, permission='view',
-          renderer='marlton.views:templates/searchresults.pt')
+@view_config(name='searchresults', for_=IWebSite, permission='view',
+             renderer='marlton.views:templates/searchresults.pt')
 def searchresults(context, request):
     catalog = find_catalog(context)
 
@@ -62,14 +62,14 @@ def searchresults(context, request):
                 md['teaser'] = teaser
             else:
                 model = find_model(context, path)
-                url = model_url(model, request)
+                url = resource_url(model, request)
                 md['url'] = url
             batch.append(md)
 
     def _batchURL(query, batch_start=0):
         query['batch_start'] = batch_start
-        return model_url(context, request, request.view_name,
-                         query=query)
+        return resource_url(context, request, request.view_name,
+                            query=query)
 
     batch_info = {}
 

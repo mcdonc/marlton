@@ -2,10 +2,10 @@ from StringIO import StringIO
 from Captcha.Visual.Tests import PseudoGimpy
 from webob import Response
 
-from pyramid.view import bfg_view
+from pyramid.view import view_config
 from marlton.utils import find_site
 
-@bfg_view(name='captcha.jpg')
+@view_config(name='captcha.jpg')
 def captcha_jpeg(context, request):
     site = find_site(context)
     output = StringIO()
