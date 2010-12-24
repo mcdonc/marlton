@@ -9,7 +9,6 @@ from pygments import lexers
 from pyramid.renderers import get_renderer
 
 from pyramid.traversal import find_interface
-from pyramid.threadlocal import get_current_registry
 from pyramid.security import authenticated_userid
 from pyramid.url import model_url
 
@@ -191,35 +190,12 @@ def random_password():
         [choice('bcdfghklmnprstvw')+choice('aeiou') for i in range(4)])
     return friendly
 
-def search_trac(request, query, filter):
-    settings = get_current_registry().settings
-    from trac.env import open_environment
-    trac_path = getattr(settings, 'trac.env_path')
-    env = open_environment(trac_path, use_cache=False)
-    search = TracSearch(env) 
-    from trac.web.api import Request
-    req = Request(request.environ, None)
-    req.perm = All()
-    trac_results = search.all_results(req, query, filter)
-    return trac_results
-    
 class All(object):
     def __call__(self, other):
         return self
 
     def __contains__(self, other):
         return True
-
-from trac.search.web_ui import SearchModule
-
-class TracSearch(SearchModule):
-    def all_results(self, req, term, filter=('ticket', 'wiki')):
-        query = self._get_search_terms(term)
-        results = []
-        for source in self.search_sources:
-            for result in source.get_search_results(req, query, filter):
-                results.append(result)
-        return results
 
 def get_tutorials(context, request, max):
     tutorialbin = find_interface(context, ITutorialBin)
