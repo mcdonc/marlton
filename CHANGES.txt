@@ -1,10 +1,3 @@
 Next release
 
-  Searching and community dashboard.
-
-  1.2 compat.
-
-0.1
-
-  Initial release.
-
+- ...

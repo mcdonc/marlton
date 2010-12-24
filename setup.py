@@ -14,9 +14,6 @@
 
 import os
 
-from ez_setup import use_setuptools
-use_setuptools()
-
 from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -24,7 +21,7 @@ README = open(os.path.join(here, 'README.txt')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
-    'repoze.bfg',
+    'pyramid',
     'repoze.tm2',
     'repoze.monty',
     'repoze.who',
@@ -37,7 +34,7 @@ requires = [
     'repoze.zodbconn',
     'repoze.folder',
     'PyCAPTCHA',
-    'PIL',
+    'Pillow',
     'repoze.session',
     'repoze.browserid',
     'repoze.catalog',
@@ -51,9 +48,9 @@ requires = [
     'docutils',
     ]
 
-setup(name='bfgsite',
-      version='0.3',
-      description=('A web site for repoze.bfg with a paste bin and a tutorial '
+setup(name='marlton',
+      version='0.0',
+      description=('A web site for Pyramid with a paste bin and a tutorial '
                    'bin'),
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[
@@ -63,8 +60,8 @@ setup(name='bfgsite',
         "Topic :: Internet :: WWW/HTTP :: WSGI",
         "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
         ],
-      keywords='paste bin tutorial cluebin repoze bfg wsgi website',
-      author="Carlos de la Guardia",
+      keywords='paste bin tutorial pyramid wsgi website',
+      author="Carlos de la Guardia, Chris McDonough",
       author_email="cguardia@yahoo.com",
       url="http://www.delaguardia.com.mx",
       license="BSD-derived (http://www.repoze.org/LICENSE.txt)",
@@ -76,11 +73,11 @@ setup(name='bfgsite',
       test_suite="nose.collector",
       entry_points = """\
       [paste.app_factory]
-      make_app = bfgsite.run:make_app
+      make_app = marlton.run:make_app
 
       [console_scripts]
-      reindex_sphinx_docs = bfgsite.scripts.reindex_sphinx_docs:main
-      debug_bfgsite = bfgsite.scripts.debug:main
+      reindex_sphinx_docs = marlton.scripts.reindex_sphinx_docs:main
+      debug_marlton = marlton.scripts.debug:main
       """
       )
 

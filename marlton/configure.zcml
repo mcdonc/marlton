@@ -1,0 +1,104 @@
+<configure xmlns="http://pylonshq.com/pyramid"
+           xmlns:lemonade="http://namespaces.repoze.org/lemonade"
+	   i18n_domain="repoze.bfg">
+
+  <include package="pyramid.includes" />
+  <include package="repoze.lemonade.includes" file="meta.zcml"/>
+
+  <scan package="."/>
+
+  <static
+   name="static"
+   path="views/static"
+   />
+
+  <subscriber
+      for="repoze.lemonade.interfaces.IContent
+           repoze.folder.interfaces.IObjectWillBeRemovedEvent"
+      handler=".subscribers.unindex_content"/>
+    
+  <subscriber
+      for="repoze.lemonade.interfaces.IContent
+           repoze.folder.interfaces.IObjectAddedEvent"
+      handler=".subscribers.index_content"/>
+  
+  <subscriber
+      for="repoze.lemonade.interfaces.IContent
+           .interfaces.IObjectModifiedEvent"
+      handler=".subscribers.reindex_content"/>
+
+  <subscriber
+      for="repoze.lemonade.interfaces.IContent
+           repoze.folder.interfaces.IObjectWillBeAddedEvent"
+      handler=".subscribers.set_created"/>
+
+  <subscriber
+      for="repoze.lemonade.interfaces.IContent
+           .interfaces.IObjectModifiedEvent"
+      handler=".subscribers.set_modified"/>
+
+  <adapter
+    for=".interfaces.ITutorial"
+    provides=".interfaces.ISearchText"
+    factory=".adapters.TutorialSearchTextAdapter"
+    />
+
+  <adapter
+    for=".interfaces.IPasteEntry"
+    provides=".interfaces.ISearchText"
+    factory=".adapters.PasteEntrySearchTextAdapter"
+    />
+
+  <adapter
+    for=".interfaces.ITutorial"
+    provides=".interfaces.IMetadata"
+    factory=".adapters.TutorialMetadataAdapter"
+    />
+
+  <adapter
+    for=".interfaces.IPasteEntry"
+    provides=".interfaces.IMetadata"
+    factory=".adapters.PasteEntryMetadataAdapter"
+    />
+
+  <adapter
+    for=".interfaces.ISphinxDocument"
+    provides=".interfaces.ISearchText"
+    factory=".adapters.SphinxDocumentSearchTextAdapter"
+    />
+
+  <utility
+    factory="marlton.utilities.mail_delivery_factory"
+    provides="repoze.sendmail.interfaces.IMailDelivery"
+  />
+
+  <forbidden
+    view=".views.forbidden.forbidden"/>
+
+  <lemonade:content
+      factory=".models.PasteEntry"
+      type=".interfaces.IPasteEntry"
+      />
+
+  <lemonade:content
+      factory=".models.Tutorial"
+      type=".interfaces.ITutorial"
+      />
+
+  <lemonade:content
+      factory=".models.SphinxDocument"
+      type=".interfaces.ISphinxDocument"
+      />
+
+  <authtktauthenticationpolicy
+    secret="sosecret"
+    callback=".security.groupfinder"/>
+
+  <aclauthorizationpolicy/>
+
+  <route
+     name="test"
+     path=":can/test*traverse"
+   />
+
+</configure>
