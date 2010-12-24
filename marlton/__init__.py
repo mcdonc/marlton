@@ -37,6 +37,7 @@ def main(global_config, **settings):
     config.hook_zca()
     config.begin()
     config.load_zcml('configure.zcml')
+    config.scan()
     config.end()
     app = config.make_wsgi_app()
     return app

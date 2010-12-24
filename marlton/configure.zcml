@@ -5,8 +5,6 @@
   <include package="pyramid.includes" />
   <include package="repoze.lemonade.includes" file="meta.zcml"/>
 
-  <scan package="."/>
-
   <static
    name="static"
    path="views/static"
