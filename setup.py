@@ -42,9 +42,7 @@ requires = [
     'virtualenv',
     'Sphinx',
     'repoze.sphinx.autointerface',
-    'Trac',
     'repoze.sendmail',
-    'lxml',
     'docutils',
     ]
 
