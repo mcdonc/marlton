@@ -73,7 +73,7 @@ setup(name='marlton',
       test_suite="nose.collector",
       entry_points = """\
       [paste.app_factory]
-      make_app = marlton.run:make_app
+      main = marlton:main
 
       [console_scripts]
       reindex_sphinx_docs = marlton.scripts.reindex_sphinx_docs:main
