@@ -6,10 +6,10 @@ from zope.component import getUtility
 from pygments import formatters
 from pygments import lexers
 
-from pyramid.chameleon_zpt import get_template
+from pyramid.renderers import get_renderer
 
 from pyramid.traversal import find_interface
-from pyramid.settings import get_settings
+from pyramid.threadlocal import get_current_registry
 from pyramid.security import authenticated_userid
 from pyramid.url import model_url
 
@@ -103,9 +103,9 @@ class API:
     @property
     def main_template(self):
         if self.is_home_page:
-            return get_template(
-                'views/templates/frontpage_main_template.pt')
-        return get_template('views/templates/main_template.pt')
+            return get_renderer(
+                'views/templates/frontpage_main_template.pt').implementation()
+        return get_renderer('views/templates/main_template.pt').implementation()
 
     @property
     def navitems(self):
@@ -192,7 +192,7 @@ def random_password():
     return friendly
 
 def search_trac(request, query, filter):
-    settings = get_settings()
+    settings = get_current_registry().settings
     from trac.env import open_environment
     trac_path = getattr(settings, 'trac.env_path')
     env = open_environment(trac_path, use_cache=False)

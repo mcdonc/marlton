@@ -2,7 +2,7 @@ import os
 import sys
 
 from zope.interface import implements
-from pyramid.settings import get_settings
+from pyramid.threadlocal import get_current_registry
 from repoze.sendmail.delivery import QueuedMailDelivery
 from repoze.sendmail.interfaces import IMailDelivery
 
@@ -14,7 +14,7 @@ def mail_delivery_factory(os=os): # accepts 'os' for unit test purposes
     """Factory method for creating an instance of repoze.sendmail.IDelivery
     for use by this application.
     """
-    settings = get_settings()
+    settings = get_current_registry().settings
     
     # If settings utility not present, we are probably testing and should
     # suppress sending mail.  Can also be set explicitly in environment 
